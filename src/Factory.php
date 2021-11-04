@@ -1,12 +1,12 @@
 <?php
 
-namespace Demo\test;
+namespace Applet\Pay;
 
 class Factory
 {
 
 	static public $instance = [
-		'Baidu' => '\Demo\test\Baidu',
+		'Baidu' => '\Applet\Pay\Baidu',
 	];
 
 	public static function getInstance($ClassName)
