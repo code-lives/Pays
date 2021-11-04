@@ -13,15 +13,25 @@
     - [解密手机号](#解密手机号)
     - [百度订单查询](#百度订单查询)
     - [百度退款](#百度退款)
-    - [异步通知](#异步通知)
+- [字节小程序](#字节小程序)
+    - [Config](#config-1)
+    - [token](#token-1)
+    - [openid](#openid-1)
+    - [解密手机号](#解密手机号-1)
+    - [字节订单查询](#字节订单查询)
+    - [字节退款](#字节退款)
+- [异步通知（通用）](#异步通知通用)
 # 安装说明
     php > 5.3
 # 预下单
 ```php
 
-    $payName='Baidu';//设置驱动
+    $payName='Baidu';//百度
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
-    
+
+    $payName='Byte';//字节
+    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
+
 ```
 # 百度小程序
 ### Config
@@ -126,10 +136,99 @@
     //返回 true false
 ```
 
-### 异步通知
+
+
+# 字节小程序
+### Config
+ | 参数名字    | 类型   | 必须 | 说明                  |
+ | ----------- | ------ | ---- | --------------------- |
+ | token       | string | 是   | 担保交易回调的Token(令牌) |
+ | salt        | string | 是   | 担保交易的SALT        |
+ | merchant_id | string | 是   | 担保交易的商户号      |
+ | app_id      | int    | 是   | 小程序的APP_ID        |
+ | secret      | string | 是   | 小程序的APP_SECRET    |
+
+### token
 ```php
 
-    $data= \\Applet\Pay\Factory::getInstance($PayName)->init($config)->notifyCheck($_POST);
+    $payName='Byte';//驱动
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
+    //成功 array
+    //失败 false
+```
+ | 返回参数     | 类型   | 必须 | 说明                                   |
+ | ------------ | ------ | ---- | -------------------------------------- |
+ | expires_in    | string | 是   | 凭证有效时间，单位：秒                   |
+ | access_token       | string    | 是   | 获取到的凭证                     |
+
+
+
+### openid
+
+```php
+
+    $payName='Byte';//设置驱动
+    $code="";
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
+    //成功 array
+    //失败 false
+```
+ | 返回参数     | 类型   | 必须 | 说明                                   |
+ | ------------ | ------ | ---- | -------------------------------------- |
+ | session_key    | string | 是   | session_key                  |
+ | openid       | string    | 是   | 用户openid                     |
+ | unionid       | string    | 是   | unionid                     |
+
+
+### 解密手机号
+
+```php
+
+    $payName='Baidu';//设置驱动
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
+    echo $phone['phoneNumber'];
+    // 成功 array
+    // 失败 false
+```
+
+
+### 字节订单查询
+
+```php
+
+    $payName='Byte';//设置驱动
+    $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+    $data = $Baidu->findOrder("订单号");
+    // 成功 array 【自己看手册】
+    // 失败 false
+```
+
+
+### 字节退款
+ | 参数名字         | 类型   | 必须 | 说明                                                                                               |
+ | ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
+ | out_order_no            | string | 是   | 平台订单号                                                                                |
+ | out_refund_no | int    | 是   | 自定义订单号                                                                                  |
+ | reason      | int    | 是   | 退款说明                                     |
+ | refund_amount      | string    | 是   | 退款金额                                      |
+```php
+
+    $order = [
+            'out_order_no' => '',
+            'out_refund_no' => time() . 'refund',
+            'reason' => '就想退款，咋滴',
+            'refund_amount' => 1, //退款金额，单位[分]
+        ];
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
+    //返回 成功 返回订单号  否则 false
+
+```
+
+# 异步通知（通用） 
+```php
+    
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->notifyCheck($_POST);
     //返回 true false
      
 ```
+

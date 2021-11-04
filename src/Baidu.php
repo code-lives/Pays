@@ -61,17 +61,7 @@ class Baidu
         $this->orderParam['signFieldsRange'] = $this->signFieldsRange;
         return $this;
     }
-    // /**
-    //  * 返回订单参数
-    //  * @return object $this
-    //  */
-    // public function getOrder()
-    // {
-    //     $sign = self::sign($this->orderParam, $this->rsaPriKeyStr);
-    //     $this->orderParam['rsaSign'] = $sign;
-    //     $this->orderParam['signFieldsRange'] = $this->signFieldsRange;
-    //     return $this;
-    // }
+
     /**
      * 获取token
      */
@@ -204,7 +194,6 @@ class Baidu
         return false;
     }
     /**
-     * 数据解密：低版本使用mcrypt库（PHP < 5.3.0），高版本使用openssl库（PHP >= 5.3.0）。
      *
      * @param string $ciphertext    待解密数据，返回的内容中的data字段
      * @param string $iv            加密向量，返回的内容中的iv字段
