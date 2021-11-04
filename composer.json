@@ -12,6 +12,6 @@
     ],
     "minimum-stability": "stable",
     "autoload":{
-   	"psr-4":{"Demo\\test\\":"src"}
+   	"psr-4":{"Applet\\Pay\\":"src"}
     }
 }
