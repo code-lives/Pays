@@ -1,6 +1,6 @@
 <?php
 
-namespace Demo\test;
+namespace Applet\Pay;
 
 class Baidu
 {
