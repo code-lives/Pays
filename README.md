@@ -20,7 +20,7 @@
 ```php
 
     $payName='Baidu';//设置驱动
-    $pay= \Demo\test\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
+    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
     
 ```
 # 百度小程序
@@ -39,7 +39,7 @@
 ```php
 
     $payName='Baidu';//设置驱动
-    $data= \Demo\test\Factory::getInstance($PayName)->init($config)->getToken();
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
     //成功 array
     //失败 false
 ```
@@ -57,7 +57,7 @@
 
     $payName='Baidu';//设置驱动
     $code="";
-    $data= \Demo\test\Factory::getInstance($PayName)->init($config)->getOpenid($code);
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
     //成功 array
     //失败 false
 ```
@@ -72,7 +72,7 @@
 ```php
 
     $payName='Baidu';//设置驱动
-    $data= \Demo\test\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $ciphertext);
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $ciphertext);
     echo $phone['mobile'];
     // 成功 array
     // 失败 false
@@ -88,7 +88,7 @@
 ```php
 
     $payName='Baidu';//设置驱动
-    $Baidu = \Demo\test\Factory::getInstance('Baidu')->init($config);
+    $Baidu = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
     $order = [
             'tpOrderId' => '',//订单号
             'access_token' => $Baidu->getToken()['access_token'],
@@ -122,14 +122,14 @@
 	'tpOrderId' => '123',//自己平台订单号
 	'userId' => 123,
     ];
-    $data= \Demo\test\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
     //返回 true false
 ```
 
 ### 异步通知
 ```php
 
-    $data= \Demo\test\Factory::getInstance($PayName)->init($config)->notifyCheck($_POST);
+    $data= \\Applet\Pay\Factory::getInstance($PayName)->init($config)->notifyCheck($_POST);
     //返回 true false
      
 ```
