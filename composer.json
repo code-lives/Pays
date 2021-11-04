@@ -1,0 +1,17 @@
+{
+    "name": "code-lives/php-compose-demo",
+    "description": "PHP Composer Demo",
+    "type": "library",
+    "license": "MIT",
+    "version":"3.0",
+    "authors": [
+        {
+            "name": "lijie",
+            "email": "18734351007@163.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload":{
+   	"psr-4":{"Demo\\test\\":"src"}
+    }
+}
