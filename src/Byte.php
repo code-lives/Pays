@@ -51,6 +51,8 @@ class Byte
      */
     public function getNotifyOrder()
     {
+        $order = $_POST;
+        $order['msg'] = json_decode($order['msg'], true);
         return $this->notifyOrder;
     }
     /**
@@ -146,7 +148,6 @@ class Byte
         sort($data, SORT_STRING);
         $str = implode('', $data);
         if (!strcmp(sha1($str), $order['msg_signature'])) {
-            $this->notifyOrder = $order;
             return true;
         }
         return false;
