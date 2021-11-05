@@ -307,14 +307,49 @@
 
 # 异步通知（通用） 
 ```php
+    字节
+    $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+    $order = $arr->getNotifyOrder();//订单数据array
+    $status = $pay->notifyCheck($order);//验证
+    //$order['cp_orderno'];//平台订单号
+    if($status){
+    	switch ($order['type']) {
+            case 'payment': // 支付相关回调
+                echo json_encode(['err_no' => 0, 'err_tips' => 'success']); // 操作成功需要给头条返回的信息
+                break;
+            case 'refund': // 退款相关回调
+                echo json_encode(['err_no' => 0, 'err_tips' => 'success']); // 操作成功需要给头条返回的信息
+                break;
+            case 'settle': // 分账相关回调
+                echo json_encode(['err_no' => 0, 'err_tips' => 'success']); // 操作成功需要给头条返回的信息
+                break;
+            default: // 未知数据
+                return '数据异常';
+        }
+    }
     
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->notifyCheck($_POST);
-    //返回 true false
+   
 
     //微信小程序回调
-    $arr = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+    $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
     $order = $arr->getNotifyOrder();//订单数据array
-    $status = $arr->notifyCheck($order);//验证
+    $status = $pay->notifyCheck($order);//验证
+    //$order['out_trade_no']//平台订单号
+    //$order['transaction_id']//微信订单号
+    if($status){
+    	echo 'success';exit;
+    }
+    
+     //百度小程序回调
+    $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+    $order = $arr->getNotifyOrder();//订单数据array
+    $status = $pay->notifyCheck($order);//验证
+    //$order['tpOrderId']//平台订单号
+    //$order['orderId']//百度订单号
+    //$order['userId']//用户uid
+    if($status){
+    	echo 'success';exit;
+    }
     
      
 ```
