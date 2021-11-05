@@ -36,8 +36,8 @@
     $payName='Byte';//字节
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
 
-    $payName='Weixin';//字节
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
+    $payName='Weixin';//微信
+    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
 ```
 # 百度小程序
