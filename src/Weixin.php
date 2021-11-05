@@ -15,7 +15,6 @@ class Weixin
     private $key_pem;
     private $cert_pem;
     private $openid;
-    private $notifyOrder;
     private $codedUrl = 'https://developer.toutiao.com/api/apps/jscode2session?';
     private $tokenUrl = 'https://developer.toutiao.com/api/apps/v2/token';
     protected $payUrl = 'https://api.mch.weixin.qq.com/pay/unifiedorder'; //支付
@@ -58,7 +57,8 @@ class Weixin
     }
     public function getNotifyOrder()
     {
-        return $this->notifyOrder;
+        $xml = file_get_contents("php://input");
+        return $this->xmlToArray($xml);
     }
     /**
      * 设置订单号 金额 描述
@@ -83,13 +83,15 @@ class Weixin
         $data = $this->arrayToXml($order);
         $xml_data = $this->curl_post($this->payUrl, $data);
         $prepay_id = $this->xmlToArray($xml_data);
-        $this->orderParam = array(
+        $orders = array(
             'appId' => $this->appid, //小程序ID
             'timeStamp' => '' . time() . '', //时间戳
             'nonceStr' => $this->create_nonce_str(), //随机串
             'package' => 'prepay_id=' . $prepay_id['prepay_id'], //数据包
             'signType' => 'MD5' //签名方式
         );
+        $orders['paySign'] = $this->sign($orders);
+        dd($orders);
         return $this;
     }
     /**
@@ -179,12 +181,11 @@ class Weixin
      */
     public function notifyCheck($order)
     {
-        $result = $this->xmlToArray($order);
-        unset($xml_data['sign']);
-        $sign = $this->sign($result); //本地签名
-        if ($result['sign'] == $sign) {
-            if (isset($result['return_code']) && $result['result_code'] == "success") {
-                $this->notifyOrder = $result;
+        $uorder = $order;
+        unset($uorder['sign']);
+        $sign = $this->sign($uorder); //本地签名
+        if ($order['sign'] == $sign) {
+            if (isset($order['return_code']) && $order['return_code'] == "SUCCESS" && $order['result_code'] && $order['result_code'] = "SUCCESS") {
                 return true;
             } else {
                 return false;

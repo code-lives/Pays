@@ -312,5 +312,11 @@
     
     $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->notifyCheck($_POST);
     //返回 true false
+
+    //微信小程序回调
+    $arr = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+    $order = $arr->getNotifyOrder();//订单数据array
+    $status = $arr->notifyCheck($order);//验证
+    
      
 ```
