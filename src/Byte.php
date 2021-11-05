@@ -53,7 +53,7 @@ class Byte
     {
         $order = $_POST;
         $order['msg'] = json_decode($order['msg'], true);
-        return $this->notifyOrder;
+        return $order;
     }
     /**
      * 设置订单号 金额 描述
