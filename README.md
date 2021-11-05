@@ -21,6 +21,13 @@
     - [字节订单查询](#字节订单查询)
     - [字节退款](#字节退款)
 - [异步通知（通用）](#异步通知通用)
+- [微信小程序](#微信小程序)
+    - [Config](#config-2)
+    - [openid](#openid-2)
+    - [解密手机号](#解密手机号-2)
+    - [微信订单查询](#微信订单查询)
+    - [微信退款](#微信退款)
+- [异步通知（通用）](#异步通知通用-1)
 # 安装说明
     php > 5.3
 # 预下单
@@ -232,3 +239,86 @@
      
 ```
 
+
+
+# 微信小程序
+### Config
+ | 参数名字    | 类型   | 必须 | 说明                  |
+ | ----------- | ------ | ---- | --------------------- |
+  | appid       | int | 是   | 小程序appid |
+ | secret       | int | 是   | 小程序secret |
+ | mch_id        | string | 是   | 商户mch_id        |
+ | mch_key        | string | 是   | 商户mch_key        |
+ | notify_url      | string    | 是   | 异步地址        |
+ | cert_pem      | string | 是   | cert_pem证书    |
+ | key_pem      | string | 是   | key_pem证书    |
+
+### openid
+
+```php
+
+    $payName='Weixin';//设置驱动
+    $code="";
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
+    //成功 array
+    //失败 false
+```
+ | 返回参数     | 类型   | 必须 | 说明                                   |
+ | ------------ | ------ | ---- | -------------------------------------- |
+ | session_key    | string | 是   | session_key                  |
+ | openid       | string    | 是   | 用户openid                     |
+ | unionid       | string    | 是   | unionid                     |
+
+
+### 解密手机号
+
+```php
+
+    $payName='Weixin';//设置驱动
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
+    echo $phone['phoneNumber'];
+    // 成功 array
+    // 失败 false
+```
+
+
+### 微信订单查询
+
+```php
+
+    $payName='Weixin';//设置驱动
+    $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+    $data = $Baidu->findOrder("订单号");
+    // 成功 array 【自己看手册】
+    // 失败 false
+```
+
+
+### 微信退款
+ | 参数名字         | 类型   | 必须 | 说明                                                                                               |
+ | ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
+ | out_trade_no            | string | 是   | 平台订单号                                                                                |
+ | out_refund_no            | strging    | 是   | 自定义订单号                                                                                  |
+ | refund_fee      | int    | 是   | 退款金额                                     |
+ | total_fee      | int    | 是   | 订单金额                                      |
+ | refund_desc      | string    | 是   | 退款原因                                      |
+```php
+
+    $order = [
+             'out_trade_no' => '123',
+            'total_fee' => 0.01,
+            'out_refund_no' => time(),
+            'refund_fee' => 0.01,
+        ];
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
+    //返回 成功 返回订单号  否则 false
+
+```
+
+# 异步通知（通用） 
+```php
+    
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->notifyCheck($_POST);
+    //返回 true false
+     
+```

@@ -8,6 +8,7 @@ class Factory
 	static public $instance = [
 		'Baidu' => '\Applet\Pay\Baidu',
 		'Byte' => '\Applet\Pay\Byte',
+		'Weixin' => '\Applet\Pay\Weixin',
 	];
 
 	public static function getInstance($ClassName)

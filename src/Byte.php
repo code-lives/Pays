@@ -2,8 +2,6 @@
 
 namespace Applet\Pay;
 
-use AlibabaCloud\Client\Result\Result;
-
 class Byte
 {
 
@@ -21,6 +19,7 @@ class Byte
     protected $query = 'https://developer.toutiao.com/api/apps/ecpay/v1/query_order';
     protected $refundUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_refund';
     protected $payOrder;
+    private $notifyOrder;
 
     public  function init($config)
     {
@@ -40,9 +39,19 @@ class Byte
         $class->valid_time = isset($config['valid_time']) ? $config['valid_time'] : time() + 900;
         return $class;
     }
+    /**
+     * 获取下单信息
+     */
     public function getParam()
     {
         return $this->payOrder;
+    }
+    /**
+     * 获取异步订单信息
+     */
+    public function getNotifyOrder()
+    {
+        return $this->notifyOrder;
     }
     /**
      * 设置订单号 金额 描述
@@ -136,7 +145,11 @@ class Byte
         ];
         sort($data, SORT_STRING);
         $str = implode('', $data);
-        return !strcmp(sha1($str), $order['msg_signature']);
+        if (!strcmp(sha1($str), $order['msg_signature'])) {
+            $this->notifyOrder = $order;
+            return true;
+        }
+        return false;
     }
     /**
      * 申请退款

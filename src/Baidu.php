@@ -16,6 +16,7 @@ class Baidu
     private $appSecret;
     private $isSkipAudit;
     private $orderParam;
+    private $notifyOrder;
 
     public  function init($config)
     {
@@ -41,6 +42,13 @@ class Baidu
     public function getParam()
     {
         return $this->orderParam;
+    }
+    /**
+     * 获取异步订单信息
+     */
+    public function getNotifyOrder()
+    {
+        return $this->notifyOrder;
     }
     /**
      * 设置订单号 金额 描述
