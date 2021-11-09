@@ -4,16 +4,19 @@ namespace Applet\Pay;
 
 class Factory
 {
+    public static $instance = [
+        'Baidu' => '\Applet\Pay\Baidu',
+        'Byte' => '\Applet\Pay\Byte',
+        'Weixin' => '\Applet\Pay\Weixin',
+        'Kuaishou' => '\Applet\Pay\Kuaishou',
+    ];
 
-	static public $instance = [
-		'Baidu' => '\Applet\Pay\Baidu',
-		'Byte' => '\Applet\Pay\Byte',
-		'Weixin' => '\Applet\Pay\Weixin',
-	];
+    public static function getInstance($ClassName)
+    {
+        if (isset($class[$ClassName])) {
+            return $class[$ClassName];
+        }
 
-	public static function getInstance($ClassName)
-	{
-		if (isset($class[$ClassName])) return $class[$ClassName];
-		return $class[$ClassName] = new self::$instance[$ClassName]();
-	}
+        return $class[$ClassName] = new self::$instance[$ClassName]();
+    }
 }

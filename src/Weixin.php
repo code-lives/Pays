@@ -22,13 +22,24 @@ class Weixin
     protected $refundUrl = 'https://api.mch.weixin.qq.com/secapi/pay/refund'; //退款
     protected $payOrder;
 
-
-    public  function init($config)
+    public function init($config)
     {
-        if (!isset($config['appid']) || empty($config['appid'])) throw new \Exception('not empty appid');
-        if (!isset($config['mch_id']) || empty($config['mch_id'])) throw new \Exception('not empty mch_id');
-        if (!isset($config['notify_url']) || empty($config['notify_url'])) throw new \Exception('not empty notify_url');
-        if (!isset($config['mch_key']) || empty($config['mch_key'])) throw new \Exception('not empty mch_key');
+        if (!isset($config['appid']) || empty($config['appid'])) {
+            throw new \Exception('not empty appid');
+        }
+
+        if (!isset($config['mch_id']) || empty($config['mch_id'])) {
+            throw new \Exception('not empty mch_id');
+        }
+
+        if (!isset($config['notify_url']) || empty($config['notify_url'])) {
+            throw new \Exception('not empty notify_url');
+        }
+
+        if (!isset($config['mch_key']) || empty($config['mch_key'])) {
+            throw new \Exception('not empty mch_key');
+        }
+
         $class = new self();
         $class->secret = $config['secret'];
         $class->appid = $config['appid'];
@@ -65,7 +76,7 @@ class Weixin
      * @param string $rder_no 平台订单号
      * @param int $money 订单金额
      * @param string $title 描述
-     * 
+     *
      */
     public function set($out_trade_no, $total_fee, $title)
     {
@@ -88,7 +99,7 @@ class Weixin
             'timeStamp' => '' . time() . '', //时间戳
             'nonceStr' => $this->create_nonce_str(), //随机串
             'package' => 'prepay_id=' . $prepay_id['prepay_id'], //数据包
-            'signType' => 'MD5' //签名方式
+            'signType' => 'MD5', //签名方式
         );
         $orders['paySign'] = $this->sign($orders);
         dd($orders);
@@ -160,8 +171,8 @@ class Weixin
         return $xml;
     }
     /**
-     * 获取openid 
-     * @param string $code 
+     * 获取openid
+     * @param string $code
      * @return array 成功返回数组 失败为空
      */
     public function getOpenid($code)
@@ -242,8 +253,8 @@ class Weixin
         $headerArr = array("Content-type:application/x-www-form-urlencoded");
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headerArr);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($curl);
@@ -266,7 +277,7 @@ class Weixin
         curl_close($curl);
         return $output;
     }
-    function curl_post_ssl($url, $vars, $second = 30, $aHeader = array())
+    public function curl_post_ssl($url, $vars, $second = 30, $aHeader = array())
     {
         $ch = curl_init();
         //超时时间
@@ -298,9 +309,9 @@ class Weixin
     }
     /**
      * 解密手机号
-     * 
+     *
      * @param string $session_key 前端传递的session_key
-     * @param string $iv 		  前端传递的iv
+     * @param string $iv           前端传递的iv
      * @param string $encryptedData  前端传递的encryptedData
      */
     public function decryptPhone($session_key, $iv, $encryptedData)
@@ -321,7 +332,7 @@ class Weixin
         $result = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
 
         $dataObj = json_decode($result);
-        if ($dataObj == NULL) {
+        if ($dataObj == null) {
             return false;
         }
         if ($dataObj->watermark->appid != $this->appid) {

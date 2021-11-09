@@ -18,15 +18,35 @@ class Baidu
     private $orderParam;
     private $notifyOrder;
 
-    public  function init($config)
+    public function init($config)
     {
-        if (!isset($config['appid']) || empty($config['appid'])) throw new \Exception('not empty appid');
-        if (!isset($config['appkey']) || empty($config['appkey'])) throw new \Exception('not empty appkey');
-        if (!isset($config['payappKey']) || empty($config['payappKey'])) throw new \Exception('not empty payappKey');
-        if (!isset($config['dealId']) || empty($config['dealId'])) throw new \Exception('not empty dealId');
-        if (!isset($config['rsaPriKeyStr']) || empty($config['rsaPriKeyStr'])) throw new \Exception('not empty rsaPriKeyStr');
-        if (!isset($config['rsaPubKeyStr']) || empty($config['rsaPubKeyStr'])) throw new \Exception('not empty rsaPubKeyStr');
-        if (!isset($config['appSecret']) || empty($config['appSecret'])) throw new \Exception('not empty appSecret');
+        if (!isset($config['appid']) || empty($config['appid'])) {
+            throw new \Exception('not empty appid');
+        }
+
+        if (!isset($config['appkey']) || empty($config['appkey'])) {
+            throw new \Exception('not empty appkey');
+        }
+
+        if (!isset($config['payappKey']) || empty($config['payappKey'])) {
+            throw new \Exception('not empty payappKey');
+        }
+
+        if (!isset($config['dealId']) || empty($config['dealId'])) {
+            throw new \Exception('not empty dealId');
+        }
+
+        if (!isset($config['rsaPriKeyStr']) || empty($config['rsaPriKeyStr'])) {
+            throw new \Exception('not empty rsaPriKeyStr');
+        }
+
+        if (!isset($config['rsaPubKeyStr']) || empty($config['rsaPubKeyStr'])) {
+            throw new \Exception('not empty rsaPubKeyStr');
+        }
+
+        if (!isset($config['appSecret']) || empty($config['appSecret'])) {
+            throw new \Exception('not empty appSecret');
+        }
 
         $class = new self();
         $class->appid = $config['appid'];
@@ -55,7 +75,7 @@ class Baidu
      * @param string $rder_no 平台订单号
      * @param int $money 订单金额
      * @param string $title 描述
-     * 
+     *
      */
     public function set($order_no, $money, $title = '')
     {
@@ -80,8 +100,8 @@ class Baidu
         return $result;
     }
     /**
-     * 获取openid 
-     * @param string $code 
+     * 获取openid
+     * @param string $code
      * @return array 成功返回数组 失败为空
      */
     public function getOpenid($code)
@@ -149,8 +169,8 @@ class Baidu
         $headerArr = array("Content-type:application/x-www-form-urlencoded");
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headerArr);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($curl);
@@ -168,9 +188,9 @@ class Baidu
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
         // POST数据
 
@@ -188,9 +208,9 @@ class Baidu
     }
     /**
      * 解密手机号
-     * 
+     *
      * @param string $session_key 前端传递的session_key
-     * @param string $iv 		  前端传递的iv
+     * @param string $iv           前端传递的iv
      * @param string $ciphertext  前端传递的ciphertext
      */
     public function decryptPhone($session_key, $iv, $ciphertext)
@@ -319,8 +339,7 @@ class Baidu
 
         $pubKey = openssl_pkey_get_public($rsaPubKeyPem);
 
-        $result = (bool)openssl_verify($str, $sign, $pubKey);
-
+        $result = (bool) openssl_verify($str, $sign, $pubKey);
 
         return $result;
     }

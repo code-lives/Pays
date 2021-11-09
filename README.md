@@ -2,7 +2,8 @@
 # 进行中 （勿使用2021-11-8）
 # 目录、微信小程序、字节小程序、百度小程序
 - [小程序集合（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）](#小程序集合支付手机号解密获取token支付异步通知退款订单查询)
-- [目录](#目录)
+- [进行中 （勿使用2021-11-8）](#进行中-勿使用2021-11-8)
+- [目录、微信小程序、字节小程序、百度小程序](#目录微信小程序字节小程序百度小程序)
 - [安装说明](#安装说明)
 - [预下单](#预下单)
 - [百度小程序](#百度小程序)
@@ -25,6 +26,12 @@
     - [微信解密手机号](#微信解密手机号)
     - [微信订单查询](#微信订单查询)
     - [微信退款](#微信退款)
+- [快手小程序](#快手小程序)
+    - [Config](#config-3)
+    - [openid](#openid-3)
+    - [快手解密手机号](#快手解密手机号)
+    - [快手订单查询](#快手订单查询)
+    - [快手退款](#快手退款)
 - [异步通知（通用）](#异步通知通用)
 # 安装说明
     php > 5.3
@@ -306,7 +313,76 @@
 
 ```
 
-# 异步通知（通用） 
+# 快手小程序
+### Config
+ | 参数名字    | 类型   | 必须 | 说明                  |
+ | ----------- | ------ | ---- | --------------------- |
+  | app_id       | int | 是   | 小程序appid |
+ | app_secret       | int | 是   | 小程序secret |
+ | notify_url        | string | 是   | 回调地址        |
+
+### openid
+
+```php
+
+    $payName='Kuaishou';//设置驱动
+    $code="";
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
+
+```
+ | 返回参数     | 类型   | 必须 | 说明                                   |
+ | ------------ | ------ | ---- | -------------------------------------- |
+ | session_key    | string | 是   | session_key                  |
+ | open_id       | string    | 是   | 用户open_id                  |
+ | result       | string    | 是   | 状态 1是成功                     |
+
+
+### 快手解密手机号
+
+```php
+
+    $payName='Kuaishou';//设置驱动
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
+    echo $phone['phoneNumber'];
+    // 成功 array
+    // 失败 false
+```
+
+
+### 快手订单查询
+
+```php
+
+    $payName='Kuaishou';//设置驱动
+    $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+    $data = $Baidu->findOrder("订单号",$access_token);
+    // 成功 array 【自己看手册】
+```
+
+
+### 快手退款
+ | 参数名字         | 类型   | 必须 | 说明                                                                                               |
+ | ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
+ | out_trade_no            | string | 是   | 平台订单号                                                                                |
+ | out_refund_no            | strging    | 是   | 自定义订单号                                                                                  |
+ | refund_fee      | int    | 是   | 退款金额                                     |
+ | refund_amount      | int    | 是   | 退款金额                                      |
+ | reason      | string    | 是   | 退款原因                                      |
+| attach      | string    | 否   | 自定义                                      |
+```php
+
+    $orders = [
+            'out_order_no' => $order['out_order_no'],
+            'out_refund_no' => $order['out_refund_no'],
+            'reason' => $order['reason'],
+            'attach' => $order['attach'],
+        ];
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
+    //返回 成功
+
+```
+
+# 异步通知（通用）
 ```php
     字节
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
@@ -328,8 +404,8 @@
                 return '数据异常';
         }
     }
-    
-   
+
+
 
     //微信小程序回调
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
@@ -340,17 +416,29 @@
     if($status){
     	echo 'success';exit;
     }
-    
+
      //百度小程序回调
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
-    $order = $arr->getNotifyOrder();//订单数据array
-    $status = $pay->notifyCheck($order);//验证
-    //$order['tpOrderId']//平台订单号
-    //$order['orderId']//百度订单号
-    //$order['userId']//用户uid
+    $status = $pay->notifyCheck($request->all());//验证
+    //request 里面['tpOrderId']//平台订单号
+    //request 里面['orderId']//百度订单号
+    //request 里面['userId']//用户uid
     if($status){
     	echo 'success';exit;
     }
-    
-     
+    //快手小程序
+    //1.想获取headerd 里面的kwaisign
+    //2.获取json字符串 $request->getContent();这个是laravel 方法
+    $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+
+    $status = $pay->notifyCheck($json_string,$kwaisign);//验证
+    if($status){
+        $order = $arr->getNotifyOrder();//订单数据array
+        //$order['out_order_no']//平台订单号
+        if($status){
+            echo json_encode(['result' => 1, 'message_id' => $data['message_id']]);exit;
+        }
+    }
+
+
 ```
