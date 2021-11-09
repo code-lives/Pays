@@ -427,7 +427,7 @@
     	echo 'success';exit;
     }
     //快手小程序
-    //1.想获取headerd 里面的kwaisign
+    //1.想获取header 里面的kwaisign
     //2.获取json字符串 $request->getContent();这个是laravel 方法
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
 
