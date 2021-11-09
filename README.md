@@ -423,7 +423,7 @@
     }
 
 ```
-## /百度小程序回调
+## 百度小程序回调
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
@@ -436,7 +436,7 @@
     }
 
 ```
-## 快手小程序
+## 快手小程序回调
 ```php
 
     //1.想获取header 里面的kwaisign
