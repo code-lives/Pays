@@ -1,5 +1,5 @@
 # 小程序集合（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）
-# 进行中 （勿使用2021-11-8）
+# 进行中 （可以先试用 微信和快手，百度和字节测试中 记得Fork下）
 # 目录、微信小程序、字节小程序、百度小程序
 - [小程序集合（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）](#小程序集合支付手机号解密获取token支付异步通知退款订单查询)
 - [进行中 （勿使用2021-11-8）](#进行中-勿使用2021-11-8)
@@ -32,7 +32,11 @@
     - [快手解密手机号](#快手解密手机号)
     - [快手订单查询](#快手订单查询)
     - [快手退款](#快手退款)
-- [异步通知（通用）](#异步通知通用)
+- [异步通知](#异步通知)
+  - [字节](#字节)
+  - [微信小程序回调](#微信小程序回调)
+  - [/百度小程序回调](#百度小程序回调)
+  - [快手小程序](#快手小程序-1)
 # 安装说明
     php > 5.3
 # 预下单
@@ -382,10 +386,10 @@
 
 ```
 
-# 异步通知（通用）
+# 异步通知
+##  字节
 ```php
-    字节
-    $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+    $pay = \Applet\Pay\Factory::getInstance('Byte')->init($config);
     $order = $arr->getNotifyOrder();//订单数据array
     $status = $pay->notifyCheck($order);//验证
     //$order['cp_orderno'];//平台订单号
@@ -405,9 +409,10 @@
         }
     }
 
+```
+## 微信小程序回调
+```php
 
-
-    //微信小程序回调
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
     $order = $arr->getNotifyOrder();//订单数据array
     $status = $pay->notifyCheck($order);//验证
@@ -417,8 +422,11 @@
     	echo 'success';exit;
     }
 
-     //百度小程序回调
-    $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+```
+## /百度小程序回调
+```php
+
+    $pay = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
     $status = $pay->notifyCheck($request->all());//验证
     //request 里面['tpOrderId']//平台订单号
     //request 里面['orderId']//百度订单号
@@ -426,10 +434,14 @@
     if($status){
     	echo 'success';exit;
     }
-    //快手小程序
+
+```
+## 快手小程序
+```php
+
     //1.想获取header 里面的kwaisign
     //2.获取json字符串 $request->getContent();这个是laravel 方法
-    $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+    $pay = \Applet\Pay\Factory::getInstance('Kuaishou')->init($config);
 
     $status = $pay->notifyCheck($json_string,$kwaisign);//验证
     if($status){
