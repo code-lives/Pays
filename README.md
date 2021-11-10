@@ -35,7 +35,7 @@
 - [异步通知](#异步通知)
   - [字节](#字节)
   - [微信小程序回调](#微信小程序回调)
-  - [/百度小程序回调](#百度小程序回调)
+  - [百度小程序回调](#百度小程序回调)
   - [快手小程序](#快手小程序-1)
 # 安装说明
     php > 5.3
@@ -433,14 +433,14 @@
     }
 
 ```
-## /百度小程序回调
+## 百度小程序回调
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
     $status = $pay->notifyCheck($request->all());//验证
-    //request 里面['tpOrderId']//平台订单号
-    //request 里面['orderId']//百度订单号
-    //request 里面['userId']//用户uid
+    //$request->tpOrderId//平台订单号
+    //$request->orderId//百度订单号
+    //$request->userId//用户uid
     if($status){
     	echo 'success';exit;
     }
