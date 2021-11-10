@@ -457,9 +457,9 @@
     if($status){
         $order = $arr->getNotifyOrder();//订单数据array
         //$order['out_order_no']//平台订单号
-        if($status){
-            echo json_encode(['result' => 1, 'message_id' => $data['message_id']]);exit;
-        }
+
+        echo json_encode(['result' => 1, 'message_id' => $data['message_id']]);exit;
+
     }
 
 
