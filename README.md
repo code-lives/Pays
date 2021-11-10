@@ -51,6 +51,9 @@
     $payName='Weixin';//微信
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
+    $payName='Kuaishou';//快手
+    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid', 'access_token')->getParam();
+
 ```
 # 百度小程序
 ### Config
