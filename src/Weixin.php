@@ -102,7 +102,6 @@ class Weixin
             'signType' => 'MD5', //签名方式
         );
         $orders['paySign'] = $this->sign($orders);
-        dd($orders);
         return $this;
     }
     /**

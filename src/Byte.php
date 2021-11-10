@@ -69,9 +69,7 @@ class Byte
      */
     public function getNotifyOrder()
     {
-        $order = $_POST;
-        $order['msg'] = json_decode($order['msg'], true);
-        return $order;
+        return $this->notifyOrder;
     }
     /**
      * 设置订单号 金额 描述
@@ -158,11 +156,12 @@ class Byte
     }
     /**
      * 异步回调
-     * @param array $order 回调数据
+     * @param  $order 回调数据
      * @return bool true   验签通过|false 验签不通过
      */
     public function notifyCheck($order)
     {
+
         $data = [
             $order['timestamp'],
             $order['nonce'],
@@ -172,6 +171,8 @@ class Byte
         sort($data, SORT_STRING);
         $str = implode('', $data);
         if (!strcmp(sha1($str), $order['msg_signature'])) {
+            $order['msg'] = json_decode($order['msg'], true);
+            $this->notifyOrder = $order;
             return true;
         }
         return false;
@@ -185,12 +186,8 @@ class Byte
         $order['notify_url'] = $this->notify_url;
         $order['app_id'] = $this->app_id;
         $order['refund_amount'] *= 100;
-        $result = json_decode($this->curl_post($this->refundUrl, json_encode(['sign' => $this->sign($order)] + $order)));
-        if (isset($result['err_no']) && $result['err_no'] == 0) {
-            return $result['refund_no'];
-        } else {
-            return false;
-        }
+        return json_decode($this->curl_post($this->refundUrl, json_encode(['sign' => $this->sign($order)] + $order)), true);
+
     }
     /**
      * 订单查询

@@ -1,5 +1,5 @@
 # 小程序集合（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）
-# 进行中 （可以先试用 微信和快手，百度和字节测试中 记得Fork下）
+# 进行中 （勿使用2021-11-8）
 # 目录、微信小程序、字节小程序、百度小程序
 - [小程序集合（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）](#小程序集合支付手机号解密获取token支付异步通知退款订单查询)
 - [进行中 （勿使用2021-11-8）](#进行中-勿使用2021-11-8)
@@ -239,7 +239,9 @@
             'refund_amount' => 1, //退款金额，单位[分]
         ];
     $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
-    //返回 成功 返回订单号  否则 false
+    //返回  [err_no] => 1
+    //     [err_tips] => 成功
+    //     [refund_no] => 1212
 
 ```
 
@@ -390,19 +392,27 @@
 ##  字节
 ```php
     $pay = \Applet\Pay\Factory::getInstance('Byte')->init($config);
-    $order = $arr->getNotifyOrder();//订单数据array
-    $status = $pay->notifyCheck($order);//验证
-    //$order['cp_orderno'];//平台订单号
-    if($status){
-    	switch ($order['type']) {
+    $check = $pay->notifyCheck($request->all()); //验证
+    if ($check) {
+        $orderSn = $pay->getNotifyOrder(); //订单数据array
+        switch ($orderSn['type']) {
             case 'payment': // 支付相关回调
-                echo json_encode(['err_no' => 0, 'err_tips' => 'success']); // 操作成功需要给头条返回的信息
+                /**
+                 *业务处理
+                */
+                echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
                 break;
             case 'refund': // 退款相关回调
-                echo json_encode(['err_no' => 0, 'err_tips' => 'success']); // 操作成功需要给头条返回的信息
+                /**
+                 *业务处理
+                */
+                echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
                 break;
             case 'settle': // 分账相关回调
-                echo json_encode(['err_no' => 0, 'err_tips' => 'success']); // 操作成功需要给头条返回的信息
+                /**
+                 *业务处理
+                */
+                echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
                 break;
             default: // 未知数据
                 return '数据异常';
@@ -423,7 +433,7 @@
     }
 
 ```
-## 百度小程序回调
+## /百度小程序回调
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
@@ -436,7 +446,7 @@
     }
 
 ```
-## 快手小程序回调
+## 快手小程序
 ```php
 
     //1.想获取header 里面的kwaisign
