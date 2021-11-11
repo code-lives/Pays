@@ -83,8 +83,9 @@ class Baidu
         $this->orderParam['tpOrderId'] = $order_no;
         $this->orderParam['dealId'] = $this->dealId;
         $this->orderParam['appKey'] = $this->payappKey;
-        $this->orderParam['dealTitle'] = $title;
+
         $sign = self::sign($this->orderParam, $this->rsaPriKeyStr);
+        $this->orderParam['dealTitle'] = $title;
         $this->orderParam['rsaSign'] = $sign;
         $this->orderParam['signFieldsRange'] = $this->signFieldsRange;
         return $this;
