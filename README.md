@@ -451,17 +451,13 @@
 ## 快手小程序
 ```php
 
-    //1.想获取header 里面的kwaisign
-    //2.获取json字符串 $request->getContent();这个是laravel 方法
     $pay = \Applet\Pay\Factory::getInstance('Kuaishou')->init($config);
-    $status = $pay->notifyCheck($json_string,$kwaisign);//验证
-    if($status){
-        $order = $arr->getNotifyOrder();//订单数据array
-        //$order['out_order_no']//平台订单号
-
-        echo json_encode(['result' => 1, 'message_id' => $data['message_id']]);exit;
-
-    }
+        $order = $pay->getNotifyOrder(); //订单数据array
+        $status = $pay->notifyCheck(); //验证
+        if ($status) {
+            //$order['out_order_no']//平台订单号
+            echo json_encode(['result' => 1, 'message_id' => $order['message_id']]);exit;
+        }
 
 
 ```
