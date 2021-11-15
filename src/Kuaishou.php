@@ -46,6 +46,8 @@ class Kuaishou
      */
     public function getNotifyOrder()
     {
+        $bodyData = file_get_contents("php://input");
+        $this->notifyOrder = json_decode($bodyData, true);
         return $this->notifyOrder;
     }
     /**
@@ -155,12 +157,11 @@ class Kuaishou
      * @param string $kwaisign sign
      * @return bool true   验签通过|false 验签不通过
      */
-    public function notifyCheck($order, $kwaisign)
+    public function notifyCheck()
     {
-        if (md5($order . $this->app_secret) != $kwaisign) {
+        if (md5(json_encode($this->notifyOrder) . $this->app_secret) != $_SERVER['HTTP_KWAISIGN']) {
             return false;
         }
-        $this->notifyOrder = json_decode($order, true);
         return true;
     }
     /**
