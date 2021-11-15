@@ -48,7 +48,8 @@
     $payName='Byte';//字节
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
 
-    $payName='Weixin';//微信
+    $payName='Weixin';//微信 特殊一点 需要加openid
+    $config['openid'] = $openid;
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
     $payName='Kuaishou';//快手
@@ -427,7 +428,7 @@
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
-    $order = $arr->getNotifyOrder();//订单数据array
+    $order = $pay->getNotifyOrder();//订单数据array
     $status = $pay->notifyCheck($order);//验证
     //$order['out_trade_no']//平台订单号
     //$order['transaction_id']//微信订单号
@@ -455,7 +456,6 @@
     //1.想获取header 里面的kwaisign
     //2.获取json字符串 $request->getContent();这个是laravel 方法
     $pay = \Applet\Pay\Factory::getInstance('Kuaishou')->init($config);
-
     $status = $pay->notifyCheck($json_string,$kwaisign);//验证
     if($status){
         $order = $arr->getNotifyOrder();//订单数据array
