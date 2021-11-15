@@ -94,14 +94,14 @@ class Weixin
         $data = $this->arrayToXml($order);
         $xml_data = $this->curl_post($this->payUrl, $data);
         $prepay_id = $this->xmlToArray($xml_data);
-        $orders = array(
+        $this->orderParam = array(
             'appId' => $this->appid, //小程序ID
             'timeStamp' => '' . time() . '', //时间戳
             'nonceStr' => $this->create_nonce_str(), //随机串
             'package' => 'prepay_id=' . $prepay_id['prepay_id'], //数据包
             'signType' => 'MD5', //签名方式
         );
-        $orders['paySign'] = $this->sign($orders);
+        $this->orderParam['paySign'] = $this->sign($this->orderParam);
         return $this;
     }
     /**
