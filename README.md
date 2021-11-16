@@ -20,6 +20,7 @@
     - [字节退款](#字节退款)
 - [微信小程序](#微信小程序)
     - [Config](#config-2)
+    - [token](#token-2)
     - [openid](#openid-2)
     - [微信解密手机号](#微信解密手机号)
     - [微信订单查询](#微信订单查询)
@@ -258,6 +259,19 @@
  | notify_url      | string    | 是   | 异步地址        |
  | cert_pem      | string | 是   | cert_pem证书    |
  | key_pem      | string | 是   | key_pem证书    |
+
+### token
+```php
+
+    $payName='Weixin';//驱动
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
+    //成功 array
+    //失败 false
+```
+ | 返回参数     | 类型   | 必须 | 说明                                   |
+ | ------------ | ------ | ---- | -------------------------------------- |
+ | expires_in    | string | 是   | 凭证有效时间，单位：秒                   |
+ | access_token       | string    | 是   | 获取到的凭证                     |
 
 ### openid
 
