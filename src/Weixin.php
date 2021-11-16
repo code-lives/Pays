@@ -15,8 +15,8 @@ class Weixin
     private $key_pem;
     private $cert_pem;
     private $openid;
-    private $codedUrl = 'https://developer.toutiao.com/api/apps/jscode2session?';
-    private $tokenUrl = 'https://developer.toutiao.com/api/apps/v2/token';
+    private $codedUrl = 'https://api.weixin.qq.com/sns/jscode2session?';
+    private $tokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=';
     protected $payUrl = 'https://api.mch.weixin.qq.com/pay/unifiedorder'; //支付
     protected $query = 'https://api.mch.weixin.qq.com/pay/orderquery'; //查询
     protected $refundUrl = 'https://api.mch.weixin.qq.com/secapi/pay/refund'; //退款
@@ -170,13 +170,22 @@ class Weixin
         return $xml;
     }
     /**
+     * 获取token
+     */
+    public function getToken()
+    {
+        $url = $this->tokenUrl . $this->appid . "&secret=" . $this->secret;
+        $result = json_decode($this->curl_get($url), true);
+        return $result;
+    }
+    /**
      * 获取openid
      * @param string $code
      * @return array 成功返回数组 失败为空
      */
     public function getOpenid($code)
     {
-        $url = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $this->app_id . "&secret=" . $this->secret . "&js_code=" . $code . "&grant_type=authorization_code";
+        $url = $this->codedUrl . "?appid=" . $this->app_id . "&secret=" . $this->secret . "&js_code=" . $code . "&grant_type=authorization_code";
         $result = json_decode($this->curl_get($url), true);
         if (isset($result['openid'])) {
             return $result;
