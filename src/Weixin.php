@@ -185,7 +185,7 @@ class Weixin
      */
     public function getOpenid($code)
     {
-        $url = $this->codedUrl . "?appid=" . $this->app_id . "&secret=" . $this->secret . "&js_code=" . $code . "&grant_type=authorization_code";
+        $url = $this->codedUrl . "?appid=" . $this->appid . "&secret=" . $this->secret . "&js_code=" . $code . "&grant_type=authorization_code";
         $result = json_decode($this->curl_get($url), true);
         if (isset($result['openid'])) {
             return $result;
