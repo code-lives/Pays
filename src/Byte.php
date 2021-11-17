@@ -13,7 +13,7 @@ class Byte
     private $valid_time;
     private $notify_url;
     private $token;
-    private $codedUrl = 'https://developer.toutiao.com/api/apps/v2/jscode2session?';
+    private $codedUrl = 'https://developer.toutiao.com/api/apps/jscode2session?';
     private $tokenUrl = 'https://developer.toutiao.com/api/apps/v2/token';
     protected $payUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_order';
     protected $query = 'https://developer.toutiao.com/api/apps/ecpay/v1/query_order';
@@ -150,18 +150,12 @@ class Byte
      */
     public function getOpenid($code, $anonymous_code)
     {
-        $arr = [
-            'appid' => $this->app_id,
-            'secret' => $this->secret,
-            'code' => $code,
-            'anonymous_code' => $anonymous_code,
-        ];
-        $result = json_decode($this->curl_post($this->codedUrl, json_encode($arr)), true);
-        if (isset($result['err_no']) && $result['err_tips'] == "success") {
-            return $result['data'];
-        } else {
-            return false;
+        $url = $this->codedUrl . "appid=" . $this->app_id . "&secret=" . $this->secret . "&code=" . $code . "&anonymous_code=" . $anonymous_code;
+        $result = json_decode($this->curl_get($url), true);
+        if ($result['error'] == 0) {
+            return $result;
         }
+        return false;
     }
     /**
      * 异步回调
@@ -222,7 +216,6 @@ class Byte
     }
     protected static function curl_get($url)
     {
-
         $headerArr = array("Content-type:application/x-www-form-urlencoded");
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
