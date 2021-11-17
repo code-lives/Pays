@@ -13,7 +13,7 @@ class Byte
     private $valid_time;
     private $notify_url;
     private $token;
-    private $codedUrl = 'https://developer.toutiao.com/api/apps/jscode2session?';
+    private $codedUrl = 'https://developer.toutiao.com/api/apps/v2/jscode2session?';
     private $tokenUrl = 'https://developer.toutiao.com/api/apps/v2/token';
     protected $payUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_order';
     protected $query = 'https://developer.toutiao.com/api/apps/ecpay/v1/query_order';
@@ -141,18 +141,27 @@ class Byte
         }
     }
     /**
-     * 获取openid
-     * @param string $code
-     * @return array 成功返回数组 失败为空
+     * 获取 openid
+     *
+     * @param  string $code
+     * @param  string $anonymous_code
+     * @return void
+     * @author LiJie
      */
-    public function getOpenid($code)
+    public function getOpenid($code, $anonymous_code)
     {
-        $url = $this->codedUrl . "appid=" . $this->app_id . "&secret=" . $this->secret . "&code=" . $code;
-        $result = json_decode($this->curl_get($url), true);
-        if (!isset($result['openid'])) {
+        $arr = [
+            'appid' => $this->app_id,
+            'secret' => $this->secret,
+            'code' => $code,
+            'anonymous_code' => $anonymous_code,
+        ];
+        $result = json_decode($this->curl_post($this->codedUrl, json_encode($arr)), true);
+        if (isset($result['err_no']) && $result['err_tips'] == "success") {
+            return $result['data'];
+        } else {
             return false;
         }
-        return $result;
     }
     /**
      * 异步回调
@@ -213,6 +222,7 @@ class Byte
     }
     protected static function curl_get($url)
     {
+
         $headerArr = array("Content-type:application/x-www-form-urlencoded");
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
