@@ -28,24 +28,16 @@ class Weixin
             throw new \Exception('not empty appid');
         }
 
-        if (!isset($config['mch_id']) || empty($config['mch_id'])) {
-            throw new \Exception('not empty mch_id');
-        }
-
-        if (!isset($config['notify_url']) || empty($config['notify_url'])) {
-            throw new \Exception('not empty notify_url');
-        }
-
-        if (!isset($config['mch_key']) || empty($config['mch_key'])) {
-            throw new \Exception('not empty mch_key');
+        if (!isset($config['secret']) || empty($config['secret'])) {
+            throw new \Exception('not empty secret');
         }
 
         $class = new self();
         $class->secret = $config['secret'];
         $class->appid = $config['appid'];
-        $class->mch_id = $config['mch_id'];
-        $class->mch_key = $config['mch_key'];
-        $class->notify_url = $config['notify_url'];
+        $class->mch_id = isset($config['mch_id']) ? $config['mch_id'] : "";
+        $class->mch_key = isset($config['mch_key']) ? $config['mch_key'] : "";
+        $class->notify_url = isset($config['notify_url']) ? $config['notify_url'] : "";
         $class->trade_type = isset($config['trade_type']) ? $config['trade_type'] : "JSAPI";
         $class->key_pem = isset($config['key_pem']) ? $config['key_pem'] : "";
         $class->cert_pem = isset($config['cert_pem']) ? $config['cert_pem'] : "";
@@ -185,13 +177,9 @@ class Weixin
      */
     public function getOpenid($code)
     {
-        $url = $this->codedUrl . "?appid=" . $this->appid . "&secret=" . $this->secret . "&js_code=" . $code . "&grant_type=authorization_code";
+        $url = $this->codedUrl . "appid=" . $this->appid . "&secret=" . $this->secret . "&js_code=" . $code . "&grant_type=authorization_code";
         $result = json_decode($this->curl_get($url), true);
-        if (isset($result['openid'])) {
-            return $result;
-        } else {
-            return false;
-        }
+        return $result;
     }
     /**
      * 异步回调
