@@ -69,6 +69,10 @@ class Byte
      */
     public function getNotifyOrder()
     {
+        $data = file_get_contents("php://input");
+        $order = json_decode($data, true);
+        $order['msg'] = json_decode($order['msg'], true);
+        $this->notifyOrder = $order;
         return $this->notifyOrder;
     }
     /**
@@ -162,20 +166,19 @@ class Byte
      * @param  $order 回调数据
      * @return bool true   验签通过|false 验签不通过
      */
-    public function notifyCheck($order)
+    public function notifyCheck()
     {
-
+        $order = $this->getNotifyOrder();
         $data = [
             $order['timestamp'],
             $order['nonce'],
-            $order['msg'],
+            json_encode($order['msg']),
             $this->token,
         ];
+
         sort($data, SORT_STRING);
         $str = implode('', $data);
         if (!strcmp(sha1($str), $order['msg_signature'])) {
-            $order['msg'] = json_decode($order['msg'], true);
-            $this->notifyOrder = $order;
             return true;
         }
         return false;
