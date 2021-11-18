@@ -47,9 +47,8 @@
     $payName='Byte';//字节
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
 
-    $payName='Weixin';//微信 特殊一点 需要加openid
-    $config['openid'] = $openid;
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
+    $payName='Weixin';//微信
+    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
 
     $payName='Kuaishou';//快手
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid', 'access_token')->getParam();
