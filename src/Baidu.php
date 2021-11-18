@@ -28,35 +28,15 @@ class Baidu
             throw new \Exception('not empty appkey');
         }
 
-        if (!isset($config['payappKey']) || empty($config['payappKey'])) {
-            throw new \Exception('not empty payappKey');
-        }
-
-        if (!isset($config['dealId']) || empty($config['dealId'])) {
-            throw new \Exception('not empty dealId');
-        }
-
-        if (!isset($config['rsaPriKeyStr']) || empty($config['rsaPriKeyStr'])) {
-            throw new \Exception('not empty rsaPriKeyStr');
-        }
-
-        if (!isset($config['rsaPubKeyStr']) || empty($config['rsaPubKeyStr'])) {
-            throw new \Exception('not empty rsaPubKeyStr');
-        }
-
-        if (!isset($config['appSecret']) || empty($config['appSecret'])) {
-            throw new \Exception('not empty appSecret');
-        }
-
         $class = new self();
         $class->appid = $config['appid'];
         $class->appKey = $config['appkey'];
-        $class->payappKey = $config['payappKey'];
+        $class->payappKey = isset($config['payappKey']) ? $config['payappKey'] : '';
         $class->isSkipAudit = isset($config['isSkipAudit']) ? $config['isSkipAudit'] : 0;
-        $class->dealId = $config['dealId'];
-        $class->rsaPriKeyStr = $config['rsaPriKeyStr'];
-        $class->rsaPubKeyStr = $config['rsaPubKeyStr'];
-        $class->appSecret = $config['appSecret'];
+        $class->dealId = isset($config['dealId']) ? $config['dealId'] : '';
+        $class->rsaPriKeyStr = isset($config['rsaPriKeyStr']) ? $config['rsaPriKeyStr'] : '';
+        $class->rsaPubKeyStr = isset($config['rsaPubKeyStr']) ? $config['rsaPubKeyStr'] : '';
+        $class->appSecret = isset($config['appSecret']) ? $config['appSecret'] : '';
         return $class;
     }
     public function getParam()
@@ -68,6 +48,7 @@ class Baidu
      */
     public function getNotifyOrder()
     {
+        $this->notifyOrder = $_POST;
         return $this->notifyOrder;
     }
     /**
@@ -117,12 +98,11 @@ class Baidu
     }
     /**
      * @desc 异步回调
-     * @param array data 回调参数$_POST
      * @return bool true 验签通过|false 验签不通过
      */
-    public function notifyCheck($data)
+    public function notifyCheck()
     {
-        return self::checkSign($data, $this->rsaPubKeyStr);
+        return self::checkSign($this->getNotifyOrder(), $this->rsaPubKeyStr);
     }
     /**
      * 申请退款
