@@ -41,7 +41,6 @@ class Weixin
         $class->trade_type = isset($config['trade_type']) ? $config['trade_type'] : "JSAPI";
         $class->key_pem = isset($config['key_pem']) ? $config['key_pem'] : "";
         $class->cert_pem = isset($config['cert_pem']) ? $config['cert_pem'] : "";
-        $class->openid = isset($config['openid']) ? $config['openid'] : "";
 
         return $class;
     }
@@ -68,9 +67,10 @@ class Weixin
      * @param string $rder_no 平台订单号
      * @param int $money 订单金额
      * @param string $title 描述
+     * @param string $openid 描述
      *
      */
-    public function set($out_trade_no, $total_fee, $title)
+    public function set($out_trade_no, $total_fee, $title, $openid)
     {
         $order['appid'] = $this->appid;
         $order['mch_id'] = $this->mch_id;
@@ -80,7 +80,7 @@ class Weixin
         $order['out_trade_no'] = $out_trade_no;
         $order['total_fee'] = $total_fee * 100;
         $order['notify_url'] = $this->notify_url;
-        $order['openid'] = $this->openid; //设置用户openid
+        $order['openid'] = $openid; //设置用户openid
         $order['spbill_create_ip'] = $_SERVER['REMOTE_ADDR'];
         $order['sign'] = $this->sign($order);
         $data = $this->arrayToXml($order);
@@ -186,8 +186,9 @@ class Weixin
      * @param array $order 回调数据
      * @return bool true   验签通过|false 验签不通过
      */
-    public function notifyCheck($order)
+    public function notifyCheck()
     {
+        $order = $this->getNotifyOrder();
         $uorder = $order;
         unset($uorder['sign']);
         $sign = $this->sign($uorder); //本地签名
