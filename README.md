@@ -408,9 +408,9 @@
 ##  字节
 ```php
     $pay = \Applet\Pay\Factory::getInstance('Byte')->init($config);
-    $check = $pay->notifyCheck($request->all()); //验证
-    if ($check) {
-        $orderSn = $pay->getNotifyOrder(); //订单数据array
+    $status = $pay->notifyCheck(); //验证
+    if ($status) {
+        $orderSn = $pay->getNotifyOrder(); //订单数据$orderSn['msg']['cp_orderno'] $orderSn['msg']['seller_uid']
         switch ($orderSn['type']) {
             case 'payment': // 支付相关回调
                 /**
@@ -440,12 +440,13 @@
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
-    $order = $pay->getNotifyOrder();//订单数据array
-    $status = $pay->notifyCheck($order);//验证
-    //$order['out_trade_no']//平台订单号
-    //$order['transaction_id']//微信订单号
+
+    $status = $pay->notifyCheck();//验证
     if($status){
-    	echo 'success';exit;
+        $order = $pay->getNotifyOrder();//订单数据
+        //$order['out_trade_no']//平台订单号
+        //$order['transaction_id']//微信订单号
+        echo 'success';exit;
     }
 
 ```
@@ -453,12 +454,13 @@
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
-    $status = $pay->notifyCheck($request->all());//验证
-    //$request->tpOrderId//平台订单号
-    //$request->orderId//百度订单号
-    //$request->userId//用户uid
+    $status = $pay->notifyCheck();//验证
     if($status){
-    	echo 'success';exit;
+        $order = $pay->getNotifyOrder();
+        //$order['tpOrderId']
+        //$order['orderId']
+        //$order['userId']
+        echo 'success';exit;
     }
 
 ```
@@ -466,9 +468,10 @@
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Kuaishou')->init($config);
-        $order = $pay->getNotifyOrder(); //订单数据array
+
         $status = $pay->notifyCheck(); //验证
         if ($status) {
+             $order = $pay->getNotifyOrder(); //订单数据
             //$order['out_order_no']//平台订单号
             echo json_encode(['result' => 1, 'message_id' => $order['message_id']]);exit;
         }
