@@ -37,7 +37,7 @@
   - [百度小程序回调](#百度小程序回调)
   - [快手小程序](#快手小程序-1)
 # 安装说明
-    php > 5.3
+    composer require code-lives/applet-pays 1.0
 # 预下单
 ```php
 
