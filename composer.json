@@ -3,7 +3,7 @@
     "description": "微信小程序、字节小程序、百度小程序集合（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）",
     "type": "library",
     "license": "MIT",
-    "version":"3.0",
+    "version":"1.0",
     "authors": [
         {
             "name": "code-lives",
