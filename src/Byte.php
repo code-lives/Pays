@@ -12,12 +12,14 @@ class Byte
     private $salt;
     private $valid_time;
     private $notify_url;
+    private $settle_url;
     private $token;
     private $codedUrl = 'https://developer.toutiao.com/api/apps/jscode2session?';
     private $tokenUrl = 'https://developer.toutiao.com/api/apps/v2/token';
     protected $payUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_order';
     protected $query = 'https://developer.toutiao.com/api/apps/ecpay/v1/query_order';
     protected $refundUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_refund';
+    protected $settle = 'https://developer.toutiao.com/api/apps/ecpay/v1/settle';
     protected $payOrder;
     private $notifyOrder;
 
@@ -53,6 +55,7 @@ class Byte
         $class->token = $config['token'];
         $class->merchant_id = $config['merchant_id'];
         $class->salt = $config['salt'];
+        $class->settle_url = isset($config['settle_url']) ? $config['settle_url'] : $config['notify_url'];
         $class->notify_url = $config['notify_url'];
         $class->valid_time = isset($config['valid_time']) ? $config['valid_time'] : time() + 900;
         return $class;
@@ -88,7 +91,7 @@ class Byte
         $this->orderParam['total_amount'] = $money * 100;
         $this->orderParam['subject'] = $title;
         $this->orderParam['body'] = $desc;
-        $this->orderParam['notify2_url'] = $this->notify_url;
+        $this->orderParam['notify_url'] = $this->notify_url;
         $this->orderParam['valid_time'] = $this->valid_time;
         $this->orderParam['app_id'] = $this->app_id;
         $data = json_encode(['sign' => $this->sign($this->orderParam)] + $this->orderParam);
@@ -217,6 +220,65 @@ class Byte
             return false;
         }
     }
+    /**
+     * 分账
+     *
+     * @param  [type] $order
+     * @return void
+     * @author LiJie
+     */
+    public function settle($order)
+    {
+        $data = [
+            'app_id' => $this->app_id,
+            'out_settle_no' => $order['out_settle_no'],
+            'out_order_no' => $order['out_order_no'],
+            'settle_desc' => $order['settle_desc'],
+            'notify_url' => $this->notify_url,
+            'cp_extra' => $order['cp_extra'],
+        ];
+        $data['sign'] = $this->sign($data);
+        $result = json_decode($this->curl_post($this->query, json_encode($data)), true);
+        if (isset($result['err_no']) && $result['err_no'] == 0) {
+            return $result;
+        } else {
+            return false;
+        }
+
+    }
+    /**
+     * 解密手机号
+     *
+     * @param string $session_key 前端传递的session_key
+     * @param string $iv           前端传递的iv
+     * @param string $encryptedData  前端传递的encryptedData
+     */
+    public function decryptPhone($session_key, $iv, $encryptedData)
+    {
+
+        if (strlen($session_key) != 24) {
+            return false;
+        }
+        $aesKey = base64_decode($session_key);
+
+        if (strlen($iv) != 24) {
+            return false;
+        }
+        $aesIV = base64_decode($iv);
+
+        $aesCipher = base64_decode($encryptedData);
+
+        $result = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
+
+        $dataObj = json_decode($result);
+        if ($dataObj == null) {
+            return false;
+        }
+        if ($dataObj->watermark->appid != $this->app_id) {
+            return false;
+        }
+        return json_decode($result, true);
+    }
     protected static function curl_get($url)
     {
         $headerArr = array("Content-type:application/x-www-form-urlencoded");
@@ -266,37 +328,5 @@ class Byte
 
         return $output;
     }
-    /**
-     * 解密手机号
-     *
-     * @param string $session_key 前端传递的session_key
-     * @param string $iv           前端传递的iv
-     * @param string $encryptedData  前端传递的encryptedData
-     */
-    public function decryptPhone($session_key, $iv, $encryptedData)
-    {
 
-        if (strlen($session_key) != 24) {
-            return false;
-        }
-        $aesKey = base64_decode($session_key);
-
-        if (strlen($iv) != 24) {
-            return false;
-        }
-        $aesIV = base64_decode($iv);
-
-        $aesCipher = base64_decode($encryptedData);
-
-        $result = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
-
-        $dataObj = json_decode($result);
-        if ($dataObj == null) {
-            return false;
-        }
-        if ($dataObj->watermark->appid != $this->app_id) {
-            return false;
-        }
-        return json_decode($result, true);
-    }
 }
