@@ -234,7 +234,7 @@ class Byte
             'out_settle_no' => $order['out_settle_no'],
             'out_order_no' => $order['out_order_no'],
             'settle_desc' => $order['settle_desc'],
-            'notify_url' => $this->notify_url,
+            'notify_url' => $this->settle_url,
             'cp_extra' => $order['cp_extra'],
         ];
         $data['sign'] = $this->sign($data);
