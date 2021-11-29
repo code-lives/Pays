@@ -17,6 +17,7 @@
     - [openid](#openid-1)
     - [解密手机号](#解密手机号-1)
     - [字节订单查询](#字节订单查询)
+    - [字节分账](#字节分账)
     - [字节退款](#字节退款)
 - [微信小程序](#微信小程序)
     - [Config](#config-2)
@@ -168,6 +169,8 @@
  | merchant_id | string | 是   | 担保交易的商户号      |
  | app_id      | int    | 是   | 小程序的APP_ID        |
  | secret      | string | 是   | 小程序的APP_SECRET    |
+ | notify_url  | string | 是   | 支付回调url        |
+ | settle_url  | string | 否   | 分账回调url,没有默认支付回调url        |
 
 ### token
 ```php
@@ -224,6 +227,21 @@
     // 失败 false
 ```
 
+### 字节分账
+ | 参数名字         | 类型   | 必须 | 说明                                |
+ | ---------------- | ------ | ---- | -------------------------------  |
+ | out_order_no            | string | 是   | 平台订单号                  |
+ | out_settle_no | string    | 是   | 自定义订单号                       |
+ | settle_desc      | int    | 是   | 分账描述                          |
+ | cp_extra      | string    | 是   | 开发者自定义字段，回调原样回传 |
+```php
+
+    $payName='Byte';//设置驱动
+    $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+    $data = $Baidu->findOrder($order);
+    // 成功 array 【自己看手册】
+    // 失败 false
+```
 
 ### 字节退款
  | 参数名字         | 类型   | 必须 | 说明                                                                                               |
