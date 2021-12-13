@@ -32,6 +32,8 @@
     - [快手解密手机号](#快手解密手机号)
     - [快手订单查询](#快手订单查询)
     - [快手退款](#快手退款)
+- [微信APP](#微信app)
+    - [Config](#config-4)
 - [异步通知](#异步通知)
   - [字节](#字节)
   - [微信小程序回调](#微信小程序回调)
@@ -51,8 +53,13 @@
     $payName='Weixin';//微信
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
 
+    $payName='Weixin';//微信APP (没有openid)
+    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
+
     $payName='Kuaishou';//快手
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid', 'access_token')->getParam();
+
+
 
 ```
 # 百度小程序
@@ -420,6 +427,15 @@
     //返回 成功
 
 ```
+# 微信APP
+### Config
+ | 参数名字    | 类型   | 必须 | 说明                  |
+ | ----------- | ------ | ---- | --------------------- |
+  | appid       | int | 是   | 开发平台appid |
+ | secret       | int | 是   | 开放平台secret |
+ | mch_id        | string | 是   | 商户mch_id        |
+ | mch_key        | string | 是   | 商户mch_key        |
+ | notify_url      | string    | 是   | 异步地址        |
 
 # 异步通知
 ##  字节
