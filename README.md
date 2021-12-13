@@ -435,6 +435,7 @@
  | secret       | int | 是   | 开放平台secret |
  | mch_id        | string | 是   | 商户mch_id        |
  | mch_key        | string | 是   | 商户mch_key        |
+| trade_type        | string | 是   | APP        |
  | notify_url      | string    | 是   | 异步地址        |
 
 # 异步通知
