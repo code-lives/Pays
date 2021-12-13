@@ -44,6 +44,7 @@ class Weixin
 
         return $class;
     }
+
     public function create_nonce_str($length = 32)
     {
         $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -53,15 +54,18 @@ class Weixin
         }
         return $str;
     }
+
     public function getParam()
     {
         return $this->orderParam;
     }
+
     public function getNotifyOrder()
     {
         $xml = file_get_contents("php://input");
         return $this->xmlToArray($xml);
     }
+
     /**
      * 设置订单号 金额 描述
      * @param string $rder_no 平台订单号
@@ -70,7 +74,7 @@ class Weixin
      * @param string $openid 描述
      *
      */
-    public function set($out_trade_no, $total_fee, $title, $openid)
+    public function set($out_trade_no, $total_fee, $title, $openid = '')
     {
         $order['appid'] = $this->appid;
         $order['mch_id'] = $this->mch_id;
@@ -80,7 +84,9 @@ class Weixin
         $order['out_trade_no'] = $out_trade_no;
         $order['total_fee'] = $total_fee * 100;
         $order['notify_url'] = $this->notify_url;
-        $order['openid'] = $openid; //设置用户openid
+        if ($this->trade_type == "JSAPI") {
+            $order['openid'] = $openid; //设置用户openid
+        }
         $order['spbill_create_ip'] = $_SERVER['REMOTE_ADDR'];
         $order['sign'] = $this->sign($order);
         $data = $this->arrayToXml($order);
@@ -96,6 +102,7 @@ class Weixin
         $this->orderParam['paySign'] = $this->sign($this->orderParam);
         return $this;
     }
+
     /**
      *    作用：将xml转为array
      */
@@ -105,6 +112,7 @@ class Weixin
         $array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
         return $array_data;
     }
+
     /**
      * @param array $map
      * @return string
@@ -125,6 +133,7 @@ class Weixin
         $result_ = strtoupper($String);
         return $result_;
     }
+
     /**
      *    作用：格式化参数，签名过程需要使用
      */
@@ -145,6 +154,7 @@ class Weixin
         }
         return $reqPar;
     }
+
     /**
      *    作用：array转xml
      */
@@ -161,6 +171,7 @@ class Weixin
         $xml .= "</xml>";
         return $xml;
     }
+
     /**
      * 获取token
      */
@@ -170,6 +181,7 @@ class Weixin
         $result = json_decode($this->curl_get($url), true);
         return $result;
     }
+
     /**
      * 获取openid
      * @param string $code
@@ -181,6 +193,7 @@ class Weixin
         $result = json_decode($this->curl_get($url), true);
         return $result;
     }
+
     /**
      * 异步回调
      * @param array $order 回调数据
@@ -201,6 +214,7 @@ class Weixin
         }
         return false;
     }
+
     /**
      * 申请退款
      * @param array $order
@@ -225,6 +239,7 @@ class Weixin
         }
         return false;
     }
+
     /**
      * 订单查询
      * @param string $out_trade_no 订单号
@@ -245,6 +260,7 @@ class Weixin
         }
         return false;
     }
+
     protected static function curl_get($url)
     {
         $headerArr = array("Content-type:application/x-www-form-urlencoded");
@@ -258,6 +274,7 @@ class Weixin
         curl_close($curl);
         return $output;
     }
+
     /**
      * @desc post 用于退款
      */
@@ -270,10 +287,12 @@ class Weixin
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
         $output = curl_exec($curl);
         curl_close($curl);
         return $output;
     }
+
     public function curl_post_ssl($url, $vars, $second = 30, $aHeader = array())
     {
         $ch = curl_init();
@@ -304,12 +323,13 @@ class Weixin
             return false;
         }
     }
+
     /**
      * 解密手机号
      *
      * @param string $session_key 前端传递的session_key
-     * @param string $iv           前端传递的iv
-     * @param string $encryptedData  前端传递的encryptedData
+     * @param string $iv 前端传递的iv
+     * @param string $encryptedData 前端传递的encryptedData
      */
     public function decryptPhone($session_key, $iv, $encryptedData)
     {
