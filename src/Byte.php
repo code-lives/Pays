@@ -8,6 +8,7 @@ class Byte
     private $orderParam;
     private $app_id;
     private $secret;
+    private $merchant_id;
     private $salt;
     private $valid_time;
     private $notify_url;
@@ -30,6 +31,10 @@ class Byte
 
         if (!isset($config['secret']) || empty($config['secret'])) {
             throw new \Exception('not empty secret');
+        }
+
+        if (!isset($config['merchant_id']) || empty($config['merchant_id'])) {
+            throw new \Exception('not empty merchant_id');
         }
 
         if (!isset($config['salt']) || empty($config['salt'])) {
