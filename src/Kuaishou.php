@@ -149,6 +149,7 @@ class Kuaishou
         if ($result['result'] != 1) {
             throw new \Exception('invalid js_code');
         }
+        $result['openid'] = $result['open_id'];
         return $result;
     }
     /**
