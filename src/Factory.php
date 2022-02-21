@@ -13,6 +13,7 @@ class Factory
 
     public static function getInstance($ClassName)
     {
+        static $class;
         if (isset($class[$ClassName])) {
             return $class[$ClassName];
         }
