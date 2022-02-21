@@ -2,7 +2,7 @@
 
 namespace Applet\Pay;
 
-class Kuaishou
+class Kuaishou implements PayInterface
 {
 
     private $orderParam;
@@ -17,7 +17,7 @@ class Kuaishou
     protected $refundUrl = 'https://open.kuaishou.com/openapi/mp/developer/epay/apply_refund';
     protected $notifyOrder;
 
-    public function init($config)
+    public static function init($config)
     {
         if (!isset($config['app_id']) || empty($config['app_id'])) {
             throw new \Exception('not empty app_id');

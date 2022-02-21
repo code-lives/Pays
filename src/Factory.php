@@ -17,7 +17,6 @@ class Factory
         if (isset($class[$ClassName])) {
             return $class[$ClassName];
         }
-
         return $class[$ClassName] = new self::$instance[$ClassName]();
     }
 }

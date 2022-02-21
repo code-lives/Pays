@@ -2,7 +2,7 @@
 
 namespace Applet\Pay;
 
-class Baidu
+class Baidu implements PayInterface
 {
     private $appKey;
     private $payappKey;
@@ -18,7 +18,7 @@ class Baidu
     private $orderParam;
     private $notifyOrder;
 
-    public function init($config)
+    public static function init($config)
     {
         if (!isset($config['appid']) || empty($config['appid'])) {
             throw new \Exception('not empty appid');

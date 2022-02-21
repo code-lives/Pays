@@ -2,7 +2,7 @@
 
 namespace Applet\Pay;
 
-class Weixin
+class Weixin implements PayInterface
 {
 
     private $orderParam;
@@ -22,7 +22,7 @@ class Weixin
     protected $refundUrl = 'https://api.mch.weixin.qq.com/secapi/pay/refund'; //退款
     protected $payOrder;
 
-    public function init($config)
+    public static function init($config)
     {
         if (!isset($config['appid']) || empty($config['appid'])) {
             throw new \Exception('not empty appid');
