@@ -100,7 +100,6 @@ class Byte implements PayInterface
             $this->payOrder = $result['data'];
             return $this;
         }
-        throw new \Exception("头条支付" . json_encode($result));
     }
     /**
      * @param array $map
