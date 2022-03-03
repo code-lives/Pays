@@ -10,9 +10,6 @@
             "email": "948870149@qq.com"
         }
     ],
-    "require": {
-    "guzzlehttp/guzzle": "^6.0||^7.0",
-  },
     "minimum-stability": "stable",
     "autoload":{
    	"psr-4":{"Applet\\Pay\\":"src"}
