@@ -87,19 +87,20 @@ class Byte implements PayInterface
      */
     public function set($order_no, $money, $title, $desc = '')
     {
-        $this->orderParam['out_order_no'] = $order_no;
-        $this->orderParam['total_amount'] = $money * 100;
-        $this->orderParam['subject'] = $title;
-        $this->orderParam['body'] = $desc;
-        $this->orderParam['notify_url'] = $this->notify_url;
-        $this->orderParam['valid_time'] = $this->valid_time;
-        $this->orderParam['app_id'] = $this->app_id;
-        $data = json_encode(['sign' => $this->sign($this->orderParam)] + $this->orderParam);
+        $this->orderParam["out_order_no"] = $order_no;
+        $this->orderParam["total_amount"] = $money * 100;
+        $this->orderParam["subject"] = $title;
+        $this->orderParam["body"] = $desc;
+        $this->orderParam["notify_url"] = $this->notify_url;
+        $this->orderParam["alid_time"] = $this->valid_time;
+        $this->orderParam["app_id"] = $this->app_id;
+        $data = json_encode(["sign" => $this->sign($this->orderParam)] + $this->orderParam);
         $result = json_decode($this->curl_post($this->payUrl, $data), true);
         if (isset($result['err_no']) && $result['err_no'] == 0) {
             $this->payOrder = $result['data'];
+            return $this;
         }
-        return $this;
+        throw new \Exception("头条支付" . json_encode($result));
     }
     /**
      * @param array $map
@@ -283,6 +284,7 @@ class Byte implements PayInterface
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headerArr);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         $output = curl_exec($curl);
         curl_close($curl);
         return $output;
@@ -293,14 +295,12 @@ class Byte implements PayInterface
     protected static function curl_post($url, $data)
     {
         $ch = curl_init();
-
         curl_setopt($ch, CURLOPT_URL, $url);
-
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         curl_setopt(
             $ch,
             CURLOPT_HTTPHEADER,
@@ -309,18 +309,13 @@ class Byte implements PayInterface
                 'Content-Length: ' . strlen($data),
             )
         );
-        // POST数据
-
         curl_setopt($ch, CURLOPT_POST, 1);
-
-        // 把post的变量加上
-
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
         $output = curl_exec($ch);
-
+        if (!$output) {
+            throw new \Exception($ch);
+        }
         curl_close($ch);
-
         return $output;
     }
 
