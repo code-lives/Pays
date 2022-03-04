@@ -289,6 +289,9 @@ class Weixin implements PayInterface
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
         $output = curl_exec($curl);
+        if (!$output) {
+            throw new \Exception(curl_error($ch));
+        }
         curl_close($curl);
         return $output;
     }
