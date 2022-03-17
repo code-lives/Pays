@@ -161,7 +161,7 @@ class Byte implements PayInterface
         if ($result['error'] == 0) {
             return $result;
         }
-        throw new \Exception($result['err_no']);
+        throw new \Exception($result['errmsg'].$result['errcode']);
     }
     /**
      * 异步回调
