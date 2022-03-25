@@ -286,7 +286,7 @@ class Byte implements PayInterface
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         $output = curl_exec($ch);
         if (!$output) {
-            throw new \Exception(curl_error($ch));
+            throw new \Exception(curl_errno($ch));
         }
         curl_close($ch);
         return $output;
@@ -315,7 +315,7 @@ class Byte implements PayInterface
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         $output = curl_exec($ch);
         if (!$output) {
-            throw new \Exception(curl_error($ch));
+            throw new \Exception(curl_errno($ch));
         }
         curl_close($ch);
         return $output;
