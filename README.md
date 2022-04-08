@@ -1,6 +1,6 @@
-# 微信小程序、字节小程序、百度小程序、快手小程序、微信App（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）
+# 微信小程序、字节小程序、百度小程序、快手小程序、微信App、微信H5（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）
 # 目录、微信小程序、字节小程序、百度小程序、微信App支付
-- [微信小程序、字节小程序、百度小程序、快手小程序、微信App（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）](#微信小程序字节小程序百度小程序快手小程序微信app支付手机号解密获取token支付异步通知退款订单查询)
+- [微信小程序、字节小程序、百度小程序、快手小程序、微信App、微信H5（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）](#微信小程序字节小程序百度小程序快手小程序微信app微信h5支付手机号解密获取token支付异步通知退款订单查询)
 - [目录、微信小程序、字节小程序、百度小程序、微信App支付](#目录微信小程序字节小程序百度小程序微信app支付)
 - [安装说明](#安装说明)
 - [预下单](#预下单)
@@ -52,6 +52,12 @@
 
     $payName='Weixin';//微信
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
+
+    $payName='Weixin';//微信公众号【appid 和secret 换成公众号的】
+    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
+
+    $payName='Weixin';//微信H5【appid 和secret 换成公众号的】
+    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getH5Param();
 
     $payName='Weixin';//微信APP (没有openid)
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
