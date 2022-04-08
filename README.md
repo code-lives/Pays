@@ -36,7 +36,7 @@
     - [Config](#config-4)
 - [异步通知](#异步通知)
   - [字节](#字节)
-  - [微信小程序回调](#微信小程序回调)
+  - [微信回调(通用微信H5支付、小程序、微信公众号) 记得改config配置](#微信回调通用微信h5支付小程序微信公众号-记得改config配置)
   - [百度小程序回调](#百度小程序回调)
   - [快手小程序](#快手小程序-1)
 # 安装说明
@@ -476,11 +476,10 @@
     }
 
 ```
-## 微信小程序回调
+## 微信回调(通用微信H5支付、小程序、微信公众号) 记得改config配置
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
-
     $status = $pay->notifyCheck();//验证
     if($status){
         $order = $pay->getNotifyOrder();//订单数据
