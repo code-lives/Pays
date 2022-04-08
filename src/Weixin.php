@@ -6,6 +6,7 @@ class Weixin implements PayInterface
 {
 
     private $orderParam;
+    private $orderH5Param;
     private $appid;
     private $secret;
     private $mch_id;
@@ -59,7 +60,10 @@ class Weixin implements PayInterface
     {
         return $this->orderParam;
     }
-
+    public function orderH5Param()
+    {
+        return $this->orderH5Param;
+    }
     public function getNotifyOrder()
     {
         $xml = file_get_contents("php://input");
@@ -92,17 +96,30 @@ class Weixin implements PayInterface
         $data = $this->arrayToXml($order);
         $xml_data = $this->curl_post($this->payUrl, $data);
         $prepay_id = $this->xmlToArray($xml_data);
-        $this->orderParam = array(
-            'appId' => $this->appid, //小程序ID
-            'timeStamp' => '' . time() . '', //时间戳
-            'nonceStr' => $this->create_nonce_str(), //随机串
-            'package' => 'prepay_id=' . $prepay_id['prepay_id'], //数据包
-            'signType' => 'MD5', //签名方式
-        );
-        $this->orderParam['paySign'] = $this->sign($this->orderParam);
+        if ($this->trade_type == "MWEB") {
+            $this->orderH5Param = $prepay_id;
+        } else {
+            $this->orderParam = array(
+                'appId' => $this->appid, //小程序ID
+                'timeStamp' => '' . time() . '', //时间戳
+                'nonceStr' => $this->create_nonce_str(), //随机串
+                'package' => 'prepay_id=' . $prepay_id['prepay_id'], //数据包
+                'signType' => 'MD5', //签名方式
+            );
+            $this->orderParam['paySign'] = $this->sign($this->orderParam);
+        }
         return $this;
     }
-
+    public function get_client_ip()
+    {
+        $cip = "unknown";
+        if ($_SERVER['REMOTE_ADDR']) {
+            $cip = $_SERVER['REMOTE_ADDR'];
+        } else if (getenv("REMOTE_ADDR")) {
+            $cip = getenv("REMOTE_ADDR");
+        }
+        return $cip;
+    }
     /**
      *    作用：将xml转为array
      */
