@@ -289,7 +289,7 @@
  | notify_url      | string    | 是   | 异步地址        |
  | cert_pem      | string | 是   | cert_pem证书    |
  | key_pem      | string | 是   | key_pem证书    |
- | trade_type      | string | 是   | 默认为：JSAPM。WEB：代表微信H5 、JSAPI：公众号或小程序    |
+ | trade_type      | string | 是   | 默认为：JSAPI。MWEB：代表微信H5 、JSAPI：公众号或小程序    |
 
 ### token
 ```php
