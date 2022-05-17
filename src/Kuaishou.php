@@ -160,7 +160,7 @@ class Kuaishou implements PayInterface
      */
     public function notifyCheck()
     {
-        if (md5(json_encode($this->notifyOrder) . $this->app_secret) != $_SERVER['HTTP_KWAISIGN']) {
+        if (md5(json_encode($this->getNotifyOrder()) . $this->app_secret) != $_SERVER['HTTP_KWAISIGN']) {
             return false;
         }
         return true;
