@@ -512,7 +512,7 @@
         $status = $pay->notifyCheck(); //验证
         if ($status) {
              $order = $pay->getNotifyOrder(); //订单数据
-            //$order['out_order_no']//平台订单号
+            //$order['data']['out_order_no']//平台订单号
             echo json_encode(['result' => 1, 'message_id' => $order['message_id']]);exit;
         }
 
