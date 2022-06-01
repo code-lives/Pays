@@ -147,7 +147,7 @@
 ### 百度退款
  | 参数名字         | 类型   | 必须 | 说明                                                                                               |
  | ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
- | token            | string | 是   | 根据上面的获取token                                                                                |
+ | access_token            | string | 是   | 根据上面的获取token                                                                                |
  | bizRefundBatchId | int    | 是   | 百度平台的订单号                                                                                   |
  | isSkipAudit      | int    | 是   | 默认为0； 0：不跳过开发者业务方审核；1：跳过开发者业务方审核。                                     |
  | orderId          | int    | 是   | 百度平台的订单号                                                                                   |
@@ -420,6 +420,7 @@
  | out_refund_no            | strging    | 是   | 自定义订单号                                                                                  |
  | refund_amount      | int    | 是   | 退款金额                                      |
  | reason      | string    | 是   | 退款原因                                      |
+ | access_token      | string    | 是   | access_token                                      |
 | attach      | string    | 否   | 自定义                                      |
 ```php
 
