@@ -247,12 +247,14 @@ class Weixin implements PayInterface
         $order['nonce_str'] = $this->create_nonce_str();
         $order['total_fee'] = $order['total_fee'] *= 100;
         $order['refund_fee'] = $order['refund_fee'] *= 100;
+        $order['out_trade_no'] = $order['out_trade_no'];
+        $order['out_refund_no'] = $order['out_refund_no'];
         $order['sign'] = $this->sign($order);
         $xml_data = $this->arrayToXml($order);
         $data = $this->curl_post_ssl($this->refundUrl, $xml_data);
-        $xml_data = $this->xmlToArray($data);
-        if ($xml_data['return_code'] == "SUCCESS" && $xml_data['result_code'] == "SUCCESS") {
-            return $xml_data;
+        $result = $this->xmlToArray($data);
+        if ($result['return_code'] == "SUCCESS" && $result['result_code'] == "SUCCESS") {
+            return $result;
         }
         return false;
     }
@@ -318,6 +320,7 @@ class Weixin implements PayInterface
 
     public function curl_post_ssl($url, $vars, $second = 30, $aHeader = array())
     {
+
         $ch = curl_init();
         //超时时间
         curl_setopt($ch, CURLOPT_TIMEOUT, $second);
@@ -341,7 +344,6 @@ class Weixin implements PayInterface
             return $data;
         } else {
             $error = curl_errno($ch);
-
             curl_close($ch);
             return false;
         }
