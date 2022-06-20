@@ -17,6 +17,7 @@ class Weixin implements PayInterface
     private $cert_pem;
     private $openid;
     private $codedUrl = 'https://api.weixin.qq.com/sns/jscode2session?';
+    private $appCodeUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?";
     private $tokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=';
     protected $payUrl = 'https://api.mch.weixin.qq.com/pay/unifiedorder'; //支付
     protected $query = 'https://api.mch.weixin.qq.com/pay/orderquery'; //查询
@@ -210,7 +211,18 @@ class Weixin implements PayInterface
         $result = json_decode($this->curl_get($url), true);
         return $result;
     }
-
+    /**
+     * 获取微信app openid
+     *
+     * @param  [type] $code
+     * @return void
+     */
+    public function getAppOpenid($code)
+    {
+        $url = $this->appCodeUrl . "appid=" . $this->appid . "&secret=" . $this->secret . "&code=" . $code . "&grant_type=authorization_code";
+        $result = json_decode($this->curl_get($url), true);
+        return $result;
+    }
     /**
      * 异步回调
      * @param array $order 回调数据
