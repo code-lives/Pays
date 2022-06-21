@@ -1,8 +1,11 @@
-# 微信小程序、字节小程序、百度小程序、快手小程序、微信App、微信H5（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）
-# 目录、微信小程序、字节小程序、百度小程序、微信App支付
-- [微信小程序、字节小程序、百度小程序、快手小程序、微信App、微信H5（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）](#微信小程序字节小程序百度小程序快手小程序微信app微信h5支付手机号解密获取token支付异步通知退款订单查询)
-- [目录、微信小程序、字节小程序、百度小程序、微信App支付](#目录微信小程序字节小程序百度小程序微信app支付)
+# 微信小程序、字节小程序、百度小程序、快手小程序、微信 App、微信 H5（支付、手机号解密、获取 Token、支付异步通知、退款、订单查询）
+
+# 目录、微信小程序、字节小程序、百度小程序、微信 App 支付
+
+- [微信小程序、字节小程序、百度小程序、快手小程序、微信 App、微信 H5（支付、手机号解密、获取 Token、支付异步通知、退款、订单查询）](#微信小程序字节小程序百度小程序快手小程序微信-app微信-h5支付手机号解密获取-token支付异步通知退款订单查询)
+- [目录、微信小程序、字节小程序、百度小程序、微信 App 支付](#目录微信小程序字节小程序百度小程序微信-app-支付)
 - [安装说明](#安装说明)
+- [功能支持](#功能支持)
 - [预下单](#预下单)
 - [百度小程序](#百度小程序)
     - [Config](#config)
@@ -32,16 +35,35 @@
     - [快手解密手机号](#快手解密手机号)
     - [快手订单查询](#快手订单查询)
     - [快手退款](#快手退款)
-- [微信APP](#微信app)
+- [微信 APP](#微信-app)
     - [Config](#config-4)
 - [异步通知](#异步通知)
   - [字节](#字节)
-  - [微信回调(通用微信H5支付、小程序、微信公众号) 记得改config配置](#微信回调通用微信h5支付小程序微信公众号-记得改config配置)
+  - [微信回调(通用微信 H5 支付、小程序、微信公众号) 记得改 config 配置](#微信回调通用微信-h5-支付小程序微信公众号-记得改-config-配置)
   - [百度小程序回调](#百度小程序回调)
   - [快手小程序](#快手小程序-1)
+- [随便打赏](#随便打赏)
+
 # 安装说明
+
     composer require code-lives/applet-pays 4.0
+
+
+# 功能支持
+
+| 第三方     | token | openid | 支付  | 回调  | 退款  | 订单查询 | 解密手机号 | 分账 |
+| :----------: | :---: | :----: | :---: | :---: | :---: | :------: | :--------: | :--------: |
+| 微信小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     x     |
+| 微信h5 |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |     x     |
+| 微信公众号 |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |     x     |
+| 百度小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     x      |
+| 字节小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     ✓      |
+| 快手小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     ✓      |
+| 微信APP |   x   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |     x      |
+
+
 # 预下单
+
 ```php
 
     $payName='Baidu';//百度
@@ -68,19 +90,23 @@
 
 
 ```
+
 # 百度小程序
+
 ### Config
- | 参数名字     | 类型   | 必须 | 说明                                   |
- | ------------ | ------ | ---- | -------------------------------------- |
- | appkey       | string | 是   | 百度小程序appkey                       |
- | payappKey    | string | 是   | 百度小程序支付appkey                   |
- | appSecret    | string | 是   | 百度小程序aapSecret                    |
- | dealId       | int    | 是   | 百度小程序支付凭证                     |
- | isSkipAudit  | int    | 是   | 默认为0； 0：不跳过开发者业务方审核；1：跳过开发者业务方审核。                     |
- | rsaPriKeyStr | string | 是   | 私钥（只需要一行长串，不需要文件）     |
- | rsaPubKeyStr | string | 是   | 百度小程序支付的平台公钥(支付回调需要) |
+
+| 参数名字     | 类型   | 必须 | 说明                                                            |
+| ------------ | ------ | ---- | --------------------------------------------------------------- |
+| appkey       | string | 是   | 百度小程序 appkey                                               |
+| payappKey    | string | 是   | 百度小程序支付 appkey                                           |
+| appSecret    | string | 是   | 百度小程序 aapSecret                                            |
+| dealId       | int    | 是   | 百度小程序支付凭证                                              |
+| isSkipAudit  | int    | 是   | 默认为 0； 0：不跳过开发者业务方审核；1：跳过开发者业务方审核。 |
+| rsaPriKeyStr | string | 是   | 私钥（只需要一行长串，不需要文件）                              |
+| rsaPubKeyStr | string | 是   | 百度小程序支付的平台公钥(支付回调需要)                          |
 
 ### token
+
 ```php
 
     $payName='Baidu';//设置驱动
@@ -88,13 +114,12 @@
     //成功 array
     //失败 false
 ```
- | 返回参数     | 类型   | 必须 | 说明                                   |
- | ------------ | ------ | ---- | -------------------------------------- |
- | expires_in    | string | 是   | 凭证有效时间，单位：秒                   |
- | session_key    | string | 是   | session_key                  |
- | access_token       | string    | 是   | 获取到的凭证                     |
 
-
+| 返回参数     | 类型   | 必须 | 说明                   |
+| ------------ | ------ | ---- | ---------------------- |
+| expires_in   | string | 是   | 凭证有效时间，单位：秒 |
+| session_key  | string | 是   | session_key            |
+| access_token | string | 是   | 获取到的凭证           |
 
 ### openid
 
@@ -106,11 +131,11 @@
     //成功 array
     //失败 false
 ```
- | 返回参数     | 类型   | 必须 | 说明                                   |
- | ------------ | ------ | ---- | -------------------------------------- |
- | session_key    | string | 是   | session_key                  |
- | openid       | string    | 是   | 用户openid                     |
 
+| 返回参数    | 类型   | 必须 | 说明        |
+| ----------- | ------ | ---- | ----------- |
+| session_key | string | 是   | session_key |
+| openid      | string | 是   | 用户 openid |
 
 ### 解密手机号
 
@@ -123,12 +148,12 @@
     // 失败 false
 ```
 
-
 ### 百度订单查询
- | 参数名字     | 类型   | 必须 | 说明                |
- | ------------ | ------ | ---- | ------------------- |
- | access_token | string | 是   | 根据上面的获取token |
- | tpOrderId    | string | 是   | 平台订单号          |
+
+| 参数名字     | 类型   | 必须 | 说明                 |
+| ------------ | ------ | ---- | -------------------- |
+| access_token | string | 是   | 根据上面的获取 token |
+| tpOrderId    | string | 是   | 平台订单号           |
 
 ```php
 
@@ -143,18 +168,19 @@
     // 失败 false
 ```
 
-
 ### 百度退款
- | 参数名字         | 类型   | 必须 | 说明                                                                                               |
- | ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
- | access_token            | string | 是   | 根据上面的获取token                                                                                |
- | bizRefundBatchId | int    | 是   | 百度平台的订单号                                                                                   |
- | isSkipAudit      | int    | 是   | 默认为0； 0：不跳过开发者业务方审核；1：跳过开发者业务方审核。                                     |
- | orderId          | int    | 是   | 百度平台的订单号                                                                                   |
- | refundReason     | string | 是   | 退款描述                                                                                           |
- | refundType       | int    | 是   | 退款类型 1：用户发起退款；2：开发者业务方客服退款；3：开发者服务异常退款。百度小程序支付的平台公钥 |
- | tpOrderId        | string | 是   | 自己平台订单号                                                                                     |
- | userId           | int    | 是   | 用户uid（不是自己平台uid）                                                                         |
+
+| 参数名字         | 类型   | 必须 | 说明                                                                                               |
+| ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
+| access_token     | string | 是   | 根据上面的获取 token                                                                               |
+| bizRefundBatchId | int    | 是   | 百度平台的订单号                                                                                   |
+| isSkipAudit      | int    | 是   | 默认为 0； 0：不跳过开发者业务方审核；1：跳过开发者业务方审核。                                    |
+| orderId          | int    | 是   | 百度平台的订单号                                                                                   |
+| refundReason     | string | 是   | 退款描述                                                                                           |
+| refundType       | int    | 是   | 退款类型 1：用户发起退款；2：开发者业务方客服退款；3：开发者服务异常退款。百度小程序支付的平台公钥 |
+| tpOrderId        | string | 是   | 自己平台订单号                                                                                     |
+| userId           | int    | 是   | 用户 uid（不是自己平台 uid）                                                                       |
+
 ```php
 
     $order = [
@@ -171,21 +197,22 @@
     //返回 true false
 ```
 
-
-
 # 字节小程序
+
 ### Config
- | 参数名字    | 类型   | 必须 | 说明                  |
- | ----------- | ------ | ---- | --------------------- |
- | token       | string | 是   | 担保交易回调的Token(令牌) |
- | salt        | string | 是   | 担保交易的SALT        |
- | merchant_id | string | 是   | 担保交易的商户号      |
- | app_id      | int    | 是   | 小程序的APP_ID        |
- | secret      | string | 是   | 小程序的APP_SECRET    |
- | notify_url  | string | 是   | 支付回调url        |
- | settle_url  | string | 否   | 分账回调url,没有默认支付回调url        |
+
+| 参数名字    | 类型   | 必须 | 说明                              |
+| ----------- | ------ | ---- | --------------------------------- |
+| token       | string | 是   | 担保交易回调的 Token(令牌)        |
+| salt        | string | 是   | 担保交易的 SALT                   |
+| merchant_id | string | 是   | 担保交易的商户号                  |
+| app_id      | int    | 是   | 小程序的 APP_ID                   |
+| secret      | string | 是   | 小程序的 APP_SECRET               |
+| notify_url  | string | 是   | 支付回调 url                      |
+| settle_url  | string | 否   | 分账回调 url,没有默认支付回调 url |
 
 ### token
+
 ```php
 
     $payName='Byte';//驱动
@@ -193,12 +220,11 @@
     //成功 array
     //失败 false
 ```
- | 返回参数     | 类型   | 必须 | 说明                                   |
- | ------------ | ------ | ---- | -------------------------------------- |
- | expires_in    | string | 是   | 凭证有效时间，单位：秒                   |
- | access_token       | string    | 是   | 获取到的凭证                     |
 
-
+| 返回参数     | 类型   | 必须 | 说明                   |
+| ------------ | ------ | ---- | ---------------------- |
+| expires_in   | string | 是   | 凭证有效时间，单位：秒 |
+| access_token | string | 是   | 获取到的凭证           |
 
 ### openid
 
@@ -210,12 +236,12 @@
     //成功 array
     //失败 false
 ```
- | 返回参数     | 类型   | 必须 | 说明                                   |
- | ------------ | ------ | ---- | -------------------------------------- |
- | session_key    | string | 是   | session_key                  |
- | openid       | string    | 是   | 用户openid                     |
- | unionid       | string    | 是   | unionid                     |
 
+| 返回参数    | 类型   | 必须 | 说明        |
+| ----------- | ------ | ---- | ----------- |
+| session_key | string | 是   | session_key |
+| openid      | string | 是   | 用户 openid |
+| unionid     | string | 是   | unionid     |
 
 ### 解密手机号
 
@@ -227,7 +253,6 @@
     // 成功 array
     // 失败 false
 ```
-
 
 ### 字节订单查询
 
@@ -241,12 +266,14 @@
 ```
 
 ### 字节分账
- | 参数名字         | 类型   | 必须 | 说明                                |
- | ---------------- | ------ | ---- | -------------------------------  |
- | out_order_no            | string | 是   | 平台订单号                  |
- | out_settle_no | string    | 是   | 自定义订单号                       |
- | settle_desc      | int    | 是   | 分账描述                          |
- | cp_extra      | string    | 是   | 开发者自定义字段，回调原样回传 |
+
+| 参数名字      | 类型   | 必须 | 说明                           |
+| ------------- | ------ | ---- | ------------------------------ |
+| out_order_no  | string | 是   | 平台订单号                     |
+| out_settle_no | string | 是   | 自定义订单号                   |
+| settle_desc   | int    | 是   | 分账描述                       |
+| cp_extra      | string | 是   | 开发者自定义字段，回调原样回传 |
+
 ```php
 
     $payName='Byte';//设置驱动
@@ -257,12 +284,14 @@
 ```
 
 ### 字节退款
- | 参数名字         | 类型   | 必须 | 说明                                                                                               |
- | ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
- | out_order_no            | string | 是   | 平台订单号                                                                                |
- | out_refund_no | int    | 是   | 自定义订单号                                                                                  |
- | reason      | int    | 是   | 退款说明                                     |
- | refund_amount      | string    | 是   | 退款金额                                      |
+
+| 参数名字      | 类型   | 必须 | 说明         |
+| ------------- | ------ | ---- | ------------ |
+| out_order_no  | string | 是   | 平台订单号   |
+| out_refund_no | int    | 是   | 自定义订单号 |
+| reason        | int    | 是   | 退款说明     |
+| refund_amount | string | 是   | 退款金额     |
+
 ```php
 
     $order = [
@@ -279,19 +308,22 @@
 ```
 
 # 微信小程序
+
 ### Config
- | 参数名字    | 类型   | 必须 | 说明                  |
- | ----------- | ------ | ---- | --------------------- |
-  | appid       | int | 是   | 小程序appid |
- | secret       | int | 是   | 小程序secret |
- | mch_id        | string | 是   | 商户mch_id        |
- | mch_key        | string | 是   | 商户mch_key        |
- | notify_url      | string    | 是   | 异步地址        |
- | cert_pem      | string | 是   | cert_pem证书    |
- | key_pem      | string | 是   | key_pem证书    |
- | trade_type      | string | 是   | 默认为：JSAPI。MWEB：代表微信H5 、JSAPI：公众号或小程序    |
+
+| 参数名字   | 类型   | 必须 | 说明                                                     |
+| ---------- | ------ | ---- | -------------------------------------------------------- |
+| appid      | int    | 是   | 小程序 appid                                             |
+| secret     | int    | 是   | 小程序 secret                                            |
+| mch_id     | string | 是   | 商户 mch_id                                              |
+| mch_key    | string | 是   | 商户 mch_key                                             |
+| notify_url | string | 是   | 异步地址                                                 |
+| cert_pem   | string | 是   | cert_pem 证书                                            |
+| key_pem    | string | 是   | key_pem 证书                                             |
+| trade_type | string | 是   | 默认为：JSAPI。MWEB：代表微信 H5 、JSAPI：公众号或小程序 |
 
 ### token
+
 ```php
 
     $payName='Weixin';//驱动
@@ -299,10 +331,11 @@
     //成功 array
     //失败 false
 ```
- | 返回参数     | 类型   | 必须 | 说明                                   |
- | ------------ | ------ | ---- | -------------------------------------- |
- | expires_in    | string | 是   | 凭证有效时间，单位：秒                   |
- | access_token       | string    | 是   | 获取到的凭证                     |
+
+| 返回参数     | 类型   | 必须 | 说明                   |
+| ------------ | ------ | ---- | ---------------------- |
+| expires_in   | string | 是   | 凭证有效时间，单位：秒 |
+| access_token | string | 是   | 获取到的凭证           |
 
 ### openid
 
@@ -314,12 +347,12 @@
     //成功 array
     //失败 false
 ```
- | 返回参数     | 类型   | 必须 | 说明                                   |
- | ------------ | ------ | ---- | -------------------------------------- |
- | session_key    | string | 是   | session_key                  |
- | openid       | string    | 是   | 用户openid                     |
- | unionid       | string    | 是   | unionid                     |
 
+| 返回参数    | 类型   | 必须 | 说明        |
+| ----------- | ------ | ---- | ----------- |
+| session_key | string | 是   | session_key |
+| openid      | string | 是   | 用户 openid |
+| unionid     | string | 是   | unionid     |
 
 ### 微信解密手机号
 
@@ -332,7 +365,6 @@
     // 失败 false
 ```
 
-
 ### 微信订单查询
 
 ```php
@@ -344,15 +376,16 @@
     // 失败 false
 ```
 
-
 ### 微信退款
- | 参数名字         | 类型   | 必须 | 说明                                                                                               |
- | ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
- | out_trade_no            | string | 是   | 平台订单号                                                                                |
- | out_refund_no            | strging    | 是   | 自定义订单号                                                                                  |
- | refund_fee      | int    | 是   | 退款金额                                     |
- | total_fee      | int    | 是   | 订单金额                                      |
- | refund_desc      | string    | 是   | 退款原因                                      |
+
+| 参数名字      | 类型    | 必须 | 说明         |
+| ------------- | ------- | ---- | ------------ |
+| out_trade_no  | string  | 是   | 平台订单号   |
+| out_refund_no | strging | 是   | 自定义订单号 |
+| refund_fee    | int     | 是   | 退款金额     |
+| total_fee     | int     | 是   | 订单金额     |
+| refund_desc   | string  | 是   | 退款原因     |
+
 ```php
 
     $order = [
@@ -367,12 +400,14 @@
 ```
 
 # 快手小程序
+
 ### Config
- | 参数名字    | 类型   | 必须 | 说明                  |
- | ----------- | ------ | ---- | --------------------- |
-  | app_id       | int | 是   | 小程序appid |
- | app_secret       | int | 是   | 小程序secret |
- | notify_url        | string | 是   | 回调地址        |
+
+| 参数名字   | 类型   | 必须 | 说明          |
+| ---------- | ------ | ---- | ------------- |
+| app_id     | int    | 是   | 小程序 appid  |
+| app_secret | int    | 是   | 小程序 secret |
+| notify_url | string | 是   | 回调地址      |
 
 ### openid
 
@@ -383,12 +418,12 @@
     $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
 
 ```
- | 返回参数     | 类型   | 必须 | 说明                                   |
- | ------------ | ------ | ---- | -------------------------------------- |
- | session_key    | string | 是   | session_key                  |
- | open_id       | string    | 是   | 用户open_id                  |
- | result       | string    | 是   | 状态 1是成功                     |
 
+| 返回参数    | 类型   | 必须 | 说明          |
+| ----------- | ------ | ---- | ------------- |
+| session_key | string | 是   | session_key   |
+| open_id     | string | 是   | 用户 open_id  |
+| result      | string | 是   | 状态 1 是成功 |
 
 ### 快手解密手机号
 
@@ -401,7 +436,6 @@
     // 失败 false
 ```
 
-
 ### 快手订单查询
 
 ```php
@@ -412,16 +446,17 @@
     // 成功 array 【自己看手册】
 ```
 
-
 ### 快手退款
- | 参数名字         | 类型   | 必须 | 说明                                                                                               |
- | ---------------- | ------ | ---- | -------------------------------------------------------------------------------------------------- |
- | out_trade_no            | string | 是   | 平台订单号                                                                                |
- | out_refund_no            | strging    | 是   | 自定义订单号                                                                                  |
- | refund_amount      | int    | 是   | 退款金额                                      |
- | reason      | string    | 是   | 退款原因                                      |
- | access_token      | string    | 是   | access_token                                      |
-| attach      | string    | 否   | 自定义                                      |
+
+| 参数名字      | 类型    | 必须 | 说明         |
+| ------------- | ------- | ---- | ------------ |
+| out_trade_no  | string  | 是   | 平台订单号   |
+| out_refund_no | strging | 是   | 自定义订单号 |
+| refund_amount | int     | 是   | 退款金额     |
+| reason        | string  | 是   | 退款原因     |
+| access_token  | string  | 是   | access_token |
+| attach        | string  | 否   | 自定义       |
+
 ```php
 
     $orders = [
@@ -434,19 +469,24 @@
     //返回 成功
 
 ```
-# 微信APP
+
+# 微信 APP
+
 ### Config
- | 参数名字    | 类型   | 必须 | 说明                  |
- | ----------- | ------ | ---- | --------------------- |
-  | appid       | int | 是   | 开发平台appid |
- | secret       | int | 是   | 开放平台secret |
- | mch_id        | string | 是   | 商户mch_id        |
- | mch_key        | string | 是   | 商户mch_key        |
-| trade_type        | string | 是   | APP        |
- | notify_url      | string    | 是   | 异步地址        |
+
+| 参数名字   | 类型   | 必须 | 说明            |
+| ---------- | ------ | ---- | --------------- |
+| appid      | int    | 是   | 开发平台 appid  |
+| secret     | int    | 是   | 开放平台 secret |
+| mch_id     | string | 是   | 商户 mch_id     |
+| mch_key    | string | 是   | 商户 mch_key    |
+| trade_type | string | 是   | APP             |
+| notify_url | string | 是   | 异步地址        |
 
 # 异步通知
-##  字节
+
+## 字节
+
 ```php
     $pay = \Applet\Pay\Factory::getInstance('Byte')->init($config);
     $status = $pay->notifyCheck(); //验证
@@ -477,7 +517,9 @@
     }
 
 ```
-## 微信回调(通用微信H5支付、小程序、微信公众号) 记得改config配置
+
+## 微信回调(通用微信 H5 支付、小程序、微信公众号) 记得改 config 配置
+
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
@@ -490,7 +532,9 @@
     }
 
 ```
+
 ## 百度小程序回调
+
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
@@ -504,7 +548,9 @@
     }
 
 ```
+
 ## 快手小程序
+
 ```php
 
     $pay = \Applet\Pay\Factory::getInstance('Kuaishou')->init($config);
@@ -518,3 +564,5 @@
 
 
 ```
+# 随便打赏
+<img src="https://github.com/code-lives/Pays/blob/main/pay.jpeg" width="30%">
