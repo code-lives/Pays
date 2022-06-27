@@ -46,7 +46,7 @@
 
 # 安装说明
 
-    composer require code-lives/applet-pays 4.0
+    composer require code-lives/applet-pays 5.0
 
 
 # 功能支持
