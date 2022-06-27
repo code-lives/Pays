@@ -33,7 +33,7 @@ class Kuaishou implements PayInterface
         $class->app_id = $config['app_id'];
         $class->app_secret = $config['app_secret'];
         $class->notify_url = $config['notify_url'];
-        $class->type = $config['type'];
+        $class->type = isset($config['type']) ? $config['type'] : "";
         return $class;
     }
     /**
