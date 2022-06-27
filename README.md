@@ -408,6 +408,7 @@
 | app_id     | int    | 是   | 小程序 appid  |
 | app_secret | int    | 是   | 小程序 secret |
 | notify_url | string | 是   | 回调地址      |
+| type       | int | 是   | 类目      |
 
 ### openid
 
