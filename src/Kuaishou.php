@@ -9,6 +9,7 @@ class Kuaishou implements PayInterface
     private $app_id;
     private $app_secret;
     private $notify_url;
+    private $type;
     private $token;
     private $codedUrl = 'https://open.kuaishou.com/oauth2/mp/code2session';
     private $tokenUrl = 'https://open.kuaishou.com/oauth2/access_token';
@@ -32,6 +33,7 @@ class Kuaishou implements PayInterface
         $class->app_id = $config['app_id'];
         $class->app_secret = $config['app_secret'];
         $class->notify_url = $config['notify_url'];
+        $class->type = $config['type'];
         return $class;
     }
     /**
@@ -68,7 +70,7 @@ class Kuaishou implements PayInterface
             'total_amount' => $money * 100,
             'subject' => $title,
             'detail' => $desc,
-            'type' => 3306,
+            'type' => $this->type,
             'expire_time' => 3000,
             'attach' => '11',
             'notify_url' => $this->notify_url,
@@ -207,7 +209,6 @@ class Kuaishou implements PayInterface
         $bodyParam['out_order_no'] = $out_order_no;
         $url = $this->query . "?app_id=" . $this->app_id . "&access_token=" . $access_token;
         return json_decode($this->curl_post_json($url, json_encode($bodyParam)), true);
-
     }
     /**
      * curl post json传递
