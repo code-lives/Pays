@@ -565,5 +565,5 @@
 
 
 ```
-# 随便 (打赏 or start or fork)
+# 随便 (打赏 or star or fork)
 <img src="https://github.com/code-lives/Pays/blob/main/pay.jpeg" width="30%">
