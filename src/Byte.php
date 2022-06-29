@@ -88,7 +88,7 @@ class Byte implements PayInterface
     public function set($order_no, $money, $title, $desc = '')
     {
         $this->orderParam["out_order_no"] = $order_no;
-        $this->orderParam["total_amount"] = $money;
+        this->orderParam["total_amount"] = $money * 100;
         $this->orderParam["subject"] = $title;
         $this->orderParam["body"] = $desc;
         $this->orderParam["notify_url"] = $this->notify_url;
