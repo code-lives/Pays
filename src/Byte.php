@@ -88,7 +88,7 @@ class Byte implements PayInterface
     public function set($order_no, $money, $title, $desc = '')
     {
         $this->orderParam["out_order_no"] = $order_no;
-        $this->orderParam["total_amount"] = $money * 100;
+        $this->orderParam["total_amount"] = $money;
         $this->orderParam["subject"] = $title;
         $this->orderParam["body"] = $desc;
         $this->orderParam["notify_url"] = $this->notify_url;
@@ -161,7 +161,7 @@ class Byte implements PayInterface
         if ($result['error'] == 0) {
             return $result;
         }
-        throw new \Exception($result['errmsg'].$result['errcode']);
+        throw new \Exception($result['errmsg'] . $result['errcode']);
     }
     /**
      * 异步回调
@@ -193,9 +193,7 @@ class Byte implements PayInterface
     {
         $order['notify_url'] = $this->notify_url;
         $order['app_id'] = $this->app_id;
-        $order['refund_amount'] *= 100;
         return json_decode($this->curl_post($this->refundUrl, json_encode(['sign' => $this->sign($order)] + $order)), true);
-
     }
     /**
      * 订单查询
@@ -239,7 +237,6 @@ class Byte implements PayInterface
         } else {
             return false;
         }
-
     }
     /**
      * 解密手机号
@@ -320,5 +317,4 @@ class Byte implements PayInterface
         curl_close($ch);
         return $output;
     }
-
 }
