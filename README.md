@@ -483,7 +483,7 @@
 
 
 ```php
-    //注意 需要设置回调notify_url  在config 设置 settle_url 如果没有 默认为 notify_url
+    //注意 需要设置回调 notify_url  在config 设置 settle_url 如果没有 默认为 notify_url
     $orders = [
             'out_order_no' => $order['out_order_no'],
             'out_settle_no' => $order['out_settle_no'],

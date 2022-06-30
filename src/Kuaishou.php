@@ -223,10 +223,11 @@ class Kuaishou implements PayInterface
     public function settle($settle_order, $access_token)
     {
         $settle_order['app_id'] = $this->app_id;
-        $seetle_order['notify_url'] = $this->settle_url;
-        $seetle_order['sign'] = $this->sign($seetle_order);
+        $settle_order['notify_url'] = $this->settle_url;
+        $settle_order = $settle_order;
+        $settle_order['sign'] = $this->sign($settle_order);
         $url = $this->settle . "?app_id=" . $this->app_id . "&access_token=" . $access_token;
-        return json_decode($this->curl_post_json($url, json_encode($seetle_order)), true);
+        return json_decode($this->curl_post_json($url, json_encode($settle_order)), true);
     }
     /**
      * curl post json传递
