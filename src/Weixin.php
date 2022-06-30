@@ -87,7 +87,7 @@ class Weixin implements PayInterface
         $order['nonce_str'] = $this->create_nonce_str();
         $order['body'] = $title;
         $order['out_trade_no'] = $out_trade_no;
-        $order['total_fee'] = $total_fee * 100;
+        $order['total_fee'] = $total_fee;
         $order['notify_url'] = $this->notify_url;
         if ($this->trade_type == "JSAPI") {
             $order['openid'] = $openid; //设置用户openid
@@ -257,10 +257,6 @@ class Weixin implements PayInterface
         $order['appid'] = $this->appid;
         $order['mch_id'] = $this->mch_id;
         $order['nonce_str'] = $this->create_nonce_str();
-        $order['total_fee'] = $order['total_fee'] *= 100;
-        $order['refund_fee'] = $order['refund_fee'] *= 100;
-        $order['out_trade_no'] = $order['out_trade_no'];
-        $order['out_refund_no'] = $order['out_refund_no'];
         $order['sign'] = $this->sign($order);
         $xml_data = $this->arrayToXml($order);
         $data = $this->curl_post_ssl($this->refundUrl, $xml_data);

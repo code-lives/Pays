@@ -60,7 +60,7 @@ class Baidu implements PayInterface
      */
     public function set($order_no, $money, $title = '')
     {
-        $this->orderParam['totalAmount'] = $money * 100;
+        $this->orderParam['totalAmount'] = $money;
         $this->orderParam['tpOrderId'] = $order_no;
         $this->orderParam['dealId'] = $this->dealId;
         $this->orderParam['appKey'] = $this->payappKey;

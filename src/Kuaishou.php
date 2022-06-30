@@ -11,11 +11,13 @@ class Kuaishou implements PayInterface
     private $notify_url;
     private $type;
     private $token;
+    private $settle_url;
     private $codedUrl = 'https://open.kuaishou.com/oauth2/mp/code2session';
     private $tokenUrl = 'https://open.kuaishou.com/oauth2/access_token';
     protected $payUrl = 'https://open.kuaishou.com/openapi/mp/developer/epay/create_order';
     protected $query = 'https://open.kuaishou.com/openapi/mp/developer/epay/query_order';
     protected $refundUrl = 'https://open.kuaishou.com/openapi/mp/developer/epay/apply_refund';
+    protected $settle = "https://open.kuaishou.com/openapi/mp/developer/epay/settle";
     protected $notifyOrder;
 
     public static function init($config)
@@ -33,6 +35,7 @@ class Kuaishou implements PayInterface
         $class->app_id = $config['app_id'];
         $class->app_secret = $config['app_secret'];
         $class->notify_url = $config['notify_url'];
+        $class->settle_url = isset($config['settle_url']) ? $config['settle_url'] : $config['notify_url'];
         $class->type = isset($config['type']) ? $config['type'] : "";
         return $class;
     }
@@ -67,7 +70,7 @@ class Kuaishou implements PayInterface
             'app_id' => $this->app_id,
             'out_order_no' => $order_no,
             'open_id' => $openid,
-            'total_amount' => $money * 100,
+            'total_amount' => $money,
             'subject' => $title,
             'detail' => $desc,
             'type' => $this->type,
@@ -185,7 +188,7 @@ class Kuaishou implements PayInterface
             'reason' => $order['reason'],
             'notify_url' => $this->notify_url,
             'attach' => $order['attach'],
-            'refund_amount' => $order['refund_amount'] * 100,
+            'refund_amount' => $order['refund_amount'],
         ];
         $orders['sign'] = $this->sign($orders);
         $url = $this->refundUrl . "?app_id=" . $this->app_id . "&access_token=" . $order['access_token'];
@@ -209,6 +212,21 @@ class Kuaishou implements PayInterface
         $bodyParam['out_order_no'] = $out_order_no;
         $url = $this->query . "?app_id=" . $this->app_id . "&access_token=" . $access_token;
         return json_decode($this->curl_post_json($url, json_encode($bodyParam)), true);
+    }
+    /**
+     * 分账
+     *
+     * @param  [type] $order
+     * @return void
+     * @author LiJie
+     */
+    public function settle($settle_order, $access_token)
+    {
+        $settle_order['app_id'] = $this->app_id;
+        $seetle_order['notify_url'] = $this->settle_url;
+        $seetle_order['sign'] = $this->sign($seetle_order);
+        $url = $this->settle . "?app_id=" . $this->app_id . "&access_token=" . $access_token;
+        return json_decode($this->curl_post_json($url, json_encode($seetle_order)), true);
     }
     /**
      * curl post json传递

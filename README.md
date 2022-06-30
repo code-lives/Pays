@@ -278,7 +278,7 @@
 
     $payName='Byte';//设置驱动
     $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
-    $data = $Baidu->findOrder($order);
+    $data = $Baidu->settle($order);
     // 成功 array 【自己看手册】
     // 失败 false
 ```
@@ -298,7 +298,7 @@
             'out_order_no' => '',
             'out_refund_no' => time() . 'refund',
             'reason' => '就想退款，咋滴',
-            'refund_amount' => 1, //退款金额，单位[分]
+            'refund_amount' => 1, //退款金额
         ];
     $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
     //返回  [err_no] => 1
@@ -408,6 +408,7 @@
 | app_id     | int    | 是   | 小程序 appid  |
 | app_secret | int    | 是   | 小程序 secret |
 | notify_url | string | 是   | 回调地址      |
+| settle_url | string | 是   | 结算回调地址，没有就默认notify_url      |
 | type       | int | 是   | 类目      |
 
 ### openid
@@ -470,7 +471,29 @@
     //返回 成功
 
 ```
+### 快手结算
 
+| 参数名字      | 类型    | 必须 | 说明         |
+| ------------- | ------- | ---- | ------------ |
+| out_order_no  | string  | 是   | 平台订单号   |
+| out_settle_no | strging | 是   | 自定义订单号 |
+| reason        | string  | 是   | 退款原因     |
+| access_token  | string  | 是   | access_token |
+| attach        | string  | 否   | 自定义       |
+
+
+```php
+    //注意 需要设置回调notify_url  在config 设置 settle_url 如果没有 默认为 notify_url
+    $orders = [
+            'out_order_no' => $order['out_order_no'],
+            'out_settle_no' => $order['out_settle_no'],
+            'reason' => $order['reason'],
+            'attach' => $order['attach'],
+        ];
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->settle($order,$access_token);
+    //返回 成功
+
+```
 # 微信 APP
 
 ### Config
