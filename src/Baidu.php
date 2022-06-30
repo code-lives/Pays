@@ -20,7 +20,7 @@ class Baidu implements PayInterface
 
     public static function init($config)
     {
-        if (!isset($config['appid']) || empty($config['appid'])) {
+        if (empty($config['appid'])) {
             throw new \Exception('not empty appid');
         }
 
