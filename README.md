@@ -65,7 +65,7 @@
 # 预下单
 
 ```php
-
+    // 金额单位分 100=1元 
     $payName='Baidu';//百度
     $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
