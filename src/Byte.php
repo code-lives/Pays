@@ -156,7 +156,7 @@ class Byte implements PayInterface
      */
     public function getOpenid($code, $anonymous_code = "")
     {
-        $url = $this->codedUrl . "appid=" . $this->app_id . "&secret=" . $this->secret . "&code=" . $code;
+        $url = $this->codeUrl . "appid=" . $this->app_id . "&secret=" . $this->secret . "&code=" . $code;
         if ($anonymous_code) {
             $url .= "&anonymous_code=" . $anonymous_code;
         }
