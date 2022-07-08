@@ -3,7 +3,7 @@
     "description": "微信小程序、字节小程序、百度小程序、快手小程序、微信App、微信公众号、微信H5（支付、手机号解密、获取Token、支付异步通知、退款、订单查询）",
     "type": "library",
     "license": "MIT",
-    "version":"5.0",
+    "version":"^5.0",
     "authors": [
         {
             "name": "code-lives",
