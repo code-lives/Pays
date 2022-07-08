@@ -46,7 +46,7 @@
 
 # 安装说明
 
-    composer require code-lives/applet-pays 5.0
+    composer require code-lives/applet-pays 5.1
 
 
 # 功能支持
@@ -232,7 +232,8 @@
 
     $payName='Byte';//设置驱动
     $code="";
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
+    $anonymous_code="";//可以不传
+    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code,$anonymous_code);
     //成功 array
     //失败 false
 ```
