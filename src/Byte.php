@@ -14,7 +14,7 @@ class Byte implements PayInterface
     private $notify_url;
     private $settle_url;
     private $token;
-    private $codedUrl = 'https://minigame.zijieapi.com/mgplatform/api/apps/jscode2session?';
+    private $codeUrl = 'https://minigame.zijieapi.com/mgplatform/api/apps/jscode2session?';
     private $tokenUrl = 'https://minigame.zijieapi.com/mgplatform/api/apps/token';
     protected $payUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_order';
     protected $query = 'https://developer.toutiao.com/api/apps/ecpay/v1/query_order';
@@ -154,9 +154,12 @@ class Byte implements PayInterface
      * @return void
      * @author LiJie
      */
-    public function getOpenid($code, $anonymous_code)
+    public function getOpenid($code, $anonymous_code = "")
     {
-        $url = $this->codedUrl . "appid=" . $this->app_id . "&secret=" . $this->secret . "&code=" . $code . "&anonymous_code=" . $anonymous_code;
+        $url = $this->codedUrl . "appid=" . $this->app_id . "&secret=" . $this->secret . "&code=" . $code;
+        if ($anonymous_code) {
+            $url .= "&anonymous_code=" . $anonymous_code;
+        }
         $result = json_decode($this->curl_get($url), true);
         if ($result['error'] == 0) {
             return $result;
