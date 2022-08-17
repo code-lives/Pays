@@ -9,6 +9,15 @@
 | 字节小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     ✓      |
 | 快手小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     ✓      |
 | 微信APP |   x   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |     x      |
+### ⚠️注意 （微信支付未使用APIv3接口规则）
+### 官方文档
+[微信小程序接口文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)
+
+[百度小程序接口文档](https://smartprogram.baidu.com/docs/develop/function/tune_up_2.0/)
+
+[快手小程序接口文档](https://mp.kuaishou.com/docs/develop/server/epay/interfaceDefinition.html)
+
+[字节小程序接口文档](https://microapp.bytedance.com/docs/zh-CN/mini-app/develop/server/ecpay/APIlist/pay-list/pay)
 # 安装说明
 
     composer require code-lives/applet-pays 5.1
