@@ -22,13 +22,13 @@ class Kuaishou implements PayInterface
 
     public static function init($config)
     {
-        if (!isset($config['app_id']) || empty($config['app_id'])) {
+        if (empty($config['app_id'])) {
             throw new \Exception('not empty app_id');
         }
-        if (!isset($config['app_secret']) || empty($config['app_secret'])) {
+        if (empty($config['app_secret'])) {
             throw new \Exception('not empty secret');
         }
-        if (!isset($config['notify_url']) || empty($config['notify_url'])) {
+        if (empty($config['notify_url'])) {
             throw new \Exception('not empty notify_url');
         }
         $class = new self();
@@ -132,11 +132,7 @@ class Kuaishou implements PayInterface
             'app_id' => $this->app_id,
             'app_secret' => $this->app_secret,
         ];
-        $result = json_decode($this->curl_post($this->tokenUrl, $arr), true);
-        if ($result['result'] != 1) {
-            throw new \Exception($result['error_msg']);
-        }
-        return $result;
+        return json_decode($this->curl_post($this->tokenUrl, $arr), true);
     }
     /**
      * 获取openid
@@ -151,10 +147,9 @@ class Kuaishou implements PayInterface
             'app_secret' => $this->app_secret,
         ];
         $result = json_decode($this->curl_post($this->codedUrl, $data), true);
-        if ($result['result'] != 1) {
-            throw new \Exception('invalid js_code');
+        if ($result['result'] == 1) {
+            return $result['openid'] = $result['open_id'];
         }
-        $result['openid'] = $result['open_id'];
         return $result;
     }
     /**
@@ -254,7 +249,6 @@ class Kuaishou implements PayInterface
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-
         return $response;
     }
     /**
@@ -285,27 +279,14 @@ class Kuaishou implements PayInterface
     protected static function curl_post($url, $data)
     {
         $ch = curl_init();
-
         curl_setopt($ch, CURLOPT_URL, $url);
-
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-
-        // POST数据
-
         curl_setopt($ch, CURLOPT_POST, 1);
-
-        // 把post的变量加上
-
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
         $output = curl_exec($ch);
-
         curl_close($ch);
-
         return $output;
     }
     /**
@@ -317,26 +298,20 @@ class Kuaishou implements PayInterface
      */
     public function decryptPhone($session_key, $iv, $encryptedData)
     {
-
         if (strlen($session_key) != 24) {
             return false;
         }
         $aesKey = base64_decode($session_key);
-
         if (strlen($iv) != 24) {
             return false;
         }
         $aesIV = base64_decode($iv);
-
         $aesCipher = base64_decode($encryptedData);
-
         $result = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
-
         $dataObj = json_decode($result);
         if ($dataObj == null) {
             return false;
         }
-
         return json_decode($result, true);
     }
 }

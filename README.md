@@ -1,15 +1,22 @@
 
 # 记得 fork or star 有问题issues
-| 第三方     | token | openid | 支付  | 回调  | 退款  | 订单查询 | 解密手机号 | 分账 |
-| :----------: | :---: | :----: | :---: | :---: | :---: | :------: | :--------: | :--------: |
-| 微信小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     x     |
-| 微信h5 |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |     x     |
-| 微信公众号 |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |     x     |
-| 百度小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     x      |
-| 字节小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     ✓      |
-| 快手小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |     ✓      |
-| 微信APP |   x   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |     x      |
-### ⚠️注意 （微信支付未使用APIv3接口规则）
+|   第三方   | token | openid | 支付  | 回调  | 退款  | 订单查询 | 解密手机号 | 分账  |
+| :--------: | :---: | :----: | :---: | :---: | :---: | :------: | :--------: | :---: |
+| 微信小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   x   |
+|   微信h5   |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   |
+| 微信公众号 |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   |
+| 百度小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   x   |
+| 字节小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   ✓   |
+| 快手小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   ✓   |
+|  微信APP   |   x   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   |
+
+### ⚠️  注意
+> 微信支付未使用APIv3接口规则
+
+> 5.1版本 返回的结果 成功：array 失败：false
+
+> 5.2版本开始 返回结果 array 由开发者自行判断（可以拿5.1版本进行对比）
+
 ### 官方文档
 [微信小程序接口文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)
 
@@ -18,37 +25,35 @@
 [快手小程序接口文档](https://mp.kuaishou.com/docs/develop/server/epay/interfaceDefinition.html)
 
 [字节小程序接口文档](https://microapp.bytedance.com/docs/zh-CN/mini-app/develop/server/ecpay/APIlist/pay-list/pay)
+
 # 安装说明
 
-    composer require code-lives/applet-pays 5.1
+    composer require code-lives/applet-pays 5.2
 
 # 预下单
 
 ```php
-    // 金额单位分 100=1元
-    $payName='Baidu';//百度
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
+// 金额单位分 100=1元
+$payName='Baidu';//百度
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
-    $payName='Byte';//字节
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
+$payName='Byte';//字节
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
 
-    $payName='Weixin';//微信
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
+$payName='Weixin';//微信
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
 
-    $payName='Weixin';//微信公众号【appid 和secret 换成公众号的】
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
+$payName='Weixin';//微信公众号【appid 和secret 换成公众号的】
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
 
-    $payName='Weixin';//微信H5【appid 和secret 换成公众号的】
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getH5Param();
+$payName='Weixin';//微信H5【appid 和secret 换成公众号的】
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getH5Param();
 
-    $payName='Weixin';//微信APP (没有openid)
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
+$payName='Weixin';//微信APP (没有openid)
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
-    $payName='Kuaishou';//快手
-    $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid', 'access_token')->getParam();
-
-
-
+$payName='Kuaishou';//快手
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid', 'access_token')->getParam();
 ```
 
 # 百度小程序
@@ -68,11 +73,8 @@
 ### token
 
 ```php
-
-    $payName='Baidu';//设置驱动
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
-    //成功 array
-    //失败 false
+$payName='Baidu';//设置驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ```
 
 | 返回参数     | 类型   | 必须 | 说明                   |
@@ -84,12 +86,9 @@
 ### openid
 
 ```php
-
-    $payName='Baidu';//设置驱动
-    $code="";
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
-    //成功 array
-    //失败 false
+$payName='Baidu';//设置驱动
+$code="";
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
 ```
 
 | 返回参数    | 类型   | 必须 | 说明        |
@@ -100,12 +99,9 @@
 ### 解密手机号
 
 ```php
-
-    $payName='Baidu';//设置驱动
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $ciphertext);
-    echo $phone['mobile'];
-    // 成功 array
-    // 失败 false
+$payName='Baidu';//设置驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $ciphertext);
+echo $phone['mobile'];
 ```
 
 ### 百度订单查询
@@ -116,16 +112,13 @@
 | tpOrderId    | string | 是   | 平台订单号           |
 
 ```php
-
-    $payName='Baidu';//设置驱动
-    $Baidu = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
-    $order = [
-            'tpOrderId' => '',//订单号
-            'access_token' => $Baidu->getToken()['access_token'],
-        ];
-    $data = $Baidu->findOrder($order);
-    // 成功 array 【自己看手册】
-    // 失败 false
+$payName='Baidu';//设置驱动
+$Baidu = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
+$order = [
+        'tpOrderId' => '',//订单号
+        'access_token' => $Baidu->getToken()['access_token'],
+    ];
+$data = $Baidu->findOrder($order);
 ```
 
 ### 百度退款
@@ -142,19 +135,17 @@
 | userId           | int    | 是   | 用户 uid（不是自己平台 uid）                                                                       |
 
 ```php
-
-    $order = [
-	'token' => 'abcd',
-	'bizRefundBatchId' => 123456,//百度平台订单号
-	'isSkipAudit' => 1,
-	'orderId' => 123456,
-	'refundReason' => '测试退款',
-	'refundType' => 2,//
-	'tpOrderId' => '123',//自己平台订单号
-	'userId' => 123,
-    ];
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
-    //返回 true false
+$order = [
+'token' => 'abcd',
+'bizRefundBatchId' => 123456,//百度平台订单号
+'isSkipAudit' => 1,
+'orderId' => 123456,
+'refundReason' => '测试退款',
+'refundType' => 2,//
+'tpOrderId' => '123',//自己平台订单号
+'userId' => 123,
+];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
 ```
 
 # 字节小程序
@@ -174,11 +165,8 @@
 ### token
 
 ```php
-
-    $payName='Byte';//驱动
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
-    //成功 array
-    //失败 false
+$payName='Byte';//驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ```
 
 | 返回参数     | 类型   | 必须 | 说明                   |
@@ -189,13 +177,10 @@
 ### openid
 
 ```php
-
-    $payName='Byte';//设置驱动
-    $code="";
-    $anonymous_code="";//可以不传
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code,$anonymous_code);
-    //成功 array
-    //失败 false
+$payName='Byte';//设置驱动
+$code="";
+$anonymous_code="";//可以不传
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code,$anonymous_code);
 ```
 
 | 返回参数    | 类型   | 必须 | 说明        |
@@ -207,23 +192,17 @@
 ### 解密手机号
 
 ```php
-
-    $payName='Baidu';//设置驱动
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
-    echo $phone['phoneNumber'];
-    // 成功 array
-    // 失败 false
+$payName='Baidu';//设置驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
+echo $phone['phoneNumber'];
 ```
 
 ### 字节订单查询
 
 ```php
-
-    $payName='Byte';//设置驱动
-    $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
-    $data = $Baidu->findOrder("订单号");
-    // 成功 array 【自己看手册】
-    // 失败 false
+$payName='Byte';//设置驱动
+$Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+$data = $Baidu->findOrder("订单号");
 ```
 
 ### 字节分账
@@ -236,12 +215,9 @@
 | cp_extra      | string | 是   | 开发者自定义字段，回调原样回传 |
 
 ```php
-
-    $payName='Byte';//设置驱动
-    $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
-    $data = $Baidu->settle($order);
-    // 成功 array 【自己看手册】
-    // 失败 false
+$payName='Byte';//设置驱动
+$Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+$data = $Baidu->settle($order);
 ```
 
 ### 字节退款
@@ -254,18 +230,16 @@
 | refund_amount | string | 是   | 退款金额     |
 
 ```php
-
-    $order = [
-            'out_order_no' => '',
-            'out_refund_no' => time() . 'refund',
-            'reason' => '就想退款，咋滴',
-            'refund_amount' => 1, //退款金额
-        ];
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
-    //返回  [err_no] => 1
-    //     [err_tips] => 成功
-    //     [refund_no] => 1212
-
+$order = [
+        'out_order_no' => '',
+        'out_refund_no' => time() . 'refund',
+        'reason' => '就想退款，咋滴',
+        'refund_amount' => 1, //退款金额
+    ];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
+//返回  [err_no] => 1
+//     [err_tips] => 成功
+//     [refund_no] => 1212
 ```
 
 # 微信小程序
@@ -286,11 +260,8 @@
 ### token
 
 ```php
-
-    $payName='Weixin';//驱动
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
-    //成功 array
-    //失败 false
+$payName='Weixin';//驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ```
 
 | 返回参数     | 类型   | 必须 | 说明                   |
@@ -301,12 +272,9 @@
 ### openid
 
 ```php
-
-    $payName='Weixin';//设置驱动
-    $code="";
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
-    //成功 array
-    //失败 false
+$payName='Weixin';//设置驱动
+$code="";
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
 ```
 
 | 返回参数    | 类型   | 必须 | 说明        |
@@ -318,23 +286,17 @@
 ### 微信解密手机号
 
 ```php
-
-    $payName='Weixin';//设置驱动
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
-    echo $phone['phoneNumber'];
-    // 成功 array
-    // 失败 false
+$payName='Weixin';//设置驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
+echo $phone['phoneNumber'];
 ```
 
 ### 微信订单查询
 
 ```php
-
-    $payName='Weixin';//设置驱动
-    $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
-    $data = $Baidu->findOrder("订单号");
-    // 成功 array 【自己看手册】
-    // 失败 false
+$payName='Weixin';//设置驱动
+$Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+$data = $Baidu->findOrder("订单号");
 ```
 
 ### 微信退款
@@ -348,38 +310,33 @@
 | refund_desc   | string  | 是   | 退款原因     |
 
 ```php
-
-    $order = [
-             'out_trade_no' => '123',
-            'total_fee' => 0.01,
-            'out_refund_no' => time(),
-            'refund_fee' => 0.01,
-        ];
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
-    //返回 成功 返回订单号  否则 false
-
+$order = [
+            'out_trade_no' => '123',
+        'total_fee' => 0.01,
+        'out_refund_no' => time(),
+        'refund_fee' => 0.01,
+    ];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
 ```
 
 # 快手小程序
 
 ### Config
 
-| 参数名字   | 类型   | 必须 | 说明          |
-| ---------- | ------ | ---- | ------------- |
-| app_id     | int    | 是   | 小程序 appid  |
-| app_secret | int    | 是   | 小程序 secret |
-| notify_url | string | 是   | 回调地址      |
-| settle_url | string | 是   | 结算回调地址，没有就默认notify_url      |
-| type       | int | 是   | 类目      |
+| 参数名字   | 类型   | 必须 | 说明                               |
+| ---------- | ------ | ---- | ---------------------------------- |
+| app_id     | int    | 是   | 小程序 appid                       |
+| app_secret | int    | 是   | 小程序 secret                      |
+| notify_url | string | 是   | 回调地址                           |
+| settle_url | string | 是   | 结算回调地址，没有就默认notify_url |
+| type       | int    | 是   | 类目                               |
 
 ### openid
 
 ```php
-
-    $payName='Kuaishou';//设置驱动
-    $code="";
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
-
+$payName='Kuaishou';//设置驱动
+$code="";
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
 ```
 
 | 返回参数    | 类型   | 必须 | 说明          |
@@ -391,22 +348,17 @@
 ### 快手解密手机号
 
 ```php
-
-    $payName='Kuaishou';//设置驱动
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
-    echo $phone['phoneNumber'];
-    // 成功 array
-    // 失败 false
+$payName='Kuaishou';//设置驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
+echo $phone['phoneNumber'];
 ```
 
 ### 快手订单查询
 
 ```php
-
-    $payName='Kuaishou';//设置驱动
-    $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
-    $data = $Baidu->findOrder("订单号",$access_token);
-    // 成功 array 【自己看手册】
+$payName='Kuaishou';//设置驱动
+$Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+$data = $Baidu->findOrder("订单号",$access_token);
 ```
 
 ### 快手退款
@@ -421,16 +373,13 @@
 | attach        | string  | 否   | 自定义       |
 
 ```php
-
-    $orders = [
-            'out_order_no' => $order['out_order_no'],
-            'out_refund_no' => $order['out_refund_no'],
-            'reason' => $order['reason'],
-            'attach' => $order['attach'],
-        ];
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
-    //返回 成功
-
+$orders = [
+        'out_order_no' => $order['out_order_no'],
+        'out_refund_no' => $order['out_refund_no'],
+        'reason' => $order['reason'],
+        'attach' => $order['attach'],
+    ];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
 ```
 ### 快手结算
 
@@ -444,16 +393,14 @@
 
 
 ```php
-    //注意 需要设置回调 notify_url  在config 设置 settle_url 如果没有 默认为 notify_url
-    $orders = [
-            'out_order_no' => $order['out_order_no'],
-            'out_settle_no' => $order['out_settle_no'],
-            'reason' => $order['reason'],
-            'attach' => $order['attach'],
-        ];
-    $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->settle($order,$access_token);
-    //返回 成功
-
+//注意 需要设置回调 notify_url  在config 设置 settle_url 如果没有 默认为 notify_url
+$orders = [
+        'out_order_no' => $order['out_order_no'],
+        'out_settle_no' => $order['out_settle_no'],
+        'reason' => $order['reason'],
+        'attach' => $order['attach'],
+    ];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->settle($order,$access_token);
 ```
 # 微信 APP
 
@@ -473,79 +420,70 @@
 ## 字节
 
 ```php
-    $pay = \Applet\Pay\Factory::getInstance('Byte')->init($config);
-    $status = $pay->notifyCheck(); //验证
-    if ($status) {
-        $orderSn = $pay->getNotifyOrder(); //订单数据$orderSn['msg']['cp_orderno'] $orderSn['msg']['seller_uid']
-        switch ($orderSn['type']) {
-            case 'payment': // 支付相关回调
-                /**
-                 *业务处理
-                */
-                echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
-                break;
-            case 'refund': // 退款相关回调
-                /**
-                 *业务处理
-                */
-                echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
-                break;
-            case 'settle': // 分账相关回调
-                /**
-                 *业务处理
-                */
-                echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
-                break;
-            default: // 未知数据
-                return '数据异常';
-        }
+$pay = \Applet\Pay\Factory::getInstance('Byte')->init($config);
+$status = $pay->notifyCheck(); //验证
+if ($status) {
+    $orderSn = $pay->getNotifyOrder(); //订单数据$orderSn['msg']['cp_orderno'] $orderSn['msg']['seller_uid']
+    switch ($orderSn['type']) {
+        case 'payment': // 支付相关回调
+            /**
+             *业务处理
+            */
+            echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
+            break;
+        case 'refund': // 退款相关回调
+            /**
+             *业务处理
+            */
+            echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
+            break;
+        case 'settle': // 分账相关回调
+            /**
+             *业务处理
+            */
+            echo json_encode(['err_no' => 0, 'err_tips' => 'success']);exit; // 操作成功需要给头条返回的信息
+            break;
+        default: // 未知数据
+            return '数据异常';
     }
-
+}
 ```
 
 ## 微信回调(通用微信 H5 支付、小程序、微信公众号) 记得改 config 配置
 
 ```php
-
-    $pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
-    $status = $pay->notifyCheck();//验证
-    if($status){
-        $order = $pay->getNotifyOrder();//订单数据
-        //$order['out_trade_no']//平台订单号
-        //$order['transaction_id']//微信订单号
-        echo 'success';exit;
-    }
-
+$pay = \Applet\Pay\Factory::getInstance('Weixin')->init($config);
+$status = $pay->notifyCheck();//验证
+if($status){
+    $order = $pay->getNotifyOrder();//订单数据
+    //$order['out_trade_no']//平台订单号
+    //$order['transaction_id']//微信订单号
+    echo 'success';exit;
+}
 ```
 
 ## 百度小程序回调
 
 ```php
-
-    $pay = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
-    $status = $pay->notifyCheck();//验证
-    if($status){
-        $order = $pay->getNotifyOrder();
-        //$order['tpOrderId']
-        //$order['orderId']
-        //$order['userId']
-        echo 'success';exit;
-    }
-
+$pay = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
+$status = $pay->notifyCheck();//验证
+if($status){
+    $order = $pay->getNotifyOrder();
+    //$order['tpOrderId']
+    //$order['orderId']
+    //$order['userId']
+    echo 'success';exit;
+}
 ```
 
 ## 快手小程序
 
 ```php
-
-    $pay = \Applet\Pay\Factory::getInstance('Kuaishou')->init($config);
-
-        $status = $pay->notifyCheck(); //验证
-        if ($status) {
-             $order = $pay->getNotifyOrder(); //订单数据
-            //$order['data']['out_order_no']//平台订单号
-            echo json_encode(['result' => 1, 'message_id' => $order['message_id']]);exit;
-        }
-
-
+$pay = \Applet\Pay\Factory::getInstance('Kuaishou')->init($config);
+$status = $pay->notifyCheck(); //验证
+if ($status) {
+        $order = $pay->getNotifyOrder(); //订单数据
+    //$order['data']['out_order_no']//平台订单号
+    echo json_encode(['result' => 1, 'message_id' => $order['message_id']]);exit;
+}
 ```

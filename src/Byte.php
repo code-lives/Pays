@@ -25,30 +25,24 @@ class Byte implements PayInterface
 
     public static function init($config)
     {
-        if (!isset($config['app_id']) || empty($config['app_id'])) {
+        if (empty($config['app_id'])) {
             throw new \Exception('not empty app_id');
         }
-
-        if (!isset($config['secret']) || empty($config['secret'])) {
+        if (empty($config['secret'])) {
             throw new \Exception('not empty secret');
         }
-
-        if (!isset($config['merchant_id']) || empty($config['merchant_id'])) {
+        if (empty($config['merchant_id'])) {
             throw new \Exception('not empty merchant_id');
         }
-
-        if (!isset($config['salt']) || empty($config['salt'])) {
+        if (empty($config['salt'])) {
             throw new \Exception('not empty salt');
         }
-
-        if (!isset($config['notify_url']) || empty($config['notify_url'])) {
+        if (empty($config['notify_url'])) {
             throw new \Exception('not empty notify_url');
         }
-
-        if (!isset($config['token']) || empty($config['token'])) {
+        if (empty($config['token'])) {
             throw new \Exception('not empty notify_url');
         }
-
         $class = new self();
         $class->app_id = $config['app_id'];
         $class->secret = $config['secret'];
@@ -95,11 +89,7 @@ class Byte implements PayInterface
         $this->orderParam["alid_time"] = $this->valid_time;
         $this->orderParam["app_id"] = $this->app_id;
         $data = json_encode(["sign" => $this->sign($this->orderParam)] + $this->orderParam);
-        $result = json_decode($this->curl_post($this->payUrl, $data), true);
-        if (isset($result['err_no']) && $result['err_no'] == 0) {
-            $this->payOrder = $result['data'];
-            return $this;
-        }
+        return json_decode($this->curl_post($this->payUrl, $data), true);
     }
     /**
      * @param array $map
@@ -112,18 +102,15 @@ class Byte implements PayInterface
             if ($k == "other_settle_params" || $k == "app_id" || $k == "sign" || $k == "thirdparty_id") {
                 continue;
             }
-
             $value = trim(strval($v));
             $len = strlen($value);
             if ($len > 1 && substr($value, 0, 1) == "\"" && substr($value, $len, $len - 1) == "\"") {
                 $value = substr($value, 1, $len - 1);
             }
-
             $value = trim($value);
             if ($value == "" || $value == "null") {
                 continue;
             }
-
             array_push($rList, $value);
         }
         array_push($rList, $this->salt);
@@ -141,10 +128,7 @@ class Byte implements PayInterface
             'secret' => $this->secret,
         ];
         $result = json_decode($this->curl_post($this->tokenUrl, json_encode($arr)), true);
-        if (isset($result['err_no']) && $result['err_tips'] == "success") {
-            return $result['data'];
-        }
-        throw new \Exception($result['err_no']);
+        return $result;
     }
     /**
      * 获取 openid
@@ -160,11 +144,7 @@ class Byte implements PayInterface
         if ($anonymous_code) {
             $url .= "&anonymous_code=" . $anonymous_code;
         }
-        $result = json_decode($this->curl_get($url), true);
-        if ($result['error'] == 0) {
-            return $result;
-        }
-        throw new \Exception($result['errmsg'] . $result['errcode']);
+        return json_decode($this->curl_get($url), true);
     }
     /**
      * 异步回调
@@ -180,7 +160,6 @@ class Byte implements PayInterface
             json_encode($order['msg']),
             $this->token,
         ];
-
         sort($data, SORT_STRING);
         $str = implode('', $data);
         if (!strcmp(sha1($str), $order['msg_signature'])) {
@@ -213,8 +192,7 @@ class Byte implements PayInterface
             'app_id' => $this->app_id,
         ];
         $order['sign'] = $this->sign($order);
-        $result = json_decode($this->curl_post($this->query, json_encode($order)), true);
-        return $result;
+        return json_decode($this->curl_post($this->query, json_encode($order)), true);
     }
     /**
      * 分账
@@ -235,11 +213,7 @@ class Byte implements PayInterface
         ];
         $data['sign'] = $this->sign($data);
         $result = json_decode($this->curl_post($this->settle, json_encode($data)), true);
-        if (isset($result['err_no']) && $result['err_no'] == 0) {
-            return $result;
-        } else {
-            return false;
-        }
+        return $result;
     }
     /**
      * 解密手机号
@@ -250,21 +224,16 @@ class Byte implements PayInterface
      */
     public function decryptPhone($session_key, $iv, $encryptedData)
     {
-
         if (strlen($session_key) != 24) {
             return false;
         }
         $aesKey = base64_decode($session_key);
-
         if (strlen($iv) != 24) {
             return false;
         }
         $aesIV = base64_decode($iv);
-
         $aesCipher = base64_decode($encryptedData);
-
         $result = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
-
         $dataObj = json_decode($result);
         if ($dataObj == null) {
             return false;

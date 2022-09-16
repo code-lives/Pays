@@ -26,14 +26,12 @@ class Weixin implements PayInterface
 
     public static function init($config)
     {
-        if (!isset($config['appid']) || empty($config['appid'])) {
+        if (empty($config['appid'])) {
             throw new \Exception('not empty appid');
         }
-
-        if (!isset($config['secret']) || empty($config['secret'])) {
+        if (empty($config['secret'])) {
             throw new \Exception('not empty secret');
         }
-
         $class = new self();
         $class->secret = $config['secret'];
         $class->appid = $config['appid'];
@@ -43,7 +41,6 @@ class Weixin implements PayInterface
         $class->trade_type = isset($config['trade_type']) ? $config['trade_type'] : "JSAPI";
         $class->key_pem = isset($config['key_pem']) ? $config['key_pem'] : "";
         $class->cert_pem = isset($config['cert_pem']) ? $config['cert_pem'] : "";
-
         return $class;
     }
 
@@ -196,8 +193,7 @@ class Weixin implements PayInterface
     public function getToken()
     {
         $url = $this->tokenUrl . $this->appid . "&secret=" . $this->secret;
-        $result = json_decode($this->curl_get($url), true);
-        return $result;
+        return json_decode($this->curl_get($url), true);
     }
 
     /**
@@ -208,8 +204,7 @@ class Weixin implements PayInterface
     public function getOpenid($code)
     {
         $url = $this->codedUrl . "appid=" . $this->appid . "&secret=" . $this->secret . "&js_code=" . $code . "&grant_type=authorization_code";
-        $result = json_decode($this->curl_get($url), true);
-        return $result;
+        return json_decode($this->curl_get($url), true);
     }
     /**
      * 获取微信app openid
@@ -220,8 +215,7 @@ class Weixin implements PayInterface
     public function getAppOpenid($code)
     {
         $url = $this->appCodeUrl . "appid=" . $this->appid . "&secret=" . $this->secret . "&code=" . $code . "&grant_type=authorization_code";
-        $result = json_decode($this->curl_get($url), true);
-        return $result;
+        return json_decode($this->curl_get($url), true);
     }
     /**
      * 异步回调
@@ -260,11 +254,7 @@ class Weixin implements PayInterface
         $order['sign'] = $this->sign($order);
         $xml_data = $this->arrayToXml($order);
         $data = $this->curl_post_ssl($this->refundUrl, $xml_data);
-        $result = $this->xmlToArray($data);
-        if ($result['return_code'] == "SUCCESS" && $result['result_code'] == "SUCCESS") {
-            return $result;
-        }
-        return false;
+        return $this->xmlToArray($data);
     }
 
     /**
@@ -281,11 +271,7 @@ class Weixin implements PayInterface
         $order['sign'] = $this->sign($order);
         $xml_data = $this->arrayToXml($order);
         $data = $this->curl_post_ssl($this->query, $xml_data);
-        $xml_data = $this->xmlToArray($data);
-        if ($xml_data['return_code'] == "SUCCESS" && $xml_data['result_code'] == "SUCCESS") {
-            return $xml_data;
-        }
-        return false;
+        return $this->xmlToArray($data);
     }
 
     protected static function curl_get($url)
@@ -366,7 +352,6 @@ class Weixin implements PayInterface
      */
     public function decryptPhone($session_key, $iv, $encryptedData)
     {
-
         if (strlen($session_key) != 24) {
             return false;
         }
@@ -376,11 +361,8 @@ class Weixin implements PayInterface
             return false;
         }
         $aesIV = base64_decode($iv);
-
         $aesCipher = base64_decode($encryptedData);
-
         $result = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
-
         $dataObj = json_decode($result);
         if ($dataObj == null) {
             return false;
