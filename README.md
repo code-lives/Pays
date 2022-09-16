@@ -1,19 +1,19 @@
 
 # 记得 fork or star 有问题issues
-|   第三方   | token | openid | 支付  | 回调  | 退款  | 订单查询 | 解密手机号 | 分账  |
-| :--------: | :---: | :----: | :---: | :---: | :---: | :------: | :--------: | :---: |
-| 微信小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   x   |
-|   微信h5   |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   |
-| 微信公众号 |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   |
-| 百度小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   x   |
-| 字节小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   ✓   |
-| 快手小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   ✓   |
-|  微信APP   |   x   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   |
+|   第三方   | token | openid | 支付  | 回调  | 退款  | 订单查询 | 解密手机号 | 分账  |模版消息|
+| :--------: | :---: | :----: | :---: | :---: | :---: | :------: | :--------: | :---: | :---: |
+| 微信小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   x   | ✓      |
+|   微信h5   |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   | x      |
+| 微信公众号 |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   | x      |
+| 百度小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   x   | ✓      |
+| 字节小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   ✓   | ✓      |
+| 快手小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   ✓   | x      |
+|  微信APP   |   x   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   | x      |
 
 ### ⚠️  注意
 > 微信支付未使用APIv3接口规则
 
-> 5.1版本 返回的结果 成功：array 失败：false
+> 5.2版本之前 返回的结果 成功：array 失败：false
 
 > 5.2版本开始 返回结果 array 由开发者自行判断（可以拿5.1版本进行对比）
 
@@ -146,6 +146,29 @@ $order = [
 'userId' => 123,
 ];
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
+```
+### 百度小程序模版消息
+
+```php
+$data = [
+    "touser_openId" => "",
+    "template_id" => "",
+    "page" => "pages/index/index",
+    "subscribe_id" => '百度from组件subscribe-id 一致',
+    "data" => json_encode([
+        'keyword1' => ['value' => "第一个参数"],
+        'keyword2' => ['value' => "第二个参数"],
+        'keyword3' =>  ['value' => "第三个参数"],
+    ])
+];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->sendMsg($data,$token);
+$data=[
+   "errno" => 0,
+    "msg" => "success",
+    "data" => array=> [
+    "msg_key" => 1663314134696897
+  ]
+]
 ```
 
 # 字节小程序
@@ -311,12 +334,34 @@ $data = $Baidu->findOrder("订单号");
 
 ```php
 $order = [
-            'out_trade_no' => '123',
+        'out_trade_no' => '123',
         'total_fee' => 0.01,
         'out_refund_no' => time(),
         'refund_fee' => 0.01,
     ];
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
+```
+
+### 微信小程序模版消息
+
+```php
+$data = [
+    "touser" => "",
+    "template_id" => "",
+    "page" => "pages/index/index",
+    "miniprogram_state" => "developer",
+    "lang" => "zh_CN",
+    "data" => [
+        'thing6' => ['value' => "第一个参数{{thing6.DATA}}"],
+        'thing7' => ['value' => "第二个参数{{thing7.DATA}}"],
+        'time8' =>  ['value' => "第三个参数{{time8.DATA}}"],
+],
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->sendMsg($data,$token);
+$data=[
+    "errcode" => 0
+    "errmsg" => "ok"
+    "msgid" => 123456
+]
 ```
 
 # 快手小程序
@@ -381,6 +426,7 @@ $orders = [
     ];
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
 ```
+
 ### 快手结算
 
 | 参数名字      | 类型    | 必须 | 说明         |
@@ -402,6 +448,27 @@ $orders = [
     ];
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->settle($order,$access_token);
 ```
+
+### 快手小程序模版消息
+
+```php
+$data = [
+    "open_id" => "",
+    "tpl_id" => "",
+    "page" => "pages/index/index",
+    "data" => [
+        'key1' =>  "第一个",
+        'key2' =>  "第二个",
+        'key3' =>  "第三个",
+    ]
+];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->sendMsg($data,$token);
+$data=[
+    "err_no" => 1001,
+    "err_tips" => "该用户未订阅"
+]
+```
+
 # 微信 APP
 
 ### Config

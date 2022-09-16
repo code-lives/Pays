@@ -17,7 +17,8 @@ class Kuaishou implements PayInterface
     protected $payUrl = 'https://open.kuaishou.com/openapi/mp/developer/epay/create_order';
     protected $query = 'https://open.kuaishou.com/openapi/mp/developer/epay/query_order';
     protected $refundUrl = 'https://open.kuaishou.com/openapi/mp/developer/epay/apply_refund';
-    protected $settle = "https://open.kuaishou.com/openapi/mp/developer/epay/settle";
+    protected $settle = 'https://open.kuaishou.com/openapi/mp/developer/epay/settle';
+    protected $sendMsgUrl = 'https://open.kuaishou.com/openapi/mp/developer/message/template/send';
     protected $notifyOrder;
 
     public static function init($config)
@@ -223,6 +224,17 @@ class Kuaishou implements PayInterface
         $settle_order['sign'] = $this->sign($settle_order);
         $url = $this->settle . "?app_id=" . $this->app_id . "&access_token=" . $access_token;
         return json_decode($this->curl_post_json($url, json_encode($settle_order)), true);
+    }
+    /**
+     * 发送模版消息
+     *
+     * @param  [type] $data
+     * @param  [type] $token
+     * @return void
+     */
+    public function sendMsg($data, $token)
+    {
+        return json_decode($this->curl_post($this->sendMsgUrl . $token, http_build_query($data)), true);
     }
     /**
      * curl post json传递

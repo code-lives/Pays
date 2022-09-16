@@ -14,12 +14,13 @@ class Byte implements PayInterface
     private $notify_url;
     private $settle_url;
     private $token;
-    private $codeUrl = 'https://minigame.zijieapi.com/mgplatform/api/apps/jscode2session?';
-    private $tokenUrl = 'https://minigame.zijieapi.com/mgplatform/api/apps/token';
+    private $codeUrl = 'https://developer.toutiao.com/api/apps/v2/jscode2session?';
+    private $tokenUrl = 'https://developer.toutiao.com/api/apps/v2/token';
     protected $payUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_order';
     protected $query = 'https://developer.toutiao.com/api/apps/ecpay/v1/query_order';
     protected $refundUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_refund';
     protected $settle = 'https://developer.toutiao.com/api/apps/ecpay/v1/settle';
+    protected $sendMsgUrl = 'https://developer.toutiao.com/api/apps/subscribe_notification/developer/v1/notify';
     protected $payOrder;
     private $notifyOrder;
 
@@ -127,8 +128,8 @@ class Byte implements PayInterface
             'appid' => $this->app_id,
             'secret' => $this->secret,
         ];
-        $result = json_decode($this->curl_post($this->tokenUrl, json_encode($arr)), true);
-        return $result;
+
+        return json_decode($this->curl_post($this->tokenUrl, json_encode($arr)), true);
     }
     /**
      * 获取 openid
@@ -214,6 +215,18 @@ class Byte implements PayInterface
         $data['sign'] = $this->sign($data);
         $result = json_decode($this->curl_post($this->settle, json_encode($data)), true);
         return $result;
+    }
+    /**
+     * 发送模版消息
+     *
+     * @param  [type] $data
+     * @param  [type] $token
+     */
+    public function sendMsg($data, $token)
+    {
+        $data['access_token'] = $token;
+        $data['app_id'] = $this->app_id;
+        return json_decode($this->curl_post($this->sendMsgUrl, json_encode($data)), true);
     }
     /**
      * 解密手机号

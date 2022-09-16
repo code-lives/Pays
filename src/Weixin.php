@@ -22,6 +22,7 @@ class Weixin implements PayInterface
     protected $payUrl = 'https://api.mch.weixin.qq.com/pay/unifiedorder'; //支付
     protected $query = 'https://api.mch.weixin.qq.com/pay/orderquery'; //查询
     protected $refundUrl = 'https://api.mch.weixin.qq.com/secapi/pay/refund'; //退款
+    protected $sendMsgUrl = 'https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=';
     protected $payOrder;
 
     public static function init($config)
@@ -216,6 +217,17 @@ class Weixin implements PayInterface
     {
         $url = $this->appCodeUrl . "appid=" . $this->appid . "&secret=" . $this->secret . "&code=" . $code . "&grant_type=authorization_code";
         return json_decode($this->curl_get($url), true);
+    }
+    /**
+     * 发送模版消息
+     *
+     * @param  [type] $data
+     * @param  [type] $token
+     * @return void
+     */
+    public function sendMsg($data, $token)
+    {
+        return json_decode($this->curl_post($this->sendMsgUrl . $token, json_encode($data)), true);
     }
     /**
      * 异步回调

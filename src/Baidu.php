@@ -12,7 +12,8 @@ class Baidu implements PayInterface
     private $rsaPubKeyStr;
     private $appid;
     private $applyOrderRefundUrl = 'https://openapi.baidu.com/rest/2.0/smartapp/pay/paymentservice/applyOrderRefund';
-    protected $findByTpOrderIdUrl = "https://openapi.baidu.com/rest/2.0/smartapp/pay/paymentservice/findByTpOrderId";
+    protected $findByTpOrderIdUrl = 'https://openapi.baidu.com/rest/2.0/smartapp/pay/paymentservice/findByTpOrderId';
+    protected $sendMsgUrl = 'https://openapi.baidu.com/rest/2.0/smartapp/template/message/subscribe/send?access_token=';
     private $appSecret;
     private $isSkipAudit;
     private $orderParam;
@@ -126,6 +127,17 @@ class Baidu implements PayInterface
         }
         $string = "?access_token=" . $order['access_token'] . "&tpOrderId=" . $order['tpOrderId'] . "&pmAppKey=" . $this->payappKey;
         return json_decode($this->curl_get($this->findByTpOrderIdUrl . $string), true);
+    }
+    /**
+     * 发送模版消息
+     *
+     * @param  [type] $data
+     * @param  [type] $token
+     * @return void
+     */
+    public function sendMsg($data, $token)
+    {
+        return json_decode($this->curl_post($this->sendMsgUrl . $token, http_build_query($data)), true);
     }
     protected static function curl_get($url)
     {
