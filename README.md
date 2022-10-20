@@ -327,7 +327,7 @@ $data = $Baidu->findOrder("订单号");
 | 参数名字      | 类型    | 必须 | 说明         |
 | ------------- | ------- | ---- | ------------ |
 | out_trade_no  | string  | 是   | 平台订单号   |
-| out_refund_no | strging | 是   | 自定义订单号 |
+| out_refund_no | string | 是   | 自定义订单号 |
 | refund_fee    | int     | 是   | 退款金额     |
 | total_fee     | int     | 是   | 订单金额     |
 | refund_desc   | string  | 是   | 退款原因     |
@@ -432,7 +432,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefu
 | 参数名字      | 类型    | 必须 | 说明         |
 | ------------- | ------- | ---- | ------------ |
 | out_order_no  | string  | 是   | 平台订单号   |
-| out_settle_no | strging | 是   | 自定义订单号 |
+| out_settle_no | string | 是   | 自定义订单号 |
 | reason        | string  | 是   | 退款原因     |
 | access_token  | string  | 是   | access_token |
 | attach        | string  | 否   | 自定义       |
