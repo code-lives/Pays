@@ -59,7 +59,7 @@ class Byte implements PayInterface
      */
     public function getParam()
     {
-        return $this->$orderParam;
+        return $this->orderParam;
     }
     /**
      * 获取异步订单信息
@@ -81,15 +81,16 @@ class Byte implements PayInterface
      */
     public function set($order_no, $money, $title, $desc = '')
     {
-        $this->orderParam["out_order_no"] = $order_no;
-        $this->orderParam["total_amount"] = $money;
-        $this->orderParam["subject"] = $title;
-        $this->orderParam["body"] = $desc;
-        $this->orderParam["notify_url"] = $this->notify_url;
-        $this->orderParam["valid_time"] = $this->valid_time;
-        $this->orderParam["app_id"] = $this->app_id;
-        $data = json_encode(["sign" => $this->sign($this->orderParam)] + $this->orderParam);
-        return json_decode($this->curl_post($this->payUrl, $data), true);
+        $orderParam["out_order_no"] = $order_no;
+        $orderParam["total_amount"] = $money;
+        $orderParam["subject"] = $title;
+        $orderParam["body"] = $desc;
+        $orderParam["notify_url"] = $this->notify_url;
+        $orderParam["valid_time"] = $this->valid_time;
+        $orderParam["app_id"] = $this->app_id;
+        $data = json_encode(["sign" => $this->sign($orderParam)] + $orderParam);
+        $this->orderParam = json_decode($this->curl_post($this->payUrl, $data), true);
+        return $this;
     }
     /**
      * @param array $map
