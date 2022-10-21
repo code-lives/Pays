@@ -81,7 +81,7 @@ class Kuaishou implements PayInterface
         ];
         $order['sign'] = $this->sign($order);
         $url = $this->payUrl . "?app_id=" . $this->app_id . "&access_token=" . $access_token;
-        $this->orderParam = $this->curl_post_json($url, json_encode($order));
+        $this->orderParam = json_decode($this->curl_post_json($url, json_encode($order)), true);
         return $this;
     }
     /**
