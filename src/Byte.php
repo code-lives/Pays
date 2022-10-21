@@ -87,7 +87,7 @@ class Byte implements PayInterface
         $this->orderParam["subject"] = $title;
         $this->orderParam["body"] = $desc;
         $this->orderParam["notify_url"] = $this->notify_url;
-        $this->orderParam["alid_time"] = $this->valid_time;
+        $this->orderParam["valid_time"] = $this->valid_time;
         $this->orderParam["app_id"] = $this->app_id;
         $data = json_encode(["sign" => $this->sign($this->orderParam)] + $this->orderParam);
         return json_decode($this->curl_post($this->payUrl, $data), true);
