@@ -21,7 +21,6 @@ class Byte implements PayInterface
     protected $refundUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_refund';
     protected $settle = 'https://developer.toutiao.com/api/apps/ecpay/v1/settle';
     protected $sendMsgUrl = 'https://developer.toutiao.com/api/apps/subscribe_notification/developer/v1/notify';
-    protected $payOrder;
     private $notifyOrder;
 
     public static function init($config)
@@ -60,7 +59,7 @@ class Byte implements PayInterface
      */
     public function getParam()
     {
-        return $this->payOrder;
+        return $this->$orderParam;
     }
     /**
      * 获取异步订单信息
