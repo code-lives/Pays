@@ -28,7 +28,7 @@
 
 # 安装说明
 
-    composer require code-lives/applet-pays 5.3
+    composer require code-lives/applet-pays 5.4
 
 # 预下单
 
