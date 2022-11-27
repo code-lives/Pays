@@ -10,6 +10,8 @@ class Baidu implements PayInterface
     private $rsaPriKeyStr;
     private $signFieldsRange = 1;
     private $rsaPubKeyStr;
+    private $refundNotifyUrl = '';
+    private $notifyUrl = '';
     private $appid;
     private $applyOrderRefundUrl = 'https://openapi.baidu.com/rest/2.0/smartapp/pay/paymentservice/applyOrderRefund';
     protected $findByTpOrderIdUrl = 'https://openapi.baidu.com/rest/2.0/smartapp/pay/paymentservice/findByTpOrderId';
@@ -36,6 +38,8 @@ class Baidu implements PayInterface
         $class->rsaPriKeyStr = isset($config['rsaPriKeyStr']) ? $config['rsaPriKeyStr'] : '';
         $class->rsaPubKeyStr = isset($config['rsaPubKeyStr']) ? $config['rsaPubKeyStr'] : '';
         $class->appSecret = isset($config['appSecret']) ? $config['appSecret'] : '';
+        $class->refundNotifyUrl = isset($config['refundNotifyUrl']) ? $config['refundNotifyUrl'] : '';
+        $class->notifyUrl = isset($config['notifyUrl']) ? $config['notifyUrl'] : '';
         return $class;
     }
     public function getParam()
@@ -63,6 +67,9 @@ class Baidu implements PayInterface
         $this->orderParam['tpOrderId'] = $order_no;
         $this->orderParam['dealId'] = $this->dealId;
         $this->orderParam['appKey'] = $this->payappKey;
+        if ($this->notifyUrl) {
+            $this->orderParam['notifyUrl'] = $this->notifyUrl;
+        }
         $sign = self::sign($this->orderParam, $this->rsaPriKeyStr);
         $this->orderParam['dealTitle'] = $title;
         $this->orderParam['rsaSign'] = $sign;
@@ -113,6 +120,9 @@ class Baidu implements PayInterface
             'userId' => $order['userId'],
             'pmAppKey' => $this->payappKey,
         ];
+        if ($this->refundNotifyUrl) {
+            $this->data['refundNotifyUrl'] = $this->refundNotifyUrl;
+        }
         return json_decode($this->curl_post($this->applyOrderRefundUrl, $data), true);
     }
     /**

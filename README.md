@@ -69,6 +69,8 @@ $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号"
 | isSkipAudit  | int    | 是   | 默认为 0； 0：不跳过开发者业务方审核；1：跳过开发者业务方审核。 |
 | rsaPriKeyStr | string | 是   | 私钥（只需要一行长串，不需要文件）                              |
 | rsaPubKeyStr | string | 是   | 百度小程序支付的平台公钥(支付回调需要)                          |
+| notifyUrl    | string | 否   | 异步回调地址                              |
+| refundNotifyUrl | string | 否   | 退款异步回调地址                          |
 
 ### token
 
