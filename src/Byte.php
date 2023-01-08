@@ -14,8 +14,8 @@ class Byte implements PayInterface
     private $notify_url;
     private $settle_url;
     private $token;
-    private $codeUrl = 'https://developer.toutiao.com/api/apps/v2/jscode2session?';
-    private $tokenUrl = 'https://developer.toutiao.com/api/apps/v2/token';
+    private $codeUrl = 'https://minigame.zijieapi.com/mgplatform/api/apps/jscode2session?';
+    private $tokenUrl = 'https://minigame.zijieapi.com/mgplatform/api/apps/token';
     protected $payUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_order';
     protected $query = 'https://developer.toutiao.com/api/apps/ecpay/v1/query_order';
     protected $refundUrl = 'https://developer.toutiao.com/api/apps/ecpay/v1/create_refund';
