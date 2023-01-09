@@ -266,6 +266,22 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefu
 //     [err_tips] => 成功
 //     [refund_no] => 1212
 ```
+### 字节小程序模版消息
+
+```php
+$data = [
+        'tpl_id' =>  "模版id",
+        "open_id" => $parm['openid'],
+        'data' => [
+            '律师' => "张三",
+            "回复时间" => date('Y-m-d H:i:s', time()),
+            "回复内容" => "我回复你啦",
+        ],
+        "page" => "pages/index/index",
+    ];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->sendMsg($data,$token);
+
+```
 
 # 微信小程序
 
