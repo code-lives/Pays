@@ -34,25 +34,25 @@
 
 ```php
 // 金额单位分 100=1元
-$payName='Baidu';//百度
+$PayName='Baidu';//百度
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
-$payName='Byte';//字节
+$PayName='Byte';//字节
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
 
-$payName='Weixin';//微信
+$PayName='Weixin';//微信
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
 
-$payName='Weixin';//微信公众号【appid 和secret 换成公众号的】
+$PayName='Weixin';//微信公众号【appid 和secret 换成公众号的】
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
 
-$payName='Weixin';//微信H5【appid 和secret 换成公众号的】
+$PayName='Weixin';//微信H5【appid 和secret 换成公众号的】
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getH5Param();
 
-$payName='Weixin';//微信APP (没有openid)
+$PayName='Weixin';//微信APP (没有openid)
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
-$payName='Kuaishou';//快手
+$PayName='Kuaishou';//快手
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid', 'access_token')->getParam();
 ```
 
@@ -75,7 +75,7 @@ $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号"
 ### token
 
 ```php
-$payName='Baidu';//设置驱动
+$PayName='Baidu';//设置驱动
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ```
 
@@ -88,7 +88,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ### openid
 
 ```php
-$payName='Baidu';//设置驱动
+$PayName='Baidu';//设置驱动
 $code="";
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
 ```
@@ -101,7 +101,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($cod
 ### 解密手机号
 
 ```php
-$payName='Baidu';//设置驱动
+$PayName='Baidu';//设置驱动
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $ciphertext);
 echo $phone['mobile'];
 ```
@@ -114,7 +114,7 @@ echo $phone['mobile'];
 | tpOrderId    | string | 是   | 平台订单号           |
 
 ```php
-$payName='Baidu';//设置驱动
+$PayName='Baidu';//设置驱动
 $Baidu = \Applet\Pay\Factory::getInstance('Baidu')->init($config);
 $order = [
         'tpOrderId' => '',//订单号
@@ -190,7 +190,7 @@ $data=[
 ### token
 
 ```php
-$payName='Byte';//驱动
+$PayName='Byte';//驱动
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ```
 
@@ -202,7 +202,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ### openid
 
 ```php
-$payName='Byte';//设置驱动
+$PayName='Byte';//设置驱动
 $code="";
 $anonymous_code="";//可以不传
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code,$anonymous_code);
@@ -217,7 +217,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($cod
 ### 解密手机号
 
 ```php
-$payName='Baidu';//设置驱动
+$PayName='Baidu';//设置驱动
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
 echo $phone['phoneNumber'];
 ```
@@ -225,7 +225,7 @@ echo $phone['phoneNumber'];
 ### 字节订单查询
 
 ```php
-$payName='Byte';//设置驱动
+$PayName='Byte';//设置驱动
 $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
 $data = $Baidu->findOrder("订单号");
 ```
@@ -240,7 +240,7 @@ $data = $Baidu->findOrder("订单号");
 | cp_extra      | string | 是   | 开发者自定义字段，回调原样回传 |
 
 ```php
-$payName='Byte';//设置驱动
+$PayName='Byte';//设置驱动
 $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
 $data = $Baidu->settle($order);
 ```
@@ -285,7 +285,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefu
 ### token
 
 ```php
-$payName='Weixin';//驱动
+$PayName='Weixin';//驱动
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ```
 
@@ -297,7 +297,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getToken();
 ### openid
 
 ```php
-$payName='Weixin';//设置驱动
+$PayName='Weixin';//设置驱动
 $code="";
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
 ```
@@ -311,7 +311,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($cod
 ### 微信解密手机号
 
 ```php
-$payName='Weixin';//设置驱动
+$PayName='Weixin';//设置驱动
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
 echo $phone['phoneNumber'];
 ```
@@ -319,7 +319,7 @@ echo $phone['phoneNumber'];
 ### 微信订单查询
 
 ```php
-$payName='Weixin';//设置驱动
+$PayName='Weixin';//设置驱动
 $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
 $data = $Baidu->findOrder("订单号");
 ```
@@ -381,7 +381,7 @@ $data=[
 ### openid
 
 ```php
-$payName='Kuaishou';//设置驱动
+$PayName='Kuaishou';//设置驱动
 $code="";
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
 ```
@@ -395,7 +395,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($cod
 ### 快手解密手机号
 
 ```php
-$payName='Kuaishou';//设置驱动
+$PayName='Kuaishou';//设置驱动
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
 echo $phone['phoneNumber'];
 ```
@@ -403,7 +403,7 @@ echo $phone['phoneNumber'];
 ### 快手订单查询
 
 ```php
-$payName='Kuaishou';//设置驱动
+$PayName='Kuaishou';//设置驱动
 $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
 $data = $Baidu->findOrder("订单号",$access_token);
 ```
