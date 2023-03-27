@@ -1,23 +1,26 @@
-
 ## 右上角收藏，回家不迷路
-|   第三方   | token | openid | 支付  | 回调  | 退款  | 订单查询 | 解密手机号 | 分账  |模版消息|
-| :--------: | :---: | :----: | :---: | :---: | :---: | :------: | :--------: | :---: | :---: |
-| 微信小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   x   | ✓      |
-|   微信h5   |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   | x      |
-| 微信公众号 |   x   |   x    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   | ✓      |
-| 百度小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   x   | ✓      |
-| 字节小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   ✓   | ✓      |
-| 快手小程序 |   ✓   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     ✓      |   ✓   | x      |
-|  微信APP   |   x   |   ✓    |   ✓   |   ✓   |   ✓   |    ✓     |     x      |   x   | x      |
 
-### ⚠️  注意
-> 微信支付未使用APIv3接口规则
+|    第三方    | token | openid | 支付 | 回调 | 退款 | 订单查询 | 解密手机号 | 分账 | 模版消息 |
+| :----------: | :---: | :----: | :--: | :--: | :--: | :------: | :--------: | :--: | :------: |
+|  微信小程序  |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
+|  百度小程序  |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
+|  字节小程序  |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  ✓   |    ✓     |
+|  快手小程序  |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  ✓   |    x     |
+| 支付宝小程序 |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
+|   微信 h5    |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    x     |
+|   微信 APP   |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    x     |
+|  微信公众号  |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    ✓     |
 
-> 5.2版本之前 返回的结果 成功：array 失败：false
+### ⚠️ 注意
 
-> 5.2版本开始 返回结果 array 由开发者自行判断（可以拿5.1版本进行对比）
+> 微信支付未使用 APIv3 接口规则
+
+> 5.2 版本之前 返回的结果 成功：array 失败：false
+
+> 5.2 版本开始 返回结果 array 由开发者自行判断（可以拿 5.1 版本进行对比）
 
 ### 官方文档
+
 [微信小程序接口文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)
 
 [百度小程序接口文档](https://smartprogram.baidu.com/docs/develop/function/tune_up_2.0/)
@@ -25,6 +28,8 @@
 [快手小程序接口文档](https://mp.kuaishou.com/docs/develop/server/epay/interfaceDefinition.html)
 
 [字节小程序接口文档](https://microapp.bytedance.com/docs/zh-CN/mini-app/develop/server/ecpay/APIlist/pay-list/pay)
+
+[支付宝小程序接口文档](https://opendocs.alipay.com/mini/03l5wn)
 
 # 安装说明
 
@@ -43,6 +48,12 @@ $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号"
 $PayName='Weixin';//微信
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
 
+$PayName='Kuaishou';//快手
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid', 'access_token')->getParam();
+
+$PayName='Ali';//支付宝小程序
+$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid')->getParam();
+
 $PayName='Weixin';//微信公众号【appid 和secret 换成公众号的】
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","openid")->getParam();
 
@@ -52,25 +63,23 @@ $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号"
 $PayName='Weixin';//微信APP (没有openid)
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
-$PayName='Kuaishou';//快手
-$pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述",'openid', 'access_token')->getParam();
 ```
 
 # 百度小程序
 
 ### Config
 
-| 参数名字     | 类型   | 必须 | 说明                                                            |
-| ------------ | ------ | ---- | --------------------------------------------------------------- |
-| appkey       | string | 是   | 百度小程序 appkey                                               |
-| payappKey    | string | 是   | 百度小程序支付 appkey                                           |
-| appSecret    | string | 是   | 百度小程序 aapSecret                                            |
-| dealId       | int    | 是   | 百度小程序支付凭证                                              |
-| isSkipAudit  | int    | 是   | 默认为 0； 0：不跳过开发者业务方审核；1：跳过开发者业务方审核。 |
-| rsaPriKeyStr | string | 是   | 私钥（只需要一行长串，不需要文件）                              |
-| rsaPubKeyStr | string | 是   | 百度小程序支付的平台公钥(支付回调需要)                          |
-| notifyUrl    | string | 否   | 异步回调地址                              |
-| refundNotifyUrl | string | 否   | 退款异步回调地址                          |
+| 参数名字        | 类型   | 必须 | 说明                                                            |
+| --------------- | ------ | ---- | --------------------------------------------------------------- |
+| appkey          | string | 是   | 百度小程序 appkey                                               |
+| payappKey       | string | 是   | 百度小程序支付 appkey                                           |
+| appSecret       | string | 是   | 百度小程序 aapSecret                                            |
+| dealId          | int    | 是   | 百度小程序支付凭证                                              |
+| isSkipAudit     | int    | 是   | 默认为 0； 0：不跳过开发者业务方审核；1：跳过开发者业务方审核。 |
+| rsaPriKeyStr    | string | 是   | 私钥（只需要一行长串，不需要文件）                              |
+| rsaPubKeyStr    | string | 是   | 百度小程序支付的平台公钥(支付回调需要)                          |
+| notifyUrl       | string | 否   | 异步回调地址                                                    |
+| refundNotifyUrl | string | 否   | 退款异步回调地址                                                |
 
 ### token
 
@@ -149,6 +158,7 @@ $order = [
 ];
 $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
 ```
+
 ### 百度小程序模版消息
 
 ```php
@@ -266,6 +276,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefu
 //     [err_tips] => 成功
 //     [refund_no] => 1212
 ```
+
 ### 字节小程序模版消息
 
 ```php
@@ -342,13 +353,13 @@ $data = $Baidu->findOrder("订单号");
 
 ### 微信退款
 
-| 参数名字      | 类型    | 必须 | 说明         |
-| ------------- | ------- | ---- | ------------ |
-| out_trade_no  | string  | 是   | 平台订单号   |
+| 参数名字      | 类型   | 必须 | 说明         |
+| ------------- | ------ | ---- | ------------ |
+| out_trade_no  | string | 是   | 平台订单号   |
 | out_refund_no | string | 是   | 自定义订单号 |
-| refund_fee    | int     | 是   | 退款金额     |
-| total_fee     | int     | 是   | 订单金额     |
-| refund_desc   | string  | 是   | 退款原因     |
+| refund_fee    | int    | 是   | 退款金额     |
+| total_fee     | int    | 是   | 订单金额     |
+| refund_desc   | string | 是   | 退款原因     |
 
 ```php
 $order = [
@@ -382,17 +393,109 @@ $data=[
 ]
 ```
 
+# 支付宝小程序
+
+> 使用密钥进行签名解密，没有使用证书签名解密。
+
+> 订单查询、退款、参数设置可以设置其他，具体看文档。
+
+> 返回值 看官方文档，每个返回值都不一样，自行判断，如 openid 返回[alipay_system_oauth_token_response] 退款返回[alipay_trade_create_response]
+
+### Config
+
+| 参数名字   | 类型   | 必须 | 说明                         |
+| ---------- | ------ | ---- | ---------------------------- |
+| appid      | string | 是   | 小程序 appid                 |
+| secret     | string | 是   | 小程序 AES 用于手机号解密    |
+| privateKey | string | 是   | 应用私钥（开发工具生成）     |
+| publicKey  | string | 是   | 支付宝公钥（支付宝后台下载） |
+| notify_url | string | 是   | 异步回调地址                 |
+
+### 支付宝小程序 openid
+
+> getOpenid 获取支付宝的用户 user_id 类似于微信的 openid
+
+```php
+$PayName='Ali';//设置驱动
+$code="";
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($code);
+//返回参数
+$data = array(
+    [alipay_system_oauth_token_response] => Array
+        (
+            [access_token] => 123
+            [alipay_user_id] => 123
+            [auth_start] => 2023-03-26 20:56:36
+            [expires_in] => 1296000
+            [re_expires_in] => 2592000
+            [refresh_token] => auth
+            [user_id] => 123
+        )
+    [sign] =>
+    )
+```
+
+### 支付宝小程序解密手机号
+
+```php
+$PayName='Ali';//设置驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($session_key, $iv, $encryptedData);
+echo $phone['mobile'];
+```
+
+### 支付宝小程序订单查询
+
+```php
+$PayName='Ali';//设置驱动
+$Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
+$data = $Baidu->findOrder(['out_trade_no' => '1679838318']);
+```
+
+### 支付宝小程序退款
+
+| 参数名字      | 类型   | 必须 | 说明       |
+| ------------- | ------ | ---- | ---------- |
+| out_trade_no  | string | 是   | 平台订单号 |
+| refund_amount | int    | 是   | 退款金额   |
+
+```php
+$orders = [
+        'out_order_no' => $order['out_order_no'],
+        'refund_amount' => $order['refund_amount'],
+    ];
+$PayName='Ali';//设置驱动
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefund($order);
+```
+
+### 支付宝小程序模版消息
+
+模版消息设置比较麻烦。需要先到开发平台添加进入小程序进行产品绑定，在去商家平台设置[文档](https://opendocs.alipay.com/b/03ksho)
+
+```php
+$data = [
+        'to_user_id' => '用户uid',
+        'user_template_id' => '模版id',
+        'page' => 'pages/index/index',
+        'data' => json_encode([
+            'keyword1' => ['value' => '1'],
+            'keyword2' =>  ['value' => '2'],
+            'keyword3' => ['value' => '3'],
+        ]),
+    ];
+$data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->sendMsg($data,$token);
+```
+
 # 快手小程序
 
 ### Config
 
-| 参数名字   | 类型   | 必须 | 说明                               |
-| ---------- | ------ | ---- | ---------------------------------- |
-| app_id     | int    | 是   | 小程序 appid                       |
-| app_secret | int    | 是   | 小程序 secret                      |
-| notify_url | string | 是   | 回调地址                           |
-| settle_url | string | 是   | 结算回调地址，没有就默认notify_url |
-| type       | int    | 是   | 类目                               |
+| 参数名字   | 类型   | 必须 | 说明                                |
+| ---------- | ------ | ---- | ----------------------------------- |
+| app_id     | int    | 是   | 小程序 appid                        |
+| app_secret | int    | 是   | 小程序 secret                       |
+| notify_url | string | 是   | 回调地址                            |
+| settle_url | string | 是   | 结算回调地址，没有就默认 notify_url |
+| type       | int    | 是   | 类目                                |
 
 ### openid
 
@@ -447,14 +550,13 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefu
 
 ### 快手结算
 
-| 参数名字      | 类型    | 必须 | 说明         |
-| ------------- | ------- | ---- | ------------ |
-| out_order_no  | string  | 是   | 平台订单号   |
+| 参数名字      | 类型   | 必须 | 说明         |
+| ------------- | ------ | ---- | ------------ |
+| out_order_no  | string | 是   | 平台订单号   |
 | out_settle_no | string | 是   | 自定义订单号 |
-| reason        | string  | 是   | 退款原因     |
-| access_token  | string  | 是   | access_token |
-| attach        | string  | 否   | 自定义       |
-
+| reason        | string | 是   | 退款原因     |
+| access_token  | string | 是   | access_token |
+| attach        | string | 否   | 自定义       |
 
 ```php
 //注意 需要设置回调 notify_url  在config 设置 settle_url 如果没有 默认为 notify_url
@@ -567,8 +669,19 @@ if($status){
 $pay = \Applet\Pay\Factory::getInstance('Kuaishou')->init($config);
 $status = $pay->notifyCheck(); //验证
 if ($status) {
-        $order = $pay->getNotifyOrder(); //订单数据
+    $order = $pay->getNotifyOrder(); //订单数据
     //$order['data']['out_order_no']//平台订单号
     echo json_encode(['result' => 1, 'message_id' => $order['message_id']]);exit;
+}
+```
+
+## 支付宝小程序
+
+```php
+$pay = \Applet\Pay\Factory::getInstance('Ali')->init($config);
+$status = $pay->notifyCheck(); //验证
+if ($status) {
+    $order = $pay->getNotifyOrder(); //订单数据
+    //$order['out_trade_no']//平台订单号
 }
 ```

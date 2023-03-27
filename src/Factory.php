@@ -9,6 +9,7 @@ class Factory
         'Byte' => '\Applet\Pay\Byte',
         'Weixin' => '\Applet\Pay\Weixin',
         'Kuaishou' => '\Applet\Pay\Kuaishou',
+        'Ali' => '\Applet\Pay\Ali',
     ];
 
     public static function getInstance($ClassName)
