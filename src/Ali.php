@@ -2,10 +2,7 @@
 
 namespace Applet\Pay;
 
-use PHPUnit\Framework\MockObject\Stub\ReturnStub;
-
-// implements PayInterface
-class Ali
+class Ali implements PayInterface
 {
     private $orderParam;
     private $appid;
@@ -86,6 +83,11 @@ class Ali
         $this->orderParam = json_decode($this->curl_post($this->gateway, $order), true);
         return $this;
     }
+    //获取token
+    public function getToken()
+    {
+        return 'Not written';
+    }
     /**
      * 获取openid 也是user_id
      * @param string $code
@@ -111,7 +113,7 @@ class Ali
      * 解密手机号
      * @param string $encryptedData 前端传递的encryptedData
      */
-    public function decryptPhone($encryptedData)
+    public function decryptPhone($encryptedData, $null = "", $nulls = "")
     {
         return json_decode(openssl_decrypt(base64_decode($encryptedData), 'AES-128-CBC', base64_decode($this->secret), OPENSSL_RAW_DATA), true);
     }
