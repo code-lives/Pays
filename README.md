@@ -13,11 +13,9 @@
 
 ### ⚠️ 注意
 
+> 金额单位分 100=1 元
 > 微信支付未使用 APIv3 接口规则
-
-> 5.2 版本之前 返回的结果 成功：array 失败：false
-
-> 5.2 版本开始 返回结果 array 由开发者自行判断（可以拿 5.1 版本进行对比）
+> 返回结果 array 由开发者自行判断（可以拿 5.1 版本进行对比）
 
 ### 官方文档
 
@@ -38,7 +36,10 @@
 # 预下单
 
 ```php
-// 金额单位分 100=1元
+// 第一种使用方法 Factory:: ide 自动提示 Weixin
+$pay= \Applet\Pay\Factory::Weixin()->init($config)->set("订单号","金额","描述")->getParam();
+
+// 第二种方法
 $PayName='Baidu';//百度
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
