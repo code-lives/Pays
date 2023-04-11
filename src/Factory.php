@@ -29,8 +29,8 @@ class Factory
         return $class[$ClassName] = new self::$instance[$ClassName]();
     }
 
-    public static function __callStatic($name)
+    public static function __callStatic($method, $args)
     {
-        return self::getInstance($name);
+        return self::getInstance($method, $args);
     }
 }
