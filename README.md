@@ -33,7 +33,7 @@
 
 # 安装说明
 
-    composer require code-lives/applet-pays 5.6
+    composer require code-lives/applet-pays 5.7
 
 # 预下单
 
