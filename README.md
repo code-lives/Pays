@@ -17,7 +17,9 @@
 
 > 微信支付未使用 APIv3 接口规则
 
-> 返回结果 array 由开发者自行判断（可以拿 5.1 版本进行对比）
+> 返回结果 array 由开发者自行判断
+
+> 抖音小程序由字节小程序转变而来，支持多端（头条、抖音、今日头条等关联应用）
 
 ### 官方文档
 
@@ -27,7 +29,7 @@
 
 [快手小程序接口文档](https://mp.kuaishou.com/docs/develop/server/epay/interfaceDefinition.html)
 
-[字节小程序接口文档](https://microapp.bytedance.com/docs/zh-CN/mini-app/develop/server/ecpay/APIlist/pay-list/pay)
+[抖音小程序接口文档](https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/introduction/overview/)
 
 [支付宝小程序接口文档](https://opendocs.alipay.com/mini/03l5wn)
 
@@ -45,7 +47,7 @@ $pay= \Applet\Pay\Factory::Weixin()->init($config)->set("订单号","金额","�
 $PayName='Baidu';//百度
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述")->getParam();
 
-$PayName='Byte';//字节
+$PayName='Byte';//抖音
 $pay= \Applet\Pay\Factory::getInstance($PayName)->init($config)->set("订单号","金额","描述","描述")->getParam();
 
 $PayName='Weixin';//微信
@@ -186,7 +188,7 @@ $data=[
 ]
 ```
 
-# 字节小程序
+# 抖音小程序
 
 ### Config
 
@@ -235,7 +237,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->decryptPhone($
 echo $phone['phoneNumber'];
 ```
 
-### 字节订单查询
+### 订单查询
 
 ```php
 $PayName='Byte';//设置驱动
@@ -243,7 +245,7 @@ $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
 $data = $Baidu->findOrder("订单号");
 ```
 
-### 字节分账
+### 分账
 
 | 参数名字      | 类型   | 必须 | 说明                           |
 | ------------- | ------ | ---- | ------------------------------ |
@@ -258,7 +260,7 @@ $Baidu = \Applet\Pay\Factory::getInstance($payName)->init($config);
 $data = $Baidu->settle($order);
 ```
 
-### 字节退款
+### 退款
 
 | 参数名字      | 类型   | 必须 | 说明         |
 | ------------- | ------ | ---- | ------------ |
@@ -280,7 +282,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->applyOrderRefu
 //     [refund_no] => 1212
 ```
 
-### 字节小程序模版消息
+### 模版消息
 
 ```php
 $data = [
@@ -607,7 +609,7 @@ $data=[
 
 # 异步通知
 
-## 字节
+## 抖音
 
 ```php
 $pay = \Applet\Pay\Factory::getInstance('Byte')->init($config);
