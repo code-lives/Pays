@@ -1,12 +1,12 @@
 ## 右上角收藏，回家不迷路
 
-<div style="text-align:center;">
+<p align="center">
 
 [![Packagist Version (including pre-releases)](https://img.shields.io/packagist/v/code-lives/applet-pays?include_prereleases)](https://packagist.org/packages/code-lives/applet-pays)
 ![GitHub Repo stars](https://img.shields.io/github/stars/code-lives/Pays?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/code-lives/Pays?style=social)
 
-</div>
+</p>
 
 |    第三方    | token | openid | 支付 | 回调 | 退款 | 订单查询 | 解密手机号 | 分账 | 模版消息 |
 | :----------: | :---: | :----: | :--: | :--: | :--: | :------: | :--------: | :--: | :------: |
