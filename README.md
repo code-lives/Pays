@@ -5,6 +5,17 @@
 
 </p>
 
+|                                               第三方                                                | token | openid | 支付 | 回调 | 退款 | 订单查询 | 解密手机号 | 分账 | 模版消息 |
+| :-------------------------------------------------------------------------------------------------: | :---: | :----: | :--: | :--: | :--: | :------: | :--------: | :--: | :------: |
+|          [微信小程序](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
+|           [百度小程序](https://smartprogram.baidu.com/docs/develop/function/tune_up_2.0/)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
+| [抖音小程序](https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/introduction/overview/) |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  ✓   |    ✓     |
+|       [快手小程序](https://mp.kuaishou.com/docs/develop/server/epay/interfaceDefinition.html)       |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  ✓   |    x     |
+|                       [支付宝小程序](https://opendocs.alipay.com/mini/03l5wn)                       |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
+|                                               微信 h5                                               |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    x     |
+|                                              微信 APP                                               |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    x     |
+|                                             微信公众号                                              |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    ✓     |
+
 ## 安装
 
 ```php
@@ -20,17 +31,6 @@ composer require code-lives/applet-pays 5.7
 > 返回结果 array 由开发者自行判断
 
 > 抖音小程序由字节小程序转变而来，支持多端（头条、抖音、今日头条等关联应用）
-
-|                                               第三方                                                | token | openid | 支付 | 回调 | 退款 | 订单查询 | 解密手机号 | 分账 | 模版消息 |
-| :-------------------------------------------------------------------------------------------------: | :---: | :----: | :--: | :--: | :--: | :------: | :--------: | :--: | :------: |
-|          [微信小程序](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
-|           [百度小程序](https://smartprogram.baidu.com/docs/develop/function/tune_up_2.0/)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
-| [抖音小程序](https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/introduction/overview/) |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  ✓   |    ✓     |
-|       [快手小程序](https://mp.kuaishou.com/docs/develop/server/epay/interfaceDefinition.html)       |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  ✓   |    x     |
-|                       [支付宝小程序](https://opendocs.alipay.com/mini/03l5wn)                       |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
-|                                               微信 h5                                               |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    x     |
-|                                              微信 APP                                               |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    x     |
-|                                             微信公众号                                              |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    ✓     |
 
 # 预下单
 
