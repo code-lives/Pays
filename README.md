@@ -5,7 +5,7 @@
 
 </p>
 
-# 安装
+## 安装
 
     composer require code-lives/applet-pays 5.7
 
