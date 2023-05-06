@@ -7,7 +7,9 @@
 
 ## 安装
 
-    composer require code-lives/applet-pays 5.7
+```php
+composer require code-lives/applet-pays 5.7
+```
 
 ### ⚠️ 注意
 
