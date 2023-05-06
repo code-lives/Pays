@@ -4,6 +4,7 @@
 <a href="https://github.com/code-lives/Pays/fork"><img src="https://img.shields.io/github/forks/code-lives/Pays?style=social" alt="GitHub forks"></a>
 
 </p>
+
 # 安装
 
     composer require code-lives/applet-pays 5.7
