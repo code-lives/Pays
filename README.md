@@ -1,7 +1,7 @@
 <p align="center">
-<a href="https://packagist.org/packages/code-lives/applet-pays"><img src="https://img.shields.io/packagist/v/code-lives/applet-pays?include_prereleases" alt="GitHub forks"></a>
-<a href="https://packagist.org/packages/code-lives/applet-pays"><img src="https://img.shields.io/github/stars/code-lives/Pays?style=social" alt="GitHub forks"></a>
-<a href="https://github.com/code-lives/Pays/fork"><img src="https://img.shields.io/github/forks/code-lives/Pays?style=social" alt="GitHub forks"></a>
+<a href="https://packagist.org/packages/code-lives/applet-pays" target="_blank"><img src="https://img.shields.io/packagist/v/code-lives/applet-pays?include_prereleases" alt="GitHub forks"></a>
+<a href="https://packagist.org/packages/code-lives/applet-pays" target="_blank"><img src="https://img.shields.io/github/stars/code-lives/Pays?style=social" alt="GitHub forks"></a>
+<a href="https://github.com/code-lives/Pays/fork" target="_blank"><img src="https://img.shields.io/github/forks/code-lives/Pays?style=social" alt="GitHub forks"></a>
 
 </p>
 
