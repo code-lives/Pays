@@ -19,6 +19,8 @@ class Kuaishou implements PayInterface
     protected $refundUrl = 'https://open.kuaishou.com/openapi/mp/developer/epay/apply_refund';
     protected $settle = 'https://open.kuaishou.com/openapi/mp/developer/epay/settle';
     protected $sendMsgUrl = 'https://open.kuaishou.com/openapi/mp/developer/message/template/send';
+    protected $synchronousUrl = 'https://open.kuaishou.com/openapi/mp/developer/order/v1/report';
+    protected $imgUrl = 'https://open.kuaishou.com/openapi/mp/developer/file//img/uploadWithUrl';
     protected $notifyOrder;
 
     public static function init($config)
@@ -210,11 +212,35 @@ class Kuaishou implements PayInterface
         return json_decode($this->curl_post_json($url, json_encode($bodyParam)), true);
     }
     /**
+     * 订单信息同步
+     *
+     * @param array $order
+     * @param string $access_token
+     * @return void
+     */
+    public function synchronousOrder($order, $access_token)
+    {
+        $url = $this->synchronousUrl . "?app_id=" . $this->app_id . "&access_token=" . $access_token;
+        return json_decode($this->curl_post_json($url, json_encode($order)), true);
+    }
+    /**
+     * url进行图片上传
+     *
+     * @param string $url 图片url地址
+     * @param string $access_token
+     * @return void
+     */
+    public function imgUpload($url, $access_token)
+    {
+        $url = $this->imgUrl . "?app_id=" . $this->app_id . "&access_token=" . $access_token . "&url=" . $url;
+        return json_decode($this->curl_post($url), true);
+    }
+    /**
      * 分账
      *
-     * @param  [type] $order
+     * @param array $settle_order
+     * @param string $access_token
      * @return void
-     * @author LiJie
      */
     public function settle($settle_order, $access_token)
     {
@@ -228,13 +254,13 @@ class Kuaishou implements PayInterface
     /**
      * 发送模版消息
      *
-     * @param  [type] $data
-     * @param  [type] $token
+     * @param  array $data
+     * @param  string $access_token
      * @return void
      */
-    public function sendMsg($data, $token)
+    public function sendMsg($data, $access_token)
     {
-        return json_decode($this->curl_post($this->sendMsgUrl . $token, http_build_query($data)), true);
+        return json_decode($this->curl_post($this->sendMsgUrl . $access_token, http_build_query($data)), true);
     }
     /**
      * curl post json传递
@@ -288,7 +314,7 @@ class Kuaishou implements PayInterface
      * @param array $data
      * @return string $output
      */
-    protected static function curl_post($url, $data)
+    protected static function curl_post($url, $data = null)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -296,7 +322,9 @@ class Kuaishou implements PayInterface
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        if (is_array($data) || is_string($data)) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
         $output = curl_exec($ch);
         curl_close($ch);
         return $output;
