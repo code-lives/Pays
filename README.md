@@ -603,7 +603,7 @@ $order = [
 $data = \Applet\Pay\Factory::getInstance($PayName)->init($config)->synchronousOrder($order, $token);
 ```
 
-### 图片上传(订单信息同)
+### 图片上传(订单信息同步)
 
 ```php
 $data = \Applet\Pay\Factory::getInstance($PayName)->init($config)->imgUpload('图片路径', $token);
