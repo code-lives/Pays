@@ -3,20 +3,21 @@
 namespace Applet\Pay;
 
 /**
- * @method static \Applet\Pay\Ali Ali()
- * @method static \Applet\Pay\Kuaishou Kuaishou()
- * @method static \Applet\Pay\Byte Byte()
- * @method static \Applet\Pay\Baidu Baidu()
- * @method static \Applet\Pay\Weixin Weixin()
+ * @method static \Applet\Assemble\Ali Ali()
+ * @method static \Applet\Assemble\Kuaishou Kuaishou()
+ * @method static \Applet\Assemble\Byte Byte()
+ * @method static \Applet\Assemble\Baidu Baidu()
+ * @method static \Applet\Assemble\Weixin Weixin()
  */
+
 class Factory
 {
     public static $instance = [
-        'Baidu' => '\Applet\Pay\Baidu',
-        'Byte' => '\Applet\Pay\Byte',
-        'Weixin' => '\Applet\Pay\Weixin',
-        'Kuaishou' => '\Applet\Pay\Kuaishou',
-        'Ali' => '\Applet\Pay\Ali',
+        'Baidu' => '\Applet\Assemble\Baidu',
+        'Byte' => '\Applet\Assemble\Byte',
+        'Weixin' => '\Applet\Assemble\Weixin',
+        'Kuaishou' => '\Applet\Assemble\Kuaishou',
+        'Ali' => '\Applet\Assemble\Ali',
     ];
 
     public static function getInstance($ClassName)
