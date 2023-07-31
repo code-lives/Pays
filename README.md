@@ -28,6 +28,8 @@ composer require code-lives/applet-pays 5.9
 
 > 微信支付未使用 APIv3 接口规则
 
+> 获取openid 接口 统一openid字段（因快手返回的open_id）
+
 > 返回结果 array 由开发者自行判断
 
 > 抖音小程序由字节小程序转变而来，支持多端（头条、抖音、今日头条等关联应用）
