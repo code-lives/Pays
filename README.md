@@ -516,7 +516,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($cod
 | 返回参数    | 类型   | 必须 | 说明          |
 | ----------- | ------ | ---- | ------------- |
 | session_key | string | 是   | session_key   |
-| open_id     | string | 是   | 用户 open_id  |
+| openid     | string | 是   | 用户 open_id  |
 | result      | string | 是   | 状态 1 是成功 |
 
 ### 快手解密手机号
