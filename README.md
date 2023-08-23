@@ -7,6 +7,10 @@
 
 ## 喜欢的小伙伴点个Star吧
 > 有想参与维护的可以邮件或留言
+> 
+## 飞书群
+
+![image](https://github.com/code-lives/Pays/assets/79346591/31ae6c17-7515-436c-bda8-3ac465a634a6)
 
 ## SDK支持
 |                                               第三方                                                | token | openid | 支付 | 回调 | 退款 | 订单查询 | 解密手机号 | 分账 | 模版消息 |
