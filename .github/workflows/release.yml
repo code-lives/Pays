@@ -1,0 +1,103 @@
+name: Notify on Release
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  send_notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fei Shu news
+        env:
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_RELEASE_WEBHOOK_URL }}
+        run: |
+          # Get the release information
+          RELEASE_NAME=$(jq -r ".release.name" $GITHUB_EVENT_PATH)
+          RELEASE_BODY=$(jq -r ".release.body" $GITHUB_EVENT_PATH)
+          VERSION=$(jq -r ".release.tag_name" $GITHUB_EVENT_PATH)
+
+          # Construct JSON payload with variable interpolation
+          PAYLOAD='{
+                "msg_type": "interactive",
+                "card": {
+                    "header": {
+                        "title": {
+                            "tag": "plain_text",
+                            "content": "版本更新通知"
+                        },
+                        "template": "blue"
+                    },
+                    "elements": [
+                        {
+                            "tag": "div",
+                            "fields": [
+                                {
+                                    "text": {
+                                        "tag": "lark_md",
+                                        "content": "**类型：** applet-pays"
+                                    }
+                                },
+                                {
+                                    "text": {
+                                        "tag": "lark_md",
+                                        "content": ""
+                                    }
+                                },
+                                {
+                                    "text": {
+                                        "tag": "lark_md",
+                                        "content": "**version：**'"$VERSION"'"
+                                    }
+                                },
+                                {
+                                    "text": {
+                                        "tag": "lark_md",
+                                        "content": ""
+                                    }
+                                },
+                                {
+                                    "text": {
+                                        "tag": "lark_md",
+                                        "content": "**描述：**'"$RELEASE_NAME"'"
+                                    }
+                                },
+                                {
+                                    "text": {
+                                        "tag": "lark_md",
+                                        "content": ""
+                                    }
+                                },
+                                {
+                                    "text": {
+                                        "tag": "lark_md",
+                                        "content": ""
+                                    }
+                                },
+                                {
+                                    "text": {
+                                        "tag": "lark_md",
+                                        "content": "<at id=all></at>"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "tag": "action",
+                            "actions": [
+                                {
+                                    "tag": "button",
+                                    "text": {
+                                        "tag": "plain_text",
+                                        "content": "查看"
+                                    },
+                                    "url": "https://github.com/${{ github.repository }}/releases"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }'
+          # Send notification to Feishu
+          curl -X POST -H 'Content-Type: application/json' -d "$PAYLOAD" $FEISHU_WEBHOOK_URL
