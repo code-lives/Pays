@@ -5,7 +5,6 @@
 
 </p>
 
-## SDK支持
 |                                               第三方                                                | token | openid | 支付 | 回调 | 退款 | 订单查询 | 解密手机号 | 分账 | 模版消息 |
 | :-------------------------------------------------------------------------------------------------: | :---: | :----: | :--: | :--: | :--: | :------: | :--------: | :--: | :------: |
 |          [微信小程序](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     |
@@ -29,7 +28,7 @@ composer require code-lives/applet-pays 5.9
 
 > 微信支付未使用 APIv3 接口规则
 
-> 获取openid 接口 统一openid字段（因快手返回的open_id）
+> 获取 openid 接口 统一 openid 字段（因快手返回的 open_id）
 
 > 返回结果 array 由开发者自行判断
 
@@ -519,7 +518,7 @@ $data= \Applet\Pay\Factory::getInstance($PayName)->init($config)->getOpenid($cod
 | 返回参数    | 类型   | 必须 | 说明          |
 | ----------- | ------ | ---- | ------------- |
 | session_key | string | 是   | session_key   |
-| openid     | string | 是   | 用户 open_id  |
+| openid      | string | 是   | 用户 open_id  |
 | result      | string | 是   | 状态 1 是成功 |
 
 ### 快手解密手机号
@@ -729,7 +728,8 @@ if ($status) {
 }
 ```
 
-## 飞书群（讨论or参与维护）
+## 飞书群
+
+> 讨论及版本通知群、issues 通知群
 
 ![image](https://github.com/code-lives/Pays/assets/79346591/e1dc3b7e-1efb-4a6a-bc1a-3e8ea9c581a4)
-
