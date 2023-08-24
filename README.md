@@ -731,4 +731,5 @@ if ($status) {
 
 ## 飞书群（讨论or参与维护）
 
-![image](https://github.com/code-lives/Pays/assets/79346591/31ae6c17-7515-436c-bda8-3ac465a634a6)
+![image](https://github.com/code-lives/Pays/assets/79346591/e1dc3b7e-1efb-4a6a-bc1a-3e8ea9c581a4)
+
