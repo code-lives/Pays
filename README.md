@@ -11,16 +11,16 @@
 
 > 大家也可以提交相应的 pr，下面我把微信、百度、抖音、快手、支付宝对应的仓库位置已补充 👇
 
-|                                               第三方                                                | token | openid | 支付 | 回调 | 退款 | 订单查询 | 解密手机号 | 分账 | 模版消息 | 仓库                                           |
-| :-------------------------------------------------------------------------------------------------: | :---: | :----: | :--: | :--: | :--: | :------: | :--------: | :--: | :------: | ---------------------------------------------- |
-|          [微信小程序](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     | [地址](https://github.com/code-lives/weixin)   |
-|           [百度小程序](https://smartprogram.baidu.com/docs/develop/function/tune_up_2.0/)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     | [地址](https://github.com/code-lives/baidu)    |
-| [抖音小程序](https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/introduction/overview/) |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  ✓   |    ✓     | [地址](https://github.com/code-lives/byte)     |
-|       [快手小程序](https://mp.kuaishou.com/docs/develop/server/epay/interfaceDefinition.html)       |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  ✓   |    x     | [地址](https://github.com/code-lives/kuaishou) |
-|                       [支付宝小程序](https://opendocs.alipay.com/mini/03l5wn)                       |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     ✓      |  x   |    ✓     | [地址](https://github.com/code-lives/ali)      |
-|                                               微信 h5                                               |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    x     | [地址](https://github.com/code-lives/weixin)   |
-|                                              微信 APP                                               |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    x     | [地址](https://github.com/code-lives/weixin)   |
-|                                             微信公众号                                              |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |     x      |  x   |    ✓     | [地址](https://github.com/code-lives/weixin)   |
+|                                               第三方                                                | token | openid | 支付 | 回调 | 退款 | 订单查询 | 手机号 | 分账 | 模版消息 | 仓库                                           |
+| :-------------------------------------------------------------------------------------------------: | :---: | :----: | :--: | :--: | :--: | :------: | :----: | :--: | :------: | ---------------------------------------------- |
+|          [微信小程序](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |   ✓    |  x   |    ✓     | [地址](https://github.com/code-lives/weixin)   |
+|           [百度小程序](https://smartprogram.baidu.com/docs/develop/function/tune_up_2.0/)           |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |   ✓    |  x   |    ✓     | [地址](https://github.com/code-lives/baidu)    |
+| [抖音小程序](https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/introduction/overview/) |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |   ✓    |  ✓   |    ✓     | [地址](https://github.com/code-lives/byte)     |
+|       [快手小程序](https://mp.kuaishou.com/docs/develop/server/epay/interfaceDefinition.html)       |   ✓   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |   ✓    |  ✓   |    x     | [地址](https://github.com/code-lives/kuaishou) |
+|                       [支付宝小程序](https://opendocs.alipay.com/mini/03l5wn)                       |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |   ✓    |  x   |    ✓     | [地址](https://github.com/code-lives/ali)      |
+|                                               微信 h5                                               |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |   x    |  x   |    x     | [地址](https://github.com/code-lives/weixin)   |
+|                                              微信 APP                                               |   x   |   ✓    |  ✓   |  ✓   |  ✓   |    ✓     |   x    |  x   |    x     | [地址](https://github.com/code-lives/weixin)   |
+|                                             微信公众号                                              |   x   |   x    |  ✓   |  ✓   |  ✓   |    ✓     |   x    |  x   |    ✓     | [地址](https://github.com/code-lives/weixin)   |
 
 ## 安装
 
