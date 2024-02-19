@@ -2,6 +2,7 @@
 <a href="https://packagist.org/packages/code-lives/applet-pays" target="_blank"><img src="https://img.shields.io/packagist/v/code-lives/applet-pays?include_prereleases" alt="GitHub forks"></a>
 <a href="https://packagist.org/packages/code-lives/applet-pays" target="_blank"><img src="https://img.shields.io/github/stars/code-lives/Pays?style=social" alt="GitHub forks"></a>
 <a href="https://github.com/code-lives/Pays/fork" target="_blank"><img src="https://img.shields.io/github/forks/code-lives/Pays?style=social" alt="GitHub forks"></a>
+<a href="https://packagist.org/packages/code-lives/applet-pays" target="_blank"><img src="https://img.shields.io/packagist/dt/code-lives/applet-pays" alt="GitHub"></a>
 
 </p>
 
@@ -731,3 +732,6 @@ if ($status) {
     //$order['out_trade_no']//平台订单号
 }
 ```
+# 感谢赞助
+<img src="https://github.com/code-lives/Pays/assets/79346591/6777b00a-7ec6-440a-b31a-bc15da3e2fce" alt="image" width="400"/>
+<img src="https://github.com/code-lives/Pays/assets/79346591/0f1895d7-8dc4-4d27-9bdd-54823c656f91" alt="image" width="400"/>
